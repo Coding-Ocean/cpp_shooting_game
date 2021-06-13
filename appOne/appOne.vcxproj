@@ -152,10 +152,11 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CHARACTER.cpp" />
+    <ClCompile Include="BULLETS.cpp" />
     <ClCompile Include="CLEAR.cpp" />
     <ClCompile Include="ENEMIES.cpp" />
     <ClCompile Include="ENEMY_BULLETS.cpp" />
+    <ClCompile Include="FLOAT2.cpp" />
     <ClCompile Include="GAME.cpp" />
     <ClCompile Include="gmain.cpp" />
     <ClCompile Include="OVER.cpp" />
@@ -172,10 +173,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BULLETS.h" />
-    <ClInclude Include="CHARACTER.h" />
     <ClInclude Include="CLEAR.h" />
     <ClInclude Include="ENEMIES.h" />
     <ClInclude Include="ENEMY_BULLETS.h" />
+    <ClInclude Include="FLOAT2.h" />
     <ClInclude Include="GAME.h" />
     <ClInclude Include="GAME_STATE.h" />
     <ClInclude Include="OVER.h" />

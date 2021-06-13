@@ -10,8 +10,8 @@ void PLAYER::create(int img) {
     TriggerInterval = 0;
 }
 void PLAYER::init(class GAME* game) {
-    Px = width / 2;
-    Py = height / 2;
+    Pos.x = width / 2;
+    Pos.y = height / 2;
     Angle = 0;
 }
 void PLAYER::move() {
@@ -21,49 +21,49 @@ void PLAYER::move() {
     if (isPress(KEY_A)) {
         Angle += -AngSpeed;
     }
-    Vx = sin(Angle);
-    Vy = -cos(Angle);
+    Vec.x = sin(Angle);
+    Vec.y = -cos(Angle);
     if (isPress(KEY_W)) {
-        Px += Vx * AdvSpeed;
-        Py += Vy * AdvSpeed;
+        Pos += Vec * AdvSpeed;
     }
     if (isPress(KEY_S)) {
-        Px += -Vx * AdvSpeed;
-        Py += -Vy * AdvSpeed;
+        Pos += Vec * -AdvSpeed;
     }
 }
 void PLAYER::launch(class BULLETS* bullets){
-    if (isPress(KEY_SPACE)&&TriggerInterval>0) {
+    if (isTrigger(KEY_SPACE)) TriggerInterval = 10;
+    if (isPress(KEY_SPACE) && TriggerInterval > 0) {
         if (TriggerCnt % TriggerInterval == 0) {
-            bullets->launch(Px, Py, Vx, Vy);
+            bullets->launch(Pos, Vec);
         }
         TriggerCnt++;
     }
     else {
         TriggerCnt = 0;
-        TriggerInterval = 10;
     }
     bullets->move();
 }
 void PLAYER::draw() {
     rectMode(CENTER);
-    image(Img, Px, Py, Angle);
+    image(Img, Pos.x, Pos.y, Angle);
+#ifdef _DEBUG
     fill(255, 255, 255, 128);
     for (int i = 0; i < 3; i++) {
         circle(cpx(i), cpy(i), 40*2);
     }
+#endif
 }
 
 float PLAYER::cpx(int i) {
     CollisionOffset = 70;
-    if (i == 0) { return Px + Vx * CollisionOffset; }
-    if (i == 1) { return Px + Vx * -CollisionOffset; }
-    if (i == 2) { return Px; }
+    if (i == 0) { return Pos.x + Vec.x * CollisionOffset; }
+    if (i == 1) { return Pos.x + Vec.x * -CollisionOffset; }
+    if (i == 2) { return Pos.x; }
     return 0;
 }
 float PLAYER::cpy(int i) {
-    if (i == 0) { return Py + Vy * CollisionOffset; }
-    if (i == 1) { return Py + Vy * -CollisionOffset; }
-    if (i == 2) { return Py; }
+    if (i == 0) { return Pos.y + Vec.y * CollisionOffset; }
+    if (i == 1) { return Pos.y + Vec.y * -CollisionOffset; }
+    if (i == 2) { return Pos.y; }
     return 0;
 }

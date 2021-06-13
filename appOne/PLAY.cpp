@@ -6,21 +6,22 @@
 #include"GAME.h"
 #include"PLAY.h"
 void PLAY::init(class GAME* game) {
-    game->player()->init(game);
-    game->playerBullets()->init(game);
-    game->enemies()->init(game);
-    game->enemyBullets()->init(game);
+    Player = game->player();
+    PlayerBullets = game->playerBullets();
+    Enemies = game->enemies();
+    EnemyBullets = game->enemyBullets();
+
+    Player->init(game);
+    PlayerBullets->init(game);
+    Enemies->init(game);
+    EnemyBullets->init(game);
 }
 void PLAY::proc(class GAME* game) {
     //update
-    PLAYER* player = game->player();
-    PLAYER_BULLETS* playerBullets = game->playerBullets();
-    ENEMIES* enemies = game->enemies();
-    ENEMY_BULLETS* enemyBullets = game->enemyBullets();
-    player->move();
-    player->launch(playerBullets);
-    enemies->move(game);
-    enemies->launch(enemyBullets, player);
+    Player->move();
+    Player->launch(PlayerBullets);
+    Enemies->move();
+    Enemies->launch(EnemyBullets, Player->pos());
     //collision
     int flag = collision(game);
     //draw
@@ -43,10 +44,10 @@ int PLAY::collision(class GAME* game) {
     float sqMin = 130 * 130;
     for (int i = 0; i < num && flag == 0; i++) {
         for (int j = 0; j < 3 && flag == 0; j++) {
-            float x = enemies->px(i) - (player->cpx(j));
-            float y = enemies->py(i) - (player->cpy(j));
-            float sqDistance = x * x + y * y;
-            if (sqDistance < sqMin)flag = 1;
+            //float x = enemies->pos(i).x - (player->cpx(j));
+            //float y = enemies->pos(i).y - (player->cpy(j));
+            //float sqDistance = x * x + y * y;
+            //if (sqDistance < sqMin)flag = 1;
         }
     }
     return flag;

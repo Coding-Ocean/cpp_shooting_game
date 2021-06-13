@@ -1,6 +1,5 @@
 #include"libOne.h"
 #include"BULLETS.h"
-#include"CHARACTER.h"
 #include "ENEMIES.h"
 ENEMIES::ENEMIES(){
 }
@@ -9,55 +8,45 @@ ENEMIES::~ENEMIES(){
 }
 void ENEMIES::create(int img){
     Img = img;
-    Num = 12;
-    Data = new DATA[Num]();
+    Num = 2;
+    Enemies = new ENEMY[Num]();
     TriggerCnt = 0;
     TriggerInterval = 20;
+    DivTheta = 3.141592f * 2 / Num;
+    Cx = width / 2;
+    Cy = 300;
+    Radius = 800;
 }
 void ENEMIES::destroy() {
-    if (Data) {
-        delete[] Data;
-        Data = 0;
+    if (Enemies) {
+        delete[] Enemies;
+        Enemies = 0;
     }
 }
 void ENEMIES::init(class GAME* game) {
-    float divTheta = 3.141592f * 2 / Num;
-    float cx = width / 2;
-    float cy = height / 2;
-    float radius = 350;
-    for (int i = 0; i < Num; i++) {
-        Data[i].px = cx +  sin(divTheta*i) * radius;
-        Data[i].py = cy + -cos(divTheta*i) * radius;
-    }
 }
-void ENEMIES::move(class GAME* game) {
-    float divTheta = 3.141592f * 2 / Num;
-    float cx = width / 2;
-    float cy = height / 2;
-    float radius = 350;
+void ENEMIES::move() {
     Theta += 0.01f;
     for (int i = 0; i < Num; i++) {
-        Data[i].px = cx +  sin(Theta + divTheta * i) * radius;
-        Data[i].py = cy + -cos(Theta + divTheta * i) * radius;
+        Enemies[i].pos.x = Cx +  sin(Theta + DivTheta * i) * Radius;
+        Enemies[i].pos.y = Cy + -cos(Theta + DivTheta * i) * Radius/8;
     }
 }
-void ENEMIES::launch(class BULLETS* bullets, class CHARACTER* target) {
+void ENEMIES::launch(class BULLETS* bullets, const FLOAT2& targetPos) {
     if (!(++TriggerCnt %= TriggerInterval)){
         for (int i = 0; i < Num; i++) {
-            float vx = target->px() - Data[i].px;
-            float vy = target->py() - Data[i].py;
-            float distance = sqrt(vx * vx + vy * vy);
-            vx /= distance;
-            vy /= distance;
-            bullets->launch(Data[i].px, Data[i].py, vx, vy);
+            FLOAT2 vec = (targetPos - Enemies[i].pos).normalize();
+            bullets->launch(Enemies[i].pos, vec);
         }
     }
     bullets->move();
 }
 void ENEMIES::draw(){
     for (int i = 0; i < Num; i++) {
-        image(Img, Data[i].px, Data[i].py, Data[i].angle);
+        image(Img, Enemies[i].pos.x, Enemies[i].pos.y, Enemies[i].angle);
+#ifdef _DEBUG
         fill(255, 255, 255, 128);
-        circle(Data[i].px, Data[i].py, 90*2);
+        circle(Enemies[i].pos.x, Enemies[i].pos.y, 90*2);
+#endif
     }
 }

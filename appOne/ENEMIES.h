@@ -1,18 +1,26 @@
 #pragma once
+#include"FLOAT2.h"
 class ENEMIES
 {
 private:
-    struct DATA {
-        float px = 0, py = 0, angle = 0;
+    struct ENEMY {
+        FLOAT2 pos;
+        float angle = 0;
     };
-    struct DATA* Data=0;
+    ENEMY* Enemies=0;
     float Theta = 0;
     int Img = 0;
     int Num = 0;
 
+    //位置決め用データ
+    float DivTheta = 0;
+    float Cx = 0;
+    float Cy = 0;
+    float Radius = 0;
+
     //launch bullet
-    int TriggerCnt;
-    int TriggerInterval;
+    int TriggerCnt = 0;
+    int TriggerInterval = 0;
 
 public:
     ENEMIES();
@@ -20,11 +28,10 @@ public:
     void create(int img);
     void destroy();
     void init(class GAME* game);
-    void move(class GAME* game);
-    void launch(class BULLETS* bullets, class CHARACTER* target);
+    void move();
+    void launch(class BULLETS* bullets, const FLOAT2& target);
     void draw();
     int num() { return Num; }
-    float px(int i) { return Data[i].px; }
-    float py(int i) { return Data[i].py; }
+    FLOAT2 pos(int i) { return Enemies[i].pos; }
 };
 

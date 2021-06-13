@@ -31,9 +31,6 @@
     <ClCompile Include="CLEAR.cpp">
       <Filter>sequence</Filter>
     </ClCompile>
-    <ClCompile Include="CHARACTER.cpp">
-      <Filter>character</Filter>
-    </ClCompile>
     <ClCompile Include="PLAYER.cpp">
       <Filter>character</Filter>
     </ClCompile>
@@ -43,7 +40,13 @@
     <ClCompile Include="PLAYER_BULLETS.cpp">
       <Filter>character</Filter>
     </ClCompile>
-    <ClCompile Include="ENEMY_BULLETS.cpp" />
+    <ClCompile Include="ENEMY_BULLETS.cpp">
+      <Filter>character</Filter>
+    </ClCompile>
+    <ClCompile Include="FLOAT2.cpp">
+      <Filter>character</Filter>
+    </ClCompile>
+    <ClCompile Include="BULLETS.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">
@@ -74,9 +77,6 @@
     <ClInclude Include="TITLE.h">
       <Filter>sequence</Filter>
     </ClInclude>
-    <ClInclude Include="CHARACTER.h">
-      <Filter>character</Filter>
-    </ClInclude>
     <ClInclude Include="PLAYER.h">
       <Filter>character</Filter>
     </ClInclude>
@@ -89,6 +89,11 @@
     <ClInclude Include="PLAYER_BULLETS.h">
       <Filter>character</Filter>
     </ClInclude>
-    <ClInclude Include="ENEMY_BULLETS.h" />
+    <ClInclude Include="ENEMY_BULLETS.h">
+      <Filter>character</Filter>
+    </ClInclude>
+    <ClInclude Include="FLOAT2.h">
+      <Filter>character</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

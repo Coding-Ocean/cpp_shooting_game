@@ -1,11 +1,12 @@
 #pragma once
-#include "CHARACTER.h"
-class PLAYER :
-    public CHARACTER
+#include"FLOAT2.h"
+class PLAYER
 {
 private:
     int Img;
-    float Angle, Vx, Vy, AngSpeed, AdvSpeed;
+    FLOAT2 Pos;
+    FLOAT2 Vec;
+    float Angle, AngSpeed, AdvSpeed;
     //launch bullet
     int TriggerCnt;
     int TriggerInterval;
@@ -17,6 +18,7 @@ public:
     void move();
     void launch(class BULLETS* bullets);
     void draw();
+    FLOAT2 pos() { return Pos; }
     float cpx(int i);
     float cpy(int i);
 };
