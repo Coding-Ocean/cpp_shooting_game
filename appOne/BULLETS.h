@@ -1,6 +1,7 @@
 #pragma once
 #include"FLOAT2.h"
-class BULLETS{
+#include"CHARACTER.h"
+class BULLETS:public CHARACTER{
 protected:
     struct BULLET {
         FLOAT2 pos, vec;
@@ -16,15 +17,14 @@ protected:
     float OfstLaunchDist = 0;
     void AllocateMemory();
 public:
-    BULLETS();
+    BULLETS(class GAME* game);
     virtual ~BULLETS();
-    virtual void create(int img) = 0;
-    void init(class GAME* game);
+    void start();
     void launch(const FLOAT2& pos, const FLOAT2& vec);
     void move();
-    void draw();
+    void isDrawn();
     FLOAT2 pos(int i);
-    int num();
+    int curNum();
     void kill(int i);
     int hp(int i);
 };

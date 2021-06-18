@@ -3,7 +3,10 @@
 class TITLE :
     public GAME_STATE
 {
-    void init(class GAME* game);
-    void proc(class GAME* game);
+public:
+    TITLE(class GAME* game);
+    ~TITLE();
+    void init();
+    void proc();
 };
 

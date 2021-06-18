@@ -1,9 +1,9 @@
 #pragma once
 #include "BULLETS.h"
-class ENEMY_BULLETS :
-    public BULLETS
-{
+class ENEMY_BULLETS : public BULLETS{
 public:
-    void create(int img);
+    ENEMY_BULLETS(class GAME* game);
+    ~ENEMY_BULLETS();
+    void prepare();
 };
 

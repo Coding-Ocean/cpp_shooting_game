@@ -10,7 +10,7 @@ PLAYER::PLAYER(class GAME* game)
 PLAYER::~PLAYER() {
 }
 void PLAYER::prepare() {
-    Img = game()->contanier()->playerImg;
+    Img = game()->container()->playerImg;
     AngSpeed = 0.02f;
     AdvSpeed = 5;
     TriggerCnt = -9;
@@ -18,7 +18,7 @@ void PLAYER::prepare() {
 }
 void PLAYER::start() {
     Pos.x = width / 2;
-    Pos.y = height - 110;
+    Pos.y = height - 105;
     Angle = 0;
     MoveMode = 0;
 }
@@ -67,20 +67,19 @@ void PLAYER::launch(){
     else {
         TriggerCnt = 0;
     }
-    game()->playerBullets()->move();
 }
 void PLAYER::collision() {
     ENEMY_BULLETS* enemyBullets = game()->enemyBullets();
-    int num = enemyBullets->num();
-    for (int i = 0; i < num; i++) {
-        if (enemyBullets->hp(i)) {
+    int curNum = enemyBullets->curNum();
+    for (int i = curNum-1; i >= 0; i--) {
+        //if (enemyBullets->hp(i)) {
             FLOAT2 pos = enemyBullets->pos(i);
             FLOAT2 vec = Pos - pos;
             if (vec.sqMag() < 50 * 50) {
                 enemyBullets->kill(i);
                 ColCnt = 3;
             }
-        }
+        //}
     }
 }
 void PLAYER::isDrawn() {

@@ -14,6 +14,9 @@
 
 #include "GAME.h"
 GAME::GAME() {
+    for (int i = 0; i < STATE_NUM; i++) {
+        GameStates[i] = 0;
+    }
 }
 GAME::~GAME() {
     destroy();
@@ -27,22 +30,21 @@ void GAME::create() {
     //キャラクタ
     Player = new PLAYER(this);
     Enemies = new ENEMIES(this);
-    PlayerBullets = new PLAYER_BULLETS;
-    EnemyBullets = new ENEMY_BULLETS;
+    PlayerBullets = new PLAYER_BULLETS(this);
+    EnemyBullets = new ENEMY_BULLETS(this);
     Player->prepare();
     Enemies->prepare();
-    PlayerBullets->create(Container->playerBulletImg);
-    EnemyBullets->create(Container->enemyBulletImg);
+    PlayerBullets->prepare();
+    EnemyBullets->prepare();
     //シーケンス
-    GameStates[GAME_STATE::TITLE] = new TITLE;
-    GameStates[GAME_STATE::PLAY] = new PLAY;
-    GameStates[GAME_STATE::OVER] = new OVER;
-    GameStates[GAME_STATE::CLEAR] = new CLEAR;
-    changeGameState(GAME_STATE::TITLE);
+    GameStates[STATE_TITLE] = new TITLE(this);
+    GameStates[STATE_PLAY] = new PLAY(this);
+    CurState = STATE_PLAY;
+    GameStates[CurState]->init();
 }
 void GAME::destroy() {
     //シーケンス
-    for (int i = 0; i < GAME_STATE::NUM; i++) {
+    for (int i = 0; i < STATE_NUM; i++) {
         SAFE_DELETE(GameStates[i]);
     }
     //キャラクタ
@@ -55,25 +57,25 @@ void GAME::destroy() {
 }
 void GAME::run() {
     while (notQuit) {
-        CurrentGameState->proc(this);
+        GameStates[CurState]->proc();
     }
 }
-void GAME::changeGameState(GAME_STATE::ID id) {
-    CurrentGameState = GameStates[id];
-    CurrentGameState->init(this);
+void GAME::changeGameState(STATE state) {
+    CurState = state;
+    GameStates[CurState]->init();
 }
-CONTAINER* GAME::contanier() {
+CONTAINER* GAME::container() {
     return Container;
 }
 //キャラクタ
 void GAME::draw() {
     Enemies->isDrawn();
     Player->isDrawn();
-    PlayerBullets->draw();
-    EnemyBullets->draw();
+    PlayerBullets->isDrawn();
+    EnemyBullets->isDrawn();
 }
 PLAYER* GAME::player(){
-    return Player;
+    return (PLAYER*)Player;
 }
 PLAYER_BULLETS* GAME::playerBullets() {
     return PlayerBullets;

@@ -6,11 +6,12 @@ class GAME
 private:
     class CONTAINER* Container = 0;
 public:
-    class CONTAINER* contanier();
+    class CONTAINER* container();
 //シーケンス遷移
+    enum STATE { STATE_TITLE, STATE_PLAY, STATE_NUM };
 private:
-    class GAME_STATE* CurrentGameState = 0;
-    class GAME_STATE* GameStates[GAME_STATE::NUM];
+    class GAME_STATE* GameStates[STATE_NUM];
+    STATE CurState = STATE_TITLE;
 public:
     GAME();
     ~GAME();
@@ -18,10 +19,10 @@ public:
     void destroy();
     void run();
     void draw();
-    void changeGameState(GAME_STATE::ID id);
+    void changeGameState(STATE state);
 //キャラクタ
 private:
-    class PLAYER* Player = 0;
+    class CHARACTER* Player = 0;
     class PLAYER_BULLETS* PlayerBullets = 0;
     class ENEMIES* Enemies = 0;
     class ENEMY_BULLETS* EnemyBullets = 0;

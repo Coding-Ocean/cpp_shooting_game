@@ -1,9 +1,14 @@
 #pragma once
 class GAME_STATE
 {
+private:
+    class GAME* Game = 0;
 public:
-    enum ID { TITLE, PLAY, OVER, CLEAR, NUM };
-    virtual void init(class GAME* game) = 0;
-    virtual void proc(class GAME* game) = 0;
+    GAME_STATE(class GAME* game);
+    virtual ~GAME_STATE();
+    class GAME* game();
+
+    virtual void init() = 0;
+    virtual void proc() = 0;
 };
 

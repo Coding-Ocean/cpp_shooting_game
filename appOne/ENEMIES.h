@@ -6,15 +6,16 @@ class ENEMIES : public CHARACTER
 private:
     int Img = 0;
     int Num = 0;
+    int CurNum = 0;
     struct ENEMY {
         FLOAT2 pos;
         float angle = 0;
         int hp = 0;
+        float theta = 0;
     };
     ENEMY* Enemies=0;
 
     //位置決め用データ
-    float DivTheta = 0;
     float Cx = 0;
     float Cy = 0;
     float Radius = 0;
@@ -27,7 +28,6 @@ private:
 public:
     ENEMIES(class GAME* game);
     ~ENEMIES();
-    void create();
     void destroy();
     void prepare();
     void start();
@@ -35,7 +35,8 @@ public:
     void launch();
     void collision();
     void isDrawn();
-    int num() { return Num; }
+    void kill(int i);
+    int curNum() { return CurNum; }
     FLOAT2 pos(int i) { return Enemies[i].pos; }
 };
 

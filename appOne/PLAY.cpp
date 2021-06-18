@@ -5,25 +5,30 @@
 #include"ENEMY_BULLETS.h"
 #include"GAME.h"
 #include"PLAY.h"
-void PLAY::init(class GAME* game) {
-    Player = game->player();
-    PlayerBullets = game->playerBullets();
-    Enemies = game->enemies();
-    EnemyBullets = game->enemyBullets();
-
-    Player->start();
-    Enemies->start();
-    PlayerBullets->init(game);
-    EnemyBullets->init(game);
+PLAY::PLAY(class GAME* game)
+    :GAME_STATE(game) {
 }
-void PLAY::proc(class GAME* game) {
+PLAY::~PLAY() {
+}
+void PLAY::init() {
+    game()->player()->start();
+    game()->enemies()->start();
+    game()->playerBullets()->start();
+    game()->enemyBullets()->start();
+}
+void PLAY::proc() {
     //update
-    Player->move();
-    Enemies->move();
+    game()->player()->move();
+    game()->enemies()->move();
+    game()->playerBullets()->move();
+    game()->enemyBullets()->move();
     //draw
-    clear(50,150,230);
-    game->draw();
-    print("PLAY");
+    clear(60);
+    game()->draw();
+    printSize(50);
+    print((let)"CurNum="+ game()->playerBullets()->curNum());
     //next state
+    if (game()->enemies()->curNum() <= 0) {
+        game()->changeGameState(GAME::STATE_TITLE);
+    }
 }
-
