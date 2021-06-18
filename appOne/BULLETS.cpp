@@ -47,7 +47,21 @@ void BULLETS::draw() {
     rectMode(CENTER);
     for (int i = 0; i < Num; i++) {
         if (Bullets[i].hp > 0) {
+            imageColor(255);
             image(Img, Bullets[i].pos.x, Bullets[i].pos.y, Bullets[i].angle);
         }
     }
 }
+int BULLETS::hp(int i) {
+    return Bullets[i].hp;
+}
+FLOAT2 BULLETS::pos(int i) {
+    return Bullets[i].pos;
+}
+int BULLETS::num() {
+    return Num;
+}
+void BULLETS::kill(int i) {
+    Bullets[i].hp = 0;
+}
+    //Bullets[i] = Bullets[CurNum - 1];

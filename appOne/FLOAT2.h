@@ -29,6 +29,9 @@ public:
         y /= mag;
         return FLOAT2(x, y);
     }
+    float sqMag() {
+        return x * x + y * y;
+    }
 };
 
 

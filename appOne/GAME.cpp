@@ -1,5 +1,7 @@
 #include"libOne.h"
 
+#include"CONTAINER.h"
+
 #include"TITLE.h"
 #include"PLAY.h"
 #include"OVER.h"
@@ -17,56 +19,56 @@ GAME::~GAME() {
     destroy();
 }
 void GAME::create() {
+    window(1920, 1080, full);
+    hideCursor();
+    //コンテナ
+    Container = new CONTAINER;
+    Container->loadGraphics();
     //キャラクタ
-    int playerImg = loadImage("assets\\player.png");
-    int playerBulletImg = loadImage("assets\\pBullet.png");
-    int enemyImg = loadImage("assets\\enemy.png");
-    int enemyBulletImg = loadImage("assets\\eBullet.png");
-    Player = new PLAYER;
+    Player = new PLAYER(this);
+    Enemies = new ENEMIES(this);
     PlayerBullets = new PLAYER_BULLETS;
-    Enemies = new ENEMIES;
     EnemyBullets = new ENEMY_BULLETS;
-    Player->create(playerImg);
-    PlayerBullets->create(playerBulletImg);
-    Enemies->create(enemyImg);
-    EnemyBullets->create(enemyBulletImg);
+    Player->prepare();
+    Enemies->prepare();
+    PlayerBullets->create(Container->playerBulletImg);
+    EnemyBullets->create(Container->enemyBulletImg);
     //シーケンス
-    GameStates = new GAME_STATE*[GAME_STATE::ID::NUM]();
-    GameStates[GAME_STATE::ID::TITLE] = new TITLE;
-    GameStates[GAME_STATE::ID::PLAY] = new PLAY;
-    GameStates[GAME_STATE::ID::OVER] = new OVER;
-    GameStates[GAME_STATE::ID::CLEAR] = new CLEAR;
-    changeGameState(GAME_STATE::ID::TITLE);
+    GameStates[GAME_STATE::TITLE] = new TITLE;
+    GameStates[GAME_STATE::PLAY] = new PLAY;
+    GameStates[GAME_STATE::OVER] = new OVER;
+    GameStates[GAME_STATE::CLEAR] = new CLEAR;
+    changeGameState(GAME_STATE::TITLE);
 }
 void GAME::destroy() {
+    //シーケンス
+    for (int i = 0; i < GAME_STATE::NUM; i++) {
+        SAFE_DELETE(GameStates[i]);
+    }
     //キャラクタ
     SAFE_DELETE(EnemyBullets);
     SAFE_DELETE(Enemies);
     SAFE_DELETE(PlayerBullets);
     SAFE_DELETE(Player);
-    //シーケンス
-    for (int i = 0; i < GAME_STATE::ID::NUM; i++) {
-        if (GameStates[i]) {
-            delete GameStates[i];
-            GameStates[i] = 0;
-        }
-    }
-    if (GameStates) {
-        delete[] GameStates;
-        GameStates = 0;
-    }
+    //コンテナ
+    SAFE_DELETE(Container);
 }
-void GAME::proc() {
-    CurrentGameState->proc(this);
+void GAME::run() {
+    while (notQuit) {
+        CurrentGameState->proc(this);
+    }
 }
 void GAME::changeGameState(GAME_STATE::ID id) {
     CurrentGameState = GameStates[id];
     CurrentGameState->init(this);
 }
+CONTAINER* GAME::contanier() {
+    return Container;
+}
 //キャラクタ
 void GAME::draw() {
-    Enemies->draw();
-    Player->draw();
+    Enemies->isDrawn();
+    Player->isDrawn();
     PlayerBullets->draw();
     EnemyBullets->draw();
 }

@@ -9,6 +9,5 @@ class PLAY :
     class ENEMY_BULLETS* EnemyBullets = 0;
     void init(class GAME* game);
     void proc(class GAME* game);
-    int  collision(class GAME* game);
 };
 

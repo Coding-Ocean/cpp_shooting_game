@@ -46,7 +46,12 @@
     <ClCompile Include="FLOAT2.cpp">
       <Filter>character</Filter>
     </ClCompile>
-    <ClCompile Include="BULLETS.cpp" />
+    <ClCompile Include="BULLETS.cpp">
+      <Filter>character</Filter>
+    </ClCompile>
+    <ClCompile Include="CHARACTER.cpp">
+      <Filter>character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">
@@ -94,6 +99,12 @@
     </ClInclude>
     <ClInclude Include="FLOAT2.h">
       <Filter>character</Filter>
+    </ClInclude>
+    <ClInclude Include="CHARACTER.h">
+      <Filter>character</Filter>
+    </ClInclude>
+    <ClInclude Include="CONTAINER.h">
+      <Filter>sequence</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

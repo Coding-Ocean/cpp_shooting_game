@@ -10,6 +10,7 @@ protected:
     BULLET* Bullets = nullptr;
     int Img = 0;
     int Num = 0;
+    int CurNum = 0;
     float AdvSpeed = 0;
     float AngSpeed = 0;
     float OfstLaunchDist = 0;
@@ -22,5 +23,9 @@ public:
     void launch(const FLOAT2& pos, const FLOAT2& vec);
     void move();
     void draw();
+    FLOAT2 pos(int i);
+    int num();
+    void kill(int i);
+    int hp(int i);
 };
 

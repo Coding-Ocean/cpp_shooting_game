@@ -1,20 +1,52 @@
 #include"libOne.h"
 #include"GAME.h"
-#include"BULLETS.h"
+#include"CONTAINER.h"
+#include"PLAYER_BULLETS.h"
+#include"ENEMY_BULLETS.h"
 #include "PLAYER.h"
-void PLAYER::create(int img) {
-    Img = img;
-    AngSpeed = 0.01f;
-    AdvSpeed = 3;
+PLAYER::PLAYER(class GAME* game)
+    :CHARACTER(game){
+}
+PLAYER::~PLAYER() {
+}
+void PLAYER::prepare() {
+    Img = game()->contanier()->playerImg;
+    AngSpeed = 0.02f;
+    AdvSpeed = 5;
     TriggerCnt = -9;
     TriggerInterval = 0;
 }
-void PLAYER::init(class GAME* game) {
+void PLAYER::start() {
     Pos.x = width / 2;
-    Pos.y = height / 2;
+    Pos.y = height - 110;
     Angle = 0;
+    MoveMode = 0;
 }
 void PLAYER::move() {
+    if (isTrigger(KEY_Q)) {
+        MoveMode = !MoveMode;
+    }
+    if (MoveMode == 0) {
+        moveLeftRight();
+    }
+    else {
+        rotate();
+    }
+    launch();
+    collision();
+}
+void PLAYER::moveLeftRight() {
+    Angle = 0;
+    Vec.x = 0;
+    Vec.y = -1;
+    if (isPress(KEY_D)) {
+        Pos.x += AdvSpeed;
+    }
+    if (isPress(KEY_A)) {
+        Pos.x += -AdvSpeed;
+    }
+}
+void PLAYER::rotate() {
     if (isPress(KEY_D)) {
         Angle += AngSpeed;
     }
@@ -23,28 +55,43 @@ void PLAYER::move() {
     }
     Vec.x = sin(Angle);
     Vec.y = -cos(Angle);
-    if (isPress(KEY_W)) {
-        Pos += Vec * AdvSpeed;
-    }
-    if (isPress(KEY_S)) {
-        Pos += Vec * -AdvSpeed;
-    }
 }
-void PLAYER::launch(class BULLETS* bullets){
+void PLAYER::launch(){
     if (isTrigger(KEY_SPACE)) TriggerInterval = 10;
     if (isPress(KEY_SPACE) && TriggerInterval > 0) {
         if (TriggerCnt % TriggerInterval == 0) {
-            bullets->launch(Pos, Vec);
+            game()->playerBullets()->launch(Pos, Vec);
         }
         TriggerCnt++;
     }
     else {
         TriggerCnt = 0;
     }
-    bullets->move();
+    game()->playerBullets()->move();
 }
-void PLAYER::draw() {
+void PLAYER::collision() {
+    ENEMY_BULLETS* enemyBullets = game()->enemyBullets();
+    int num = enemyBullets->num();
+    for (int i = 0; i < num; i++) {
+        if (enemyBullets->hp(i)) {
+            FLOAT2 pos = enemyBullets->pos(i);
+            FLOAT2 vec = Pos - pos;
+            if (vec.sqMag() < 50 * 50) {
+                enemyBullets->kill(i);
+                ColCnt = 3;
+            }
+        }
+    }
+}
+void PLAYER::isDrawn() {
     rectMode(CENTER);
+    if (ColCnt > 0) {
+        imageColor(255, 0, 0);
+        ColCnt--;
+    }
+    else {
+        imageColor(255);
+    }
     image(Img, Pos.x, Pos.y, Angle);
 #ifdef _DEBUG
     fill(255, 255, 255, 128);
