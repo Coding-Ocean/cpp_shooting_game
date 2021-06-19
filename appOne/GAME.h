@@ -9,15 +9,10 @@ public:
 //シーケンス遷移
 public:
     enum STATE { STATE_TITLE, STATE_PLAY, STATE_NUM };
+    void changeGameState(STATE state);
 private:
     class GAME_STATE* GameStates[STATE_NUM];
     STATE CurState = STATE_TITLE;
-public:
-    GAME();
-    ~GAME();
-    void run();
-    void draw();
-    void changeGameState(STATE state);
 //キャラクタ
 private:
     class CHARACTER* Player = 0;
@@ -25,8 +20,14 @@ private:
     class ENEMIES* Enemies = 0;
     class ENEMY_BULLETS* EnemyBullets = 0;
 public:
+    void draw();
     class PLAYER* player();
     class PLAYER_BULLETS* playerBullets();
     class ENEMIES* enemies();
     class ENEMY_BULLETS* enemyBullets();
+//ゲームマネージャー
+public:
+    GAME();
+    ~GAME();
+    void run();
 };

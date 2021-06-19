@@ -1,28 +1,19 @@
-#include"libOne.h"
 //コンテナ
 #include"CONTAINER.h"
 //シーケンス
 #include"TITLE.h"
 #include"PLAY.h"
-#include"OVER.h"
-#include"CLEAR.h"
 //キャラクタ
 #include"PLAYER.h"
 #include"PLAYER_BULLETS.h"
 #include"ENEMIES.h"
 #include"ENEMY_BULLETS.h"
-
 //ゲームマネージャー
 #include "GAME.h"
 GAME::GAME() {
-    window(1920, 1080, full);
-    hideCursor();
     //コンテナ
     Container = new CONTAINER;
     //シーケンス
-    for (int i = 0; i < STATE_NUM; i++) {
-        GameStates[i] = 0;
-    }
     GameStates[STATE_TITLE] = new TITLE(this);
     GameStates[STATE_PLAY] = new PLAY(this);
     //キャラクタ
@@ -45,6 +36,8 @@ GAME::~GAME() {
     SAFE_DELETE(Container);
 }
 void GAME::run() {
+    window(1920, 1080, full);
+    hideCursor();
     //開始前準備
     Container->loadGraphics();
     Player->initOnce();
