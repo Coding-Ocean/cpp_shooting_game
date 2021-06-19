@@ -13,7 +13,7 @@ BULLETS::~BULLETS() {
 void BULLETS::AllocateMemory() {
     Bullets = new BULLET[Num];
 }
-void BULLETS::start() {
+void BULLETS::init() {
     for (int i = 0; i < Num; i++) {
         Bullets[i].hp = 0;
         Bullets[i].angle = 0;
@@ -29,7 +29,7 @@ void BULLETS::launch(const FLOAT2& pos, const FLOAT2& vec) {
         CurNum++;
     }
 }
-void BULLETS::move() {
+void BULLETS::update() {
     for (int i = CurNum - 1; i >= 0; i--) {
         Bullets[i].pos += Bullets[i].vec * AdvSpeed;
         Bullets[i].angle += AngSpeed;
@@ -43,7 +43,7 @@ void BULLETS::move() {
     }
 
 }
-void BULLETS::isDrawn() {
+void BULLETS::draw() {
     rectMode(CENTER);
     for (int i = 0; i < CurNum; i++) {
         imageColor(255);

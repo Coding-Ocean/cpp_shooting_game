@@ -1,5 +1,4 @@
 #pragma once
-#include"GAME_STATE.h"
 class GAME
 {
 //コンテナ
@@ -8,6 +7,7 @@ private:
 public:
     class CONTAINER* container();
 //シーケンス遷移
+public:
     enum STATE { STATE_TITLE, STATE_PLAY, STATE_NUM };
 private:
     class GAME_STATE* GameStates[STATE_NUM];
@@ -15,8 +15,6 @@ private:
 public:
     GAME();
     ~GAME();
-    void create();
-    void destroy();
     void run();
     void draw();
     void changeGameState(STATE state);

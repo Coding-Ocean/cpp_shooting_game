@@ -6,7 +6,7 @@ ENEMY_BULLETS::ENEMY_BULLETS(class GAME* game)
 }
 ENEMY_BULLETS::~ENEMY_BULLETS() {
 }
-void ENEMY_BULLETS::prepare() {
+void ENEMY_BULLETS::initOnce() {
     Img = game()->container()->enemyBulletImg;
     Num = 120;
     AdvSpeed = 10;

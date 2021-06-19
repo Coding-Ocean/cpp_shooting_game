@@ -9,20 +9,20 @@ PLAYER::PLAYER(class GAME* game)
 }
 PLAYER::~PLAYER() {
 }
-void PLAYER::prepare() {
+void PLAYER::initOnce() {
     Img = game()->container()->playerImg;
     AngSpeed = 0.02f;
     AdvSpeed = 5;
     TriggerCnt = -9;
     TriggerInterval = 0;
 }
-void PLAYER::start() {
+void PLAYER::init() {
     Pos.x = width / 2;
     Pos.y = height - 105;
     Angle = 0;
     MoveMode = 0;
 }
-void PLAYER::move() {
+void PLAYER::update() {
     if (isTrigger(KEY_Q)) {
         MoveMode = !MoveMode;
     }
@@ -82,7 +82,7 @@ void PLAYER::collision() {
         //}
     }
 }
-void PLAYER::isDrawn() {
+void PLAYER::draw() {
     rectMode(CENTER);
     if (ColCnt > 0) {
         imageColor(255, 0, 0);

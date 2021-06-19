@@ -1,7 +1,8 @@
 #pragma once
 #include"FLOAT2.h"
 #include"CHARACTER.h"
-class PLAYER :public CHARACTER
+class PLAYER 
+    : public CHARACTER
 {
 private:
     int Img = 0;
@@ -18,14 +19,14 @@ private:
 public:
     PLAYER(class GAME* game);
     ~PLAYER();
-    void prepare();
-    void start();
-    void move();
+    void initOnce();
+    void init();
+    void update();
     void moveLeftRight();
     void rotate();
     void launch();
     void collision();
-    void isDrawn();
+    void draw();
     FLOAT2 pos() { return Pos; }
     float cpx(int i);
     float cpy(int i);

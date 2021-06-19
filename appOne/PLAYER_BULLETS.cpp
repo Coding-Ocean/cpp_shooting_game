@@ -6,7 +6,7 @@ PLAYER_BULLETS::PLAYER_BULLETS(class GAME* game)
 }
 PLAYER_BULLETS::~PLAYER_BULLETS(){
 }
-void PLAYER_BULLETS::prepare(){
+void PLAYER_BULLETS::initOnce(){
     Img = game()->container()->playerBulletImg;
     Num = 20;
     AdvSpeed = 10;

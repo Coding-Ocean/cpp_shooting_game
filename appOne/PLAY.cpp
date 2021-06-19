@@ -11,17 +11,17 @@ PLAY::PLAY(class GAME* game)
 PLAY::~PLAY() {
 }
 void PLAY::init() {
-    game()->player()->start();
-    game()->enemies()->start();
-    game()->playerBullets()->start();
-    game()->enemyBullets()->start();
+    game()->player()->init();
+    game()->enemies()->init();
+    game()->playerBullets()->init();
+    game()->enemyBullets()->init();
 }
 void PLAY::proc() {
     //update
-    game()->player()->move();
-    game()->enemies()->move();
-    game()->playerBullets()->move();
-    game()->enemyBullets()->move();
+    game()->player()->update();
+    game()->enemies()->update();
+    game()->playerBullets()->update();
+    game()->enemyBullets()->update();
     //draw
     clear(60);
     game()->draw();

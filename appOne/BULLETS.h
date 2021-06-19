@@ -19,10 +19,10 @@ protected:
 public:
     BULLETS(class GAME* game);
     virtual ~BULLETS();
-    void start();
+    void init();
     void launch(const FLOAT2& pos, const FLOAT2& vec);
-    void move();
-    void isDrawn();
+    void update();
+    void draw();
     FLOAT2 pos(int i);
     int curNum();
     void kill(int i);

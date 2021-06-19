@@ -29,12 +29,12 @@ public:
     ENEMIES(class GAME* game);
     ~ENEMIES();
     void destroy();
-    void prepare();
-    void start();
-    void move();
+    void initOnce();
+    void init();
+    void update();
     void launch();
     void collision();
-    void isDrawn();
+    void draw();
     void kill(int i);
     int curNum() { return CurNum; }
     FLOAT2 pos(int i) { return Enemies[i].pos; }

@@ -1,48 +1,37 @@
 #include"libOne.h"
-
+//コンテナ
 #include"CONTAINER.h"
-
+//シーケンス
 #include"TITLE.h"
 #include"PLAY.h"
 #include"OVER.h"
 #include"CLEAR.h"
-
+//キャラクタ
 #include"PLAYER.h"
 #include"PLAYER_BULLETS.h"
 #include"ENEMIES.h"
 #include"ENEMY_BULLETS.h"
 
+//ゲームマネージャー
 #include "GAME.h"
 GAME::GAME() {
-    for (int i = 0; i < STATE_NUM; i++) {
-        GameStates[i] = 0;
-    }
-}
-GAME::~GAME() {
-    destroy();
-}
-void GAME::create() {
     window(1920, 1080, full);
     hideCursor();
     //コンテナ
     Container = new CONTAINER;
-    Container->loadGraphics();
+    //シーケンス
+    for (int i = 0; i < STATE_NUM; i++) {
+        GameStates[i] = 0;
+    }
+    GameStates[STATE_TITLE] = new TITLE(this);
+    GameStates[STATE_PLAY] = new PLAY(this);
     //キャラクタ
     Player = new PLAYER(this);
     Enemies = new ENEMIES(this);
     PlayerBullets = new PLAYER_BULLETS(this);
     EnemyBullets = new ENEMY_BULLETS(this);
-    Player->prepare();
-    Enemies->prepare();
-    PlayerBullets->prepare();
-    EnemyBullets->prepare();
-    //シーケンス
-    GameStates[STATE_TITLE] = new TITLE(this);
-    GameStates[STATE_PLAY] = new PLAY(this);
-    CurState = STATE_PLAY;
-    GameStates[CurState]->init();
 }
-void GAME::destroy() {
+GAME::~GAME() {
     //シーケンス
     for (int i = 0; i < STATE_NUM; i++) {
         SAFE_DELETE(GameStates[i]);
@@ -56,24 +45,37 @@ void GAME::destroy() {
     SAFE_DELETE(Container);
 }
 void GAME::run() {
+    //開始前準備
+    Container->loadGraphics();
+    Player->initOnce();
+    Enemies->initOnce();
+    PlayerBullets->initOnce();
+    EnemyBullets->initOnce();
+    //最初のステート
+    CurState = STATE_PLAY;
+    GameStates[CurState]->init();
     while (notQuit) {
         GameStates[CurState]->proc();
     }
 }
+
+//以下、他のクラスから呼び出されるメンバ
+//　コンテナ
+CONTAINER* GAME::container() {
+    return Container;
+}
+//　シーケンス
 void GAME::changeGameState(STATE state) {
     CurState = state;
     GameStates[CurState]->init();
 }
-CONTAINER* GAME::container() {
-    return Container;
-}
-//キャラクタ
 void GAME::draw() {
-    Enemies->isDrawn();
-    Player->isDrawn();
-    PlayerBullets->isDrawn();
-    EnemyBullets->isDrawn();
+    Enemies->draw();
+    Player->draw();
+    PlayerBullets->draw();
+    EnemyBullets->draw();
 }
+//　キャラクタ
 PLAYER* GAME::player(){
     return (PLAYER*)Player;
 }

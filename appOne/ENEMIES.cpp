@@ -11,7 +11,7 @@ ENEMIES::ENEMIES(class GAME* game)
 ENEMIES::~ENEMIES(){
     destroy();
 }
-void ENEMIES::prepare(){
+void ENEMIES::initOnce(){
     Img = game()->container()->enemyImg;
     Num = 20;
     CurNum = Num;
@@ -28,14 +28,14 @@ void ENEMIES::destroy() {
         Enemies = 0;
     }
 }
-void ENEMIES::start(){
+void ENEMIES::init(){
     CurNum = Num;
     float divTheta = 3.141592f * 2 / Num;
     for (int i = 0; i < Num; i++) {
         Enemies[i].theta = divTheta * i;
     }
 }
-void ENEMIES::move() {
+void ENEMIES::update() {
     for (int i = 0; i < CurNum; i++) {
         float theta = Theta + Enemies[i].theta;
         Enemies[i].pos.x = Cx + sin(theta) * Radius;
@@ -75,7 +75,7 @@ void ENEMIES::kill(int i) {
     CurNum--;
     Enemies[i] = Enemies[CurNum];
 }
-void ENEMIES::isDrawn(){
+void ENEMIES::draw(){
     for (int i = 0; i < CurNum; i++) {
         imageColor(255);
         image(Img, Enemies[i].pos.x, Enemies[i].pos.y, Enemies[i].angle);
