@@ -18,17 +18,22 @@ void PLAY::init() {
 }
 void PLAY::proc() {
     //update
-    game()->player()->update();
-    game()->enemies()->update();
     game()->playerBullets()->update();
     game()->enemyBullets()->update();
+    game()->player()->update();
+    game()->enemies()->update();
     //draw
     clear(60);
     game()->draw();
+#ifdef _DEBUG
     printSize(50);
     print((let)"CurNum="+ game()->playerBullets()->curNum());
+#endif
     //next state
     if (game()->enemies()->curNum() <= 0) {
-        game()->changeGameState(GAME::STATE_TITLE);
+        game()->changeGameState(GAME::STATE_CLEAR);
+    }
+    else if (game()->player()->hp() <= 0) {
+        game()->changeGameState(GAME::STATE_OVER);
     }
 }

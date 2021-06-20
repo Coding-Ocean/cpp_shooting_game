@@ -13,11 +13,11 @@ ENEMIES::~ENEMIES(){
 }
 void ENEMIES::initOnce(){
     Img = game()->container()->enemyImg;
-    Num = 20;
+    Num = 8;
     CurNum = Num;
     Enemies = new ENEMY[Num]();
     TriggerCnt = 0;
-    TriggerInterval = 60;
+    TriggerInterval = 15;
     Cx = width / 2;
     Cy = 300;
     Radius = 800;
@@ -36,14 +36,17 @@ void ENEMIES::init(){
     }
 }
 void ENEMIES::update() {
+    move();
+    launch();
+    collision();
+}
+void ENEMIES::move() {
     for (int i = 0; i < CurNum; i++) {
         float theta = Theta + Enemies[i].theta;
         Enemies[i].pos.x = Cx + sin(theta) * Radius;
         Enemies[i].pos.y = Cy + -cos(theta) * Radius / 8;
     }
     Theta += 0.01f;
-    launch();
-    collision();
 }
 void ENEMIES::launch(){
     BULLETS* bullets = game()->enemyBullets();
@@ -77,7 +80,7 @@ void ENEMIES::kill(int i) {
 }
 void ENEMIES::draw(){
     for (int i = 0; i < CurNum; i++) {
-        imageColor(255);
+        imageColor(255,255,255,128);
         image(Img, Enemies[i].pos.x, Enemies[i].pos.y, Enemies[i].angle);
 #ifdef _DEBUG
         fill(255, 255, 255, 128);

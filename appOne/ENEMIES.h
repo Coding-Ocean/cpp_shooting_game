@@ -32,6 +32,7 @@ public:
     void initOnce();
     void init();
     void update();
+    void move();
     void launch();
     void collision();
     void draw();

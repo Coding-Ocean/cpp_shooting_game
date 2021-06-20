@@ -10,6 +10,7 @@ private:
     FLOAT2 Vec;//プレイヤの向いている方向ベクトル
     float Angle = 0, AngSpeed = 0, AdvSpeed = 0;
     int MoveMode = 0;
+    int Hp = 0;
     //launch bullet
     int TriggerCnt = 0;
     int TriggerInterval = 0;
@@ -22,12 +23,14 @@ public:
     void initOnce();
     void init();
     void update();
-    void moveLeftRight();
+    void move();
     void rotate();
     void launch();
     void collision();
     void draw();
     FLOAT2 pos() { return Pos; }
+    int hp();
+    void setZeroHp();
     float cpx(int i);
     float cpy(int i);
 };

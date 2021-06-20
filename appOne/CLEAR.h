@@ -3,7 +3,10 @@
 class CLEAR :
     public GAME_STATE
 {
-    void init(class GAME* game);
-    void proc(class GAME* game);
+public:
+    CLEAR(class GAME* game);
+    ~CLEAR();
+    void init();
+    void proc();
 };
 

@@ -3,6 +3,8 @@
 //シーケンス
 #include"TITLE.h"
 #include"PLAY.h"
+#include"CLEAR.h"
+#include"OVER.h"
 //キャラクタ
 #include"PLAYER.h"
 #include"PLAYER_BULLETS.h"
@@ -16,6 +18,8 @@ GAME::GAME() {
     //シーケンス
     GameStates[STATE_TITLE] = new TITLE(this);
     GameStates[STATE_PLAY] = new PLAY(this);
+    GameStates[STATE_CLEAR] = new CLEAR(this);
+    GameStates[STATE_OVER] = new OVER(this);
     //キャラクタ
     Player = new PLAYER(this);
     Enemies = new ENEMIES(this);
@@ -45,10 +49,11 @@ void GAME::run() {
     PlayerBullets->initOnce();
     EnemyBullets->initOnce();
     //最初のステート
-    CurState = STATE_PLAY;
-    GameStates[CurState]->init();
+    //CurStateId = STATE_PLAY;
+    GameStates[CurStateId]->init();
+    //ゲームループ
     while (notQuit) {
-        GameStates[CurState]->proc();
+        GameStates[CurStateId]->proc();
     }
 }
 
@@ -58,9 +63,9 @@ CONTAINER* GAME::container() {
     return Container;
 }
 //　シーケンス
-void GAME::changeGameState(STATE state) {
-    CurState = state;
-    GameStates[CurState]->init();
+void GAME::changeGameState(STATE_ID stateId) {
+    CurStateId = stateId;
+    GameStates[CurStateId]->init();
 }
 void GAME::draw() {
     Enemies->draw();

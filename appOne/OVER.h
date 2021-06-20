@@ -3,7 +3,10 @@
 class OVER :
     public GAME_STATE
 {
-    void init(class GAME* game);
-    void proc(class GAME* game);
+public:
+    OVER(class GAME* game);
+    ~OVER();
+    void init();
+    void proc();
 };
 

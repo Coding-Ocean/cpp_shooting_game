@@ -49,6 +49,12 @@
     <ClCompile Include="GAME_STATE.cpp">
       <Filter>sequence</Filter>
     </ClCompile>
+    <ClCompile Include="CLEAR.cpp">
+      <Filter>sequence</Filter>
+    </ClCompile>
+    <ClCompile Include="OVER.cpp">
+      <Filter>sequence</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">
@@ -95,6 +101,12 @@
       <Filter>character</Filter>
     </ClInclude>
     <ClInclude Include="CONTAINER.h">
+      <Filter>sequence</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEAR.h">
+      <Filter>sequence</Filter>
+    </ClInclude>
+    <ClInclude Include="OVER.h">
       <Filter>sequence</Filter>
     </ClInclude>
   </ItemGroup>

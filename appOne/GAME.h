@@ -8,11 +8,18 @@ public:
     class CONTAINER* container();
 //シーケンス遷移
 public:
-    enum STATE { STATE_TITLE, STATE_PLAY, STATE_NUM };
-    void changeGameState(STATE state);
+    enum STATE_ID{ 
+        STATE_TITLE, 
+        STATE_PLAY, 
+        STATE_CLEAR,
+        STATE_OVER,
+        STATE_NUM 
+    };
 private:
     class GAME_STATE* GameStates[STATE_NUM];
-    STATE CurState = STATE_TITLE;
+    STATE_ID CurStateId = STATE_TITLE;
+public:
+    void changeGameState(STATE_ID state);
 //キャラクタ
 private:
     class CHARACTER* Player = 0;
