@@ -17,10 +17,11 @@ void ENEMIES::initOnce(){
     CurNum = Num;
     Enemies = new ENEMY[Num]();
     TriggerCnt = 0;
-    TriggerInterval = 15;
+    TriggerInterval = 45;
     Cx = width / 2;
     Cy = 300;
-    Radius = 800;
+    MajRadius = 800;
+    MinRadius = 100;
 }
 void ENEMIES::destroy() {
     if (Enemies) {
@@ -33,6 +34,8 @@ void ENEMIES::init(){
     float divTheta = 3.141592f * 2 / Num;
     for (int i = 0; i < Num; i++) {
         Enemies[i].theta = divTheta * i;
+        Enemies[i].triggerCnt = 5 * (Num-i);
+        Enemies[i].hp = 5;
     }
 }
 void ENEMIES::update() {
@@ -43,16 +46,16 @@ void ENEMIES::update() {
 void ENEMIES::move() {
     for (int i = 0; i < CurNum; i++) {
         float theta = Theta + Enemies[i].theta;
-        Enemies[i].pos.x = Cx + sin(theta) * Radius;
-        Enemies[i].pos.y = Cy + -cos(theta) * Radius / 8;
+        Enemies[i].pos.x = Cx + sin(theta) * MajRadius;
+        Enemies[i].pos.y = Cy + -cos(theta) * MinRadius;
     }
     Theta += 0.01f;
 }
 void ENEMIES::launch(){
     BULLETS* bullets = game()->enemyBullets();
     FLOAT2 targetPos = game()->player()->pos();
-    if (!(++TriggerCnt %= TriggerInterval)){
-        for (int i = 0; i < CurNum; i++) {
+    for (int i = 0; i < CurNum; i++) {
+        if (!(++Enemies[i].triggerCnt %= TriggerInterval)) {
             FLOAT2 vec = (targetPos - Enemies[i].pos).normalize();
             bullets->launch(Enemies[i].pos, vec);
         }
@@ -64,24 +67,35 @@ void ENEMIES::collision() {
         int curNum = playerBullets->curNum();
         int flag = 0;
         for (int j = curNum - 1; j >= 0 && flag == 0; j--) {
-            FLOAT2 pos = playerBullets->pos(j);
-            FLOAT2 vec = Enemies[i].pos - pos;
-            if (vec.sqMag() < 100 * 100) {
-                this->kill(i);
+            FLOAT2 vec = Enemies[i].pos - playerBullets->pos(j);
+            if (Enemies[i].colCnt <= 0 && 
+                vec.sqMag() < 120 * 120) {
+                Enemies[i].hp--;
+                Enemies[i].colCnt = 3;
+                if (Enemies[i].hp <= 0) {
+                    CurNum--;
+                    Enemies[i] = Enemies[CurNum];
+                }
                 playerBullets->kill(j);
                 flag = 1;
             }
         }
     }
 }
-void ENEMIES::kill(int i) {
-    CurNum--;
-    Enemies[i] = Enemies[CurNum];
-}
 void ENEMIES::draw(){
     for (int i = 0; i < CurNum; i++) {
-        imageColor(255,255,255,128);
+        if (Enemies[i].colCnt > 0) {
+            imageColor(255, 0, 0,128);
+            Enemies[i].colCnt--;
+        }
+        else {
+            imageColor(255,255,255,128);
+        }
         image(Img, Enemies[i].pos.x, Enemies[i].pos.y, Enemies[i].angle);
+        fill(0, 255, 0);
+        noStroke();
+        rect(Enemies[i].pos.x-10,Enemies[i].pos.y - 120, 
+            Enemies[i].hp * 30.0f, 15.0f);
 #ifdef _DEBUG
         fill(255, 255, 255, 128);
         circle(Enemies[i].pos.x, Enemies[i].pos.y, 90 * 2);

@@ -12,13 +12,16 @@ private:
         float angle = 0;
         int hp = 0;
         float theta = 0;
+        int triggerCnt = 0;
+        int colCnt = 0;
     };
     ENEMY* Enemies=0;
 
     //位置決め用データ
     float Cx = 0;
     float Cy = 0;
-    float Radius = 0;
+    float MajRadius = 0;
+    float MinRadius = 0;
     float Theta = 0;
 
     //launch bullet
@@ -36,7 +39,6 @@ public:
     void launch();
     void collision();
     void draw();
-    void kill(int i);
     int curNum() { return CurNum; }
     FLOAT2 pos(int i) { return Enemies[i].pos; }
 };
