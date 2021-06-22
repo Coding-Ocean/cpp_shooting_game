@@ -6,11 +6,11 @@ PLAYER_BULLETS::PLAYER_BULLETS(class GAME* game)
 }
 PLAYER_BULLETS::~PLAYER_BULLETS(){
 }
-void PLAYER_BULLETS::initOnce(){
+void PLAYER_BULLETS::create(){
     Img = game()->container()->playerBulletImg;
-    Num = 20;
-    AdvSpeed = 10;
+    SetTotalNum(20);
+    AdvSpeed = 600;
     AngSpeed = 0.05f;
     OfstLaunchDist = 100;
-    AllocateMemory();
+    BCRadius = 30;
 }

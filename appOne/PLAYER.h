@@ -7,20 +7,20 @@ class PLAYER
 private:
     int Img = 0;
     FLOAT2 Pos;
-    FLOAT2 Vec;//プレイヤの向いている方向ベクトル
+    FLOAT2 Dir;//プレイヤの向いている方向ベクトル
     float Angle = 0, AngSpeed = 0, AdvSpeed = 0;
     int MoveMode = 0;
     int Hp = 0;
     //launch bullet
-    int TriggerCnt = 0;
-    int TriggerInterval = 0;
+    float TriggerElapsedTime = 0;
+    float TriggerInterval = 0;
     //collision
-    float CollisionOffset = 0;
-    int ColCnt = 0;
+    float InvincibleTime = 0;
+    float BCRadius=0;
 public:
     PLAYER(class GAME* game);
     ~PLAYER();
-    void initOnce();
+    void create();
     void init();
     void update();
     void move();
@@ -30,8 +30,6 @@ public:
     void draw();
     FLOAT2 pos() { return Pos; }
     int hp();
-    void setZeroHp();
-    float cpx(int i);
-    float cpy(int i);
+    void initForTitle();
 };
 

@@ -6,11 +6,11 @@ ENEMY_BULLETS::ENEMY_BULLETS(class GAME* game)
 }
 ENEMY_BULLETS::~ENEMY_BULLETS() {
 }
-void ENEMY_BULLETS::initOnce() {
+void ENEMY_BULLETS::create() {
     Img = game()->container()->enemyBulletImg;
-    Num = 120;
-    AdvSpeed = 10;
+    BULLETS::SetTotalNum(120);
+    AdvSpeed = 600;
     AngSpeed = 0.0f;
     OfstLaunchDist = 90;
-    AllocateMemory();
+    BCRadius = 30;
 }

@@ -9,12 +9,13 @@ PLAYER::PLAYER(class GAME* game)
 }
 PLAYER::~PLAYER() {
 }
-void PLAYER::initOnce() {
+void PLAYER::create() {
     Img = game()->container()->playerImg;
-    AngSpeed = 0.02f;
-    AdvSpeed = 5;
-    TriggerCnt = 0;
-    TriggerInterval = 10;
+    AngSpeed = 1.2f;
+    AdvSpeed = 300;
+    TriggerElapsedTime = 0;
+    TriggerInterval = 0.1f;
+    BCRadius = 40;
 }
 void PLAYER::init() {
     Pos.x = width / 2;
@@ -22,70 +23,56 @@ void PLAYER::init() {
     Angle = 0;
     MoveMode = 0;
     Hp = 5;
+    Dir.x = 0;
+    Dir.y = -1;
 }
 void PLAYER::update() {
-    if (isTrigger(KEY_Q)) {
-        MoveMode = !MoveMode;
-    }
-    if (MoveMode == 0) {
-        move();
-    }
-    else {
-        rotate();
-    }
+    move();
     launch();
     collision();
 }
 void PLAYER::move() {
-    Angle = 0;
-    Vec.x = 0;
-    Vec.y = -1;
     if (Pos.x < width - 100 && isPress(KEY_D)) {
-        Pos.x += AdvSpeed;
+        Pos.x += AdvSpeed * delta;
     }
     if (Pos.x > 100 && isPress(KEY_A)) {
-        Pos.x += -AdvSpeed;
+        Pos.x += -AdvSpeed * delta;
     }
-}
-void PLAYER::rotate() {
-    if (isPress(KEY_D)) {
-        Angle += AngSpeed;
-    }
-    if (isPress(KEY_A)) {
-        Angle += -AngSpeed;
-    }
-    Vec.x = sin(Angle);
-    Vec.y = -cos(Angle);
 }
 void PLAYER::launch(){
     if (isPress(KEY_SPACE)) {
-        if (TriggerCnt % TriggerInterval == 0) {
-            game()->playerBullets()->launch(Pos, Vec);
+        TriggerElapsedTime += delta;
+        if (TriggerElapsedTime > TriggerInterval) {
+            game()->playerBullets()->launch(Pos, Dir);
+            TriggerElapsedTime = 0;
         }
-        TriggerCnt++;
     }
     else {
-        TriggerCnt = 0;
+        TriggerElapsedTime = TriggerInterval;
     }
 }
 void PLAYER::collision() {
-    ENEMY_BULLETS* enemyBullets = game()->enemyBullets();
-    int curNum = enemyBullets->curNum();
+    BULLETS* bullets = game()->enemyBullets();
+    //“–‚½‚Á‚½‚Æ”»’è‚·‚éÅ’·‹——£
+    float distance = BCRadius + bullets->bcRadius();
+    float sqDistance = distance * distance;
+    //“G’e‚Æ‚Ì“–‚½‚è”»’è
+    int curNum = bullets->curNum();
     for (int i = curNum - 1; i >= 0; i--) {
-        FLOAT2 pos = enemyBullets->pos(i);
+        FLOAT2 pos = bullets->pos(i);
         FLOAT2 vec = Pos - pos;
-        if (ColCnt==0 && vec.sqMag() < 50 * 50) {
-            enemyBullets->kill(i);
+        if (InvincibleTime<=0 && vec.sqMag() < sqDistance) {
+            bullets->kill(i);
             Hp--;
-            ColCnt = 3;
+            InvincibleTime = 0.05f;
         }
     }
 }
 void PLAYER::draw() {
     rectMode(CENTER);
-    if (ColCnt > 0) {
+    if (InvincibleTime > 0) {
         imageColor(255, 0, 0);
-        ColCnt--;
+        InvincibleTime -= delta;
     }
     else {
         imageColor(255);
@@ -95,29 +82,16 @@ void PLAYER::draw() {
     noStroke();
     rect(Pos.x, Pos.y-120, Hp * 30.0f, 15.0f);
 #ifdef _DEBUG
-    fill(255, 255, 255, 128);
+    fill(255, 255, 255, 64);
     for (int i = 0; i < 3; i++) {
-        circle(cpx(i), cpy(i), 40*2);
+        circle(Pos.x, Pos.y, BCRadius * 2);
     }
 #endif
 }
-
 int PLAYER::hp() {
     return Hp;
 }
-void PLAYER::setZeroHp() {
+void PLAYER::initForTitle() {
+    init();
     Hp = 0;
-}
-float PLAYER::cpx(int i) {
-    CollisionOffset = 70;
-    if (i == 0) { return Pos.x + Vec.x * CollisionOffset; }
-    if (i == 1) { return Pos.x + Vec.x * -CollisionOffset; }
-    if (i == 2) { return Pos.x; }
-    return 0;
-}
-float PLAYER::cpy(int i) {
-    if (i == 0) { return Pos.y + Vec.y * CollisionOffset; }
-    if (i == 1) { return Pos.y + Vec.y * -CollisionOffset; }
-    if (i == 2) { return Pos.y; }
-    return 0;
 }

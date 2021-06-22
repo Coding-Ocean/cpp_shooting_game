@@ -10,20 +10,19 @@ BULLETS::~BULLETS() {
         Bullets = 0;
     }
 }
-void BULLETS::AllocateMemory() {
-    Bullets = new BULLET[Num];
+void BULLETS::SetTotalNum(int num) {
+    TotalNum = num;
+    Bullets = new BULLET[TotalNum];
 }
 void BULLETS::init() {
-    for (int i = 0; i < Num; i++) {
-        Bullets[i].hp = 0;
+    for (int i = 0; i < TotalNum; i++) {
         Bullets[i].angle = 0;
     }
     CurNum = 0;
 }
 void BULLETS::launch(const FLOAT2& pos, const FLOAT2& vec) {
-    if (CurNum < Num) {
+    if (CurNum < TotalNum) {
         int i = CurNum;
-        Bullets[i].hp = 1;
         Bullets[i].pos = pos + vec * OfstLaunchDist;
         Bullets[i].vec = vec;
         CurNum++;
@@ -31,8 +30,10 @@ void BULLETS::launch(const FLOAT2& pos, const FLOAT2& vec) {
 }
 void BULLETS::update() {
     for (int i = CurNum - 1; i >= 0; i--) {
-        Bullets[i].pos += Bullets[i].vec * AdvSpeed;
+        //move
+        Bullets[i].pos += Bullets[i].vec * (AdvSpeed*delta);
         Bullets[i].angle += AngSpeed;
+        //ウィンドウの外に出た
         if (Bullets[i].pos.y < -20
             || Bullets[i].pos.y > height + 20
             || Bullets[i].pos.x < -20
@@ -41,17 +42,17 @@ void BULLETS::update() {
             kill(i);
         }
     }
-
 }
 void BULLETS::draw() {
     rectMode(CENTER);
     for (int i = 0; i < CurNum; i++) {
         imageColor(255);
         image(Img, Bullets[i].pos.x, Bullets[i].pos.y, Bullets[i].angle);
+#ifdef _DEBUG
+        fill(255, 255, 255, 64);
+        circle(Bullets[i].pos.x, Bullets[i].pos.y, BCRadius * 2);
+#endif
     }
-}
-int BULLETS::hp(int i) {
-    return Bullets[i].hp;
 }
 FLOAT2 BULLETS::pos(int i) {
     return Bullets[i].pos;
@@ -60,7 +61,10 @@ int BULLETS::curNum() {
     return CurNum;
 }
 void BULLETS::kill(int i) {
-    Bullets[i].hp = 0;
+    //生きている弾を死んだたまに上書き
     CurNum--;
     Bullets[i] = Bullets[CurNum];
+}
+float BULLETS::bcRadius() {
+    return BCRadius;
 }

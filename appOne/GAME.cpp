@@ -1,10 +1,11 @@
 //コンテナ
+#include"CREATE_BIN.h"
 #include"CONTAINER.h"
 //シーケンス
 #include"TITLE.h"
-#include"PLAY.h"
-#include"CLEAR.h"
-#include"OVER.h"
+#include"STAGE.h"
+#include"GAME_CLEAR.h"
+#include"GAME_OVER.h"
 //キャラクタ
 #include"PLAYER.h"
 #include"PLAYER_BULLETS.h"
@@ -17,9 +18,9 @@ GAME::GAME() {
     Container = new CONTAINER;
     //シーケンス
     GameStates[STATE_TITLE] = new TITLE(this);
-    GameStates[STATE_PLAY] = new PLAY(this);
-    GameStates[STATE_CLEAR] = new CLEAR(this);
-    GameStates[STATE_OVER] = new OVER(this);
+    GameStates[STATE_STAGE] = new STAGE(this);
+    GameStates[STATE_GAME_CLEAR] = new GAME_CLEAR(this);
+    GameStates[STATE_GAME_OVER] = new GAME_OVER(this);
     //キャラクタ
     Player = new PLAYER(this);
     Enemies = new ENEMIES(this);
@@ -27,38 +28,51 @@ GAME::GAME() {
     EnemyBullets = new ENEMY_BULLETS(this);
 }
 GAME::~GAME() {
-    //シーケンス
-    for (int i = 0; i < STATE_NUM; i++) {
-        SAFE_DELETE(GameStates[i]);
-    }
     //キャラクタ
     SAFE_DELETE(EnemyBullets);
     SAFE_DELETE(Enemies);
     SAFE_DELETE(PlayerBullets);
     SAFE_DELETE(Player);
+    //シーケンス
+    for (int i = 0; i < STATE_NUM; i++) {
+        SAFE_DELETE(GameStates[i]);
+    }
     //コンテナ
     SAFE_DELETE(Container);
 }
 void GAME::run() {
     window(1920, 1080, full);
     hideCursor();
-    //開始前準備
+
+    CREATE_BIN bin;
+    bin.createBinary();
+
+    //読み込み
     Container->loadGraphics();
-    Player->initOnce();
-    Enemies->initOnce();
-    PlayerBullets->initOnce();
-    EnemyBullets->initOnce();
+    Container->loadData();
+    //全要素をつくる
+    for (int i = 0; i < STATE_NUM; i++) {
+        GameStates[i]->create();
+    }
+    Player->create();
+    Enemies->create();
+    PlayerBullets->create();
+    EnemyBullets->create();
     //最初のステート
-    //CurStateId = STATE_PLAY;
+    CurStateId = STATE_TITLE;
     GameStates[CurStateId]->init();
+    initDeltaTime();
     //ゲームループ
     while (notQuit) {
+        setDeltaTime();
         GameStates[CurStateId]->proc();
+        fill(255);
+        print(delta);
     }
 }
 
 //以下、他のクラスから呼び出されるメンバ
-//　コンテナ
+//　コンテナ getter
 CONTAINER* GAME::container() {
     return Container;
 }
@@ -73,7 +87,7 @@ void GAME::draw() {
     PlayerBullets->draw();
     EnemyBullets->draw();
 }
-//　キャラクタ
+//　キャラクタ getter
 PLAYER* GAME::player(){
     return (PLAYER*)Player;
 }
@@ -86,4 +100,3 @@ ENEMIES* GAME::enemies() {
 ENEMY_BULLETS* GAME::enemyBullets() {
     return EnemyBullets;
 }
-

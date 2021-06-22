@@ -4,6 +4,6 @@ class ENEMY_BULLETS : public BULLETS{
 public:
     ENEMY_BULLETS(class GAME* game);
     ~ENEMY_BULLETS();
-    void initOnce();
+    void create();
 };
 

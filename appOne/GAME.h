@@ -9,11 +9,11 @@ public:
 //シーケンス遷移
 public:
     enum STATE_ID{ 
-        STATE_TITLE, 
-        STATE_PLAY, 
-        STATE_CLEAR,
-        STATE_OVER,
-        STATE_NUM 
+        STATE_TITLE,
+        STATE_STAGE,
+        STATE_GAME_CLEAR,
+        STATE_GAME_OVER,
+        STATE_NUM
     };
 private:
     class GAME_STATE* GameStates[STATE_NUM];
@@ -22,7 +22,7 @@ public:
     void changeGameState(STATE_ID state);
 //キャラクタ
 private:
-    class CHARACTER* Player = 0;
+    class PLAYER* Player = 0;
     class PLAYER_BULLETS* PlayerBullets = 0;
     class ENEMIES* Enemies = 0;
     class ENEMY_BULLETS* EnemyBullets = 0;

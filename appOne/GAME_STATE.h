@@ -6,7 +6,8 @@ private:
 public:
     GAME_STATE(class GAME* game);
     virtual ~GAME_STATE();
-    virtual void init() = 0;
+    virtual void create();
+    virtual void init();
     virtual void proc() = 0;
     //getter
     class GAME* game();

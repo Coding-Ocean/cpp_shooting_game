@@ -1,24 +1,29 @@
 #include"libOne.h"
 #include"GAME.h"
+#include"CONTAINER.h"
 #include"PLAYER_BULLETS.h"
 #include"ENEMY_BULLETS.h"
-#include"CLEAR.h"
-CLEAR::CLEAR(class GAME* game) :
+#include"GAME_CLEAR.h"
+GAME_CLEAR::GAME_CLEAR(class GAME* game) :
     GAME_STATE(game) {
 }
-CLEAR::~CLEAR() {
+GAME_CLEAR::~GAME_CLEAR() {
 }
-void CLEAR::init() {
+void GAME_CLEAR::create() {
+    BackColor = game()->container()->data.stageBackColor;
 }
-void CLEAR::proc() {
+void GAME_CLEAR::proc() {
+    //update
     game()->playerBullets()->update();
     game()->enemyBullets()->update();
+    //draw
     clear(60);
     game()->draw();
     float size = 200;
     textSize(size);
     fill(250, 250, 0);
-    text("GameClear", (width - size / 2 * 9) / 2, 400);
+    text("Game Clear", (width - size / 2 * 10) / 2, 400);
+    //next sequence
     if (isTrigger(KEY_ENTER)) {
         game()->changeGameState(GAME::STATE_TITLE);
     }

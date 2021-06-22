@@ -88,6 +88,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <ForcedIncludeFiles>
+      </ForcedIncludeFiles>
+      <DisableSpecificWarnings>26812</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -102,6 +105,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <ForcedIncludeFiles>
+      </ForcedIncludeFiles>
+      <DisableSpecificWarnings>26812</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -119,6 +125,9 @@
       <AdditionalIncludeDirectories>../libOne/inc</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <ForcedIncludeFiles>
+      </ForcedIncludeFiles>
+      <DisableSpecificWarnings>26812</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -138,6 +147,9 @@
       <AdditionalIncludeDirectories>../libOne/inc</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <ForcedIncludeFiles>
+      </ForcedIncludeFiles>
+      <DisableSpecificWarnings>26812</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -154,17 +166,17 @@
   <ItemGroup>
     <ClCompile Include="BULLETS.cpp" />
     <ClCompile Include="CHARACTER.cpp" />
-    <ClCompile Include="CLEAR.cpp" />
+    <ClCompile Include="CREATE_BIN.cpp" />
     <ClCompile Include="ENEMIES.cpp" />
     <ClCompile Include="ENEMY_BULLETS.cpp" />
-    <ClCompile Include="FLOAT2.cpp" />
     <ClCompile Include="GAME.cpp" />
+    <ClCompile Include="GAME_CLEAR.cpp" />
+    <ClCompile Include="GAME_OVER.cpp" />
     <ClCompile Include="GAME_STATE.cpp" />
     <ClCompile Include="gmain.cpp" />
-    <ClCompile Include="OVER.cpp" />
-    <ClCompile Include="PLAY.cpp" />
     <ClCompile Include="PLAYER.cpp" />
     <ClCompile Include="PLAYER_BULLETS.cpp" />
+    <ClCompile Include="STAGE.cpp" />
     <ClCompile Include="TITLE.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -174,19 +186,20 @@
     <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ALL_DATA.h" />
     <ClInclude Include="BULLETS.h" />
     <ClInclude Include="CHARACTER.h" />
-    <ClInclude Include="CLEAR.h" />
     <ClInclude Include="CONTAINER.h" />
+    <ClInclude Include="CREATE_BIN.h" />
     <ClInclude Include="ENEMIES.h" />
     <ClInclude Include="ENEMY_BULLETS.h" />
-    <ClInclude Include="FLOAT2.h" />
     <ClInclude Include="GAME.h" />
+    <ClInclude Include="GAME_CLEAR.h" />
+    <ClInclude Include="GAME_OVER.h" />
     <ClInclude Include="GAME_STATE.h" />
-    <ClInclude Include="OVER.h" />
-    <ClInclude Include="PLAY.h" />
     <ClInclude Include="PLAYER.h" />
     <ClInclude Include="PLAYER_BULLETS.h" />
+    <ClInclude Include="STAGE.h" />
     <ClInclude Include="TITLE.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
