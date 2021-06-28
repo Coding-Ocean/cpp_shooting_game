@@ -1,10 +1,28 @@
 #pragma once
+#include"DATABASE.h"
 #include"ALL_DATA.h"
 class CREATE_BIN
 {
 public:
     struct ALL_DATA data;
     void createBinary() {
+        DATABASE db("data.txt");
+        data.title.backColor.r = db.data("data.title.backColor.r");
+        data.title.backColor.g = db.data("data.title.backColor.g");
+        data.title.backColor.b = db.data("data.title.backColor.b");
+        data.title.textColor.r = db.data("data.title.textColor.r");
+        data.title.textColor.g = db.data("data.title.textColor.g");
+        data.title.textColor.b = db.data("data.title.textColor.b");
+        data.title.px = db.data("data.title.px");
+        data.title.py = db.data("data.title.py");
+        data.title.textSize = db.data("data.title.textSize");
+        strcpy_s(data.title.string, db.data("data.title.string"));
+        data.stageBackColor.r = db.data("data.stageBackColor.r");
+        data.stageBackColor.g = db.data("data.stageBackColor.g");
+        data.stageBackColor.b = db.data("data.stageBackColor.b");
+        data.playerHp = db.data("data.playerHp");
+        data.numEnemies = db.data("data.numEnemies");
+
         data.title.backColor.r = 20;
         data.title.backColor.g = 20;
         data.title.backColor.b = 20;
