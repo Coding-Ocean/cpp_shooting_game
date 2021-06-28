@@ -8,9 +8,10 @@ PLAYER_BULLETS::~PLAYER_BULLETS(){
 }
 void PLAYER_BULLETS::create(){
     Img = game()->container()->playerBulletImg;
-    SetTotalNum(20);
-    AdvSpeed = 600;
-    AngSpeed = 0.05f;
-    OfstLaunchDist = 100;
-    BCRadius = 30;
+    Bullet.advSpeed = 600;
+    Bullet.angSpeed = 0.05f;
+    Bullet.ofstLaunchDist = 100;
+    Bullet.bcRadius = 30;
+    Bullet.totalNum=20;
+    AllocateBullets(Bullet.totalNum);
 }

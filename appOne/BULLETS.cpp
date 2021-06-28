@@ -1,3 +1,4 @@
+#include"window.h"
 #include"input.h"
 #include"graphic.h"
 #include "BULLETS.h"
@@ -10,29 +11,26 @@ BULLETS::~BULLETS() {
         Bullets = 0;
     }
 }
-void BULLETS::SetTotalNum(int num) {
-    TotalNum = num;
-    Bullets = new BULLET[TotalNum];
+void BULLETS::AllocateBullets(int num) {
+    Bullets = new BULLET[num];
 }
 void BULLETS::init() {
-    for (int i = 0; i < TotalNum; i++) {
-        Bullets[i].angle = 0;
-    }
-    CurNum = 0;
+    Bullet.curNum = 0;
 }
-void BULLETS::launch(const FLOAT2& pos, const FLOAT2& vec) {
-    if (CurNum < TotalNum) {
-        int i = CurNum;
-        Bullets[i].pos = pos + vec * OfstLaunchDist;
+void BULLETS::launch(const VECTOR2& pos, const VECTOR2& vec) {
+    if (Bullet.curNum < Bullet.totalNum) {
+        int i = Bullet.curNum;
+        Bullets[i].pos = pos + vec * Bullet.ofstLaunchDist;
         Bullets[i].vec = vec;
-        CurNum++;
+        Bullets[i].angle = 0;
+        Bullet.curNum++;
     }
 }
 void BULLETS::update() {
-    for (int i = CurNum - 1; i >= 0; i--) {
+    for (int i = Bullet.curNum - 1; i >= 0; i--) {
         //move
-        Bullets[i].pos += Bullets[i].vec * (AdvSpeed*delta);
-        Bullets[i].angle += AngSpeed;
+        Bullets[i].pos += Bullets[i].vec * (Bullet.advSpeed * delta);
+        Bullets[i].angle += Bullet.angSpeed;
         //ウィンドウの外に出た
         if (Bullets[i].pos.y < -20
             || Bullets[i].pos.y > height + 20
@@ -45,7 +43,7 @@ void BULLETS::update() {
 }
 void BULLETS::draw() {
     rectMode(CENTER);
-    for (int i = 0; i < CurNum; i++) {
+    for (int i = 0; i < Bullet.curNum; i++) {
         imageColor(255);
         image(Img, Bullets[i].pos.x, Bullets[i].pos.y, Bullets[i].angle);
 #ifdef _DEBUG
@@ -54,17 +52,17 @@ void BULLETS::draw() {
 #endif
     }
 }
-FLOAT2 BULLETS::pos(int i) {
+VECTOR2 BULLETS::pos(int i) {
     return Bullets[i].pos;
 }
 int BULLETS::curNum() {
-    return CurNum;
+    return Bullet.curNum;
 }
 void BULLETS::kill(int i) {
     //生きている弾を死んだたまに上書き
-    CurNum--;
-    Bullets[i] = Bullets[CurNum];
+    Bullet.curNum--;
+    Bullets[i] = Bullets[Bullet.curNum];
 }
 float BULLETS::bcRadius() {
-    return BCRadius;
+    return Bullet.bcRadius;
 }

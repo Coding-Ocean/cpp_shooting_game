@@ -8,9 +8,10 @@ ENEMY_BULLETS::~ENEMY_BULLETS() {
 }
 void ENEMY_BULLETS::create() {
     Img = game()->container()->enemyBulletImg;
-    BULLETS::SetTotalNum(120);
-    AdvSpeed = 600;
-    AngSpeed = 0.0f;
-    OfstLaunchDist = 90;
-    BCRadius = 30;
+    Bullet.advSpeed = 600;
+    Bullet.angSpeed = 0.0f;
+    Bullet.ofstLaunchDist = 90;
+    Bullet.bcRadius = 30;
+    Bullet.totalNum = 20;
+    AllocateBullets(Bullet.totalNum);
 }

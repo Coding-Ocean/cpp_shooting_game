@@ -1,22 +1,27 @@
 #pragma once
-#include"FLOAT2.h"
+#include"VECTOR2.h"
 #include"CHARACTER.h"
 class PLAYER 
     : public CHARACTER
 {
+public:
+    struct DATA {
+        VECTOR2 pos;
+        float advSpeed = 0;
+        float angle = 0;
+        int hp = 0;
+        //launch bullet
+        VECTOR2 launchVec;//発射方向
+        float triggerElapsedTime = 0;//発射後経過時間
+        float triggerInterval = 0;//発射間隔時間
+        //collision
+        float invincibleTime = 0;//無敵時間
+        float invincibleRestTime = 0;//無敵残り時間
+        float bcRadius = 0;//衝突判定用円半径
+    };
 private:
     int Img = 0;
-    FLOAT2 Pos;
-    FLOAT2 Dir;//プレイヤの向いている方向ベクトル
-    float Angle = 0, AngSpeed = 0, AdvSpeed = 0;
-    int MoveMode = 0;
-    int Hp = 0;
-    //launch bullet
-    float TriggerElapsedTime = 0;
-    float TriggerInterval = 0;
-    //collision
-    float InvincibleTime = 0;
-    float BCRadius=0;
+    struct DATA Player;
 public:
     PLAYER(class GAME* game);
     ~PLAYER();
@@ -24,12 +29,13 @@ public:
     void init();
     void update();
     void move();
-    void rotate();
     void launch();
     void collision();
     void draw();
-    FLOAT2 pos() { return Pos; }
-    int hp();
+    //
     void initForTitle();
+    //getter
+    VECTOR2 pos() { return Player.pos; }
+    int hp() { return Player.hp; }
 };
 
