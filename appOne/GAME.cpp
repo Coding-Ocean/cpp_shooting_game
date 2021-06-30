@@ -1,5 +1,4 @@
 //コンテナ
-#include"CREATE_BIN.h"
 #include"CONTAINER.h"
 //シーケンス
 #include"TITLE.h"
@@ -17,10 +16,11 @@ GAME::GAME() {
     //コンテナ
     Container = new CONTAINER;
     //シーケンス
-    GameStates[STATE_TITLE] = new TITLE(this);
-    GameStates[STATE_STAGE] = new STAGE(this);
-    GameStates[STATE_GAME_CLEAR] = new GAME_CLEAR(this);
-    GameStates[STATE_GAME_OVER] = new GAME_OVER(this);
+    Scenes[TITLE_ID] = new TITLE(this);
+    Scenes[STAGE_ID] = new STAGE(this);
+    Scenes[GAME_CLEAR_ID] = new GAME_CLEAR(this);
+    Scenes[GAME_OVER_ID] = new GAME_OVER(this);
+    StageCnt = 1;
     //キャラクタ
     Player = new PLAYER(this);
     Enemies = new ENEMIES(this);
@@ -35,7 +35,7 @@ GAME::~GAME() {
     SAFE_DELETE(Player);
     //シーケンス
     for (int i = 0; i < STATE_NUM; i++) {
-        SAFE_DELETE(GameStates[i]);
+        SAFE_DELETE(Scenes[i]);
     }
     //コンテナ
     SAFE_DELETE(Container);
@@ -43,29 +43,24 @@ GAME::~GAME() {
 void GAME::run() {
     window(1920, 1080, full);
     hideCursor();
-
-    CREATE_BIN bin;
-    bin.createBinary();
-
     //読み込み
-    Container->loadGraphics();
-    Container->loadData();
+    Container->load();
     //全要素をつくる
     for (int i = 0; i < STATE_NUM; i++) {
-        GameStates[i]->create();
+        Scenes[i]->create();
     }
     Player->create();
     Enemies->create();
     PlayerBullets->create();
     EnemyBullets->create();
     //最初のステート
-    CurStateId = STATE_TITLE;
-    GameStates[CurStateId]->init();
+    CurSceneId = TITLE_ID;
+    Scenes[CurSceneId]->init();
     initDeltaTime();
     //ゲームループ
     while (notQuit) {
         setDeltaTime();
-        GameStates[CurStateId]->proc();
+        Scenes[CurSceneId]->proc();
         fill(255);
         print(delta);
     }
@@ -77,9 +72,18 @@ CONTAINER* GAME::container() {
     return Container;
 }
 //　シーケンス
-void GAME::changeGameState(STATE_ID stateId) {
-    CurStateId = stateId;
-    GameStates[CurStateId]->init();
+void GAME::changeScene(SCENE_ID stateId) {
+    CurSceneId = stateId;
+    Scenes[CurSceneId]->init();
+}
+int GAME::stageCnt(){
+    return StageCnt;
+}
+void GAME::stageCntUp() {
+    StageCnt++;
+}
+void GAME::resetStageCnt() {
+    StageCnt = 1;
 }
 void GAME::draw() {
     Enemies->draw();
@@ -89,7 +93,7 @@ void GAME::draw() {
 }
 //　キャラクタ getter
 PLAYER* GAME::player(){
-    return (PLAYER*)Player;
+    return Player;
 }
 PLAYER_BULLETS* GAME::playerBullets() {
     return PlayerBullets;

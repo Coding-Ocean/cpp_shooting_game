@@ -1,8 +1,7 @@
 #pragma once
-#include<string>
-#include "GAME_STATE.h"
+#include "SCENE.h"
 class TITLE :
-    public GAME_STATE
+    public SCENE
 {
 public:
     struct DATA {
@@ -10,15 +9,16 @@ public:
         COLOR textColor;
         float textSize = 0;
         float px = 0, py = 0;
+        char string[12];
     };
 private:
-    std::string String;
-    struct DATA Data;
+    struct DATA Title;
 public:
     TITLE(class GAME* game);
     ~TITLE();
     void create();
     void init();
-    void proc();
+    void draw();
+    void nextScene();
 };
 

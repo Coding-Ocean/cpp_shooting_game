@@ -1,0 +1,61 @@
+data.title.backColor.r = 20;
+data.title.backColor.g = 20;
+data.title.backColor.b = 20;
+data.title.textColor.r = 0;
+data.title.textColor.g = 255;
+data.title.textColor.b = 0;
+data.title.px = 0;
+data.title.py = 700;
+data.title.textSize = 490;
+data.title.string = "KUNOICHI";
+
+data.stageBackColor.r = 50;
+data.stageBackColor.g = 50;
+data.stageBackColor.b = 50;
+
+data.player.advSpeed = 300;
+data.player.triggerElapsedTime = 0.1;
+data.player.triggerInterval = 0.1;
+data.player.bcRadius = 40;
+data.player.invincibleTime = 0.05;
+data.player.pos.x = 960;
+data.player.pos.y = 975;
+data.player.angle = 0;
+data.player.hp = 50;
+data.player.launchVec.x = 0;
+data.player.launchVec.y = -1;
+data.player.collisionColor.r = 255;
+data.player.collisionColor.g = 0;
+data.player.collisionColor.b = 0;
+data.player.normalColor.r = 255;
+data.player.normalColor.g = 255;
+data.player.normalColor.b = 255;
+data.player.hpGaugeOffset.x = 0;
+data.player.hpGaugeOffset.y = -120;
+data.player.titlePos.x = 859;
+data.player.titlePos.y = 520;
+
+data.playerBullet.advSpeed = 600;
+data.playerBullet.angSpeed = 0.05;
+data.playerBullet.ofstLaunchDist = 100;
+data.playerBullet.bcRadius = 30;
+data.playerBullet.totalNum = 20;
+data.playerBullet.curNum = 0;
+
+data.enemy.totalNum = 8;
+data.enemy.triggerInterval = 0.72;
+data.enemy.majRadius = 800;
+data.enemy.minRadius = 100;
+data.enemy.invincibleTime = 0.05;
+data.enemy.bcRadius = 90;
+data.enemy.hp = 5;
+data.enemy.ofstTime = 0.09;
+data.enemy.centerX = 960;
+data.enemy.centerY = -300;
+
+data.enemyBullet.advSpeed = 600;
+data.enemyBullet.angSpeed = 0;
+data.enemyBullet.ofstLaunchDist = 90;
+data.enemyBullet.bcRadius = 30;
+data.enemyBullet.totalNum = 1;
+data.enemyBullet.curNum = 0;

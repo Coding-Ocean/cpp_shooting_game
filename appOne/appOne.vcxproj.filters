@@ -5,43 +5,34 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="sequence">
-      <UniqueIdentifier>{13f8f23a-1616-4fa2-a215-31591671fd39}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="character">
-      <UniqueIdentifier>{6ea091ee-a6a6-45df-b5db-7b764556ba0d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="manager">
       <UniqueIdentifier>{d790dbb8-0d6b-4889-8a5e-26f4673f80e1}</UniqueIdentifier>
     </Filter>
     <Filter Include="container">
       <UniqueIdentifier>{efff77ea-8acb-4e8d-81d2-a83fae3cff8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="scenes">
+      <UniqueIdentifier>{13f8f23a-1616-4fa2-a215-31591671fd39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scenes\base">
+      <UniqueIdentifier>{eafa269e-07e1-411b-9920-bfc9d9fa1605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="characters">
+      <UniqueIdentifier>{6ea091ee-a6a6-45df-b5db-7b764556ba0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="characters\bullets">
+      <UniqueIdentifier>{6c47062e-dcc2-4df9-b1ad-7814f41c2d73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TITLE.cpp">
-      <Filter>sequence</Filter>
+      <Filter>scenes</Filter>
     </ClCompile>
     <ClCompile Include="PLAYER.cpp">
-      <Filter>character</Filter>
+      <Filter>characters</Filter>
     </ClCompile>
     <ClCompile Include="ENEMIES.cpp">
-      <Filter>character</Filter>
-    </ClCompile>
-    <ClCompile Include="PLAYER_BULLETS.cpp">
-      <Filter>character</Filter>
-    </ClCompile>
-    <ClCompile Include="ENEMY_BULLETS.cpp">
-      <Filter>character</Filter>
-    </ClCompile>
-    <ClCompile Include="BULLETS.cpp">
-      <Filter>character</Filter>
-    </ClCompile>
-    <ClCompile Include="CHARACTER.cpp">
-      <Filter>character</Filter>
-    </ClCompile>
-    <ClCompile Include="GAME_STATE.cpp">
-      <Filter>sequence</Filter>
+      <Filter>characters</Filter>
     </ClCompile>
     <ClCompile Include="GAME.cpp">
       <Filter>manager</Filter>
@@ -50,16 +41,31 @@
       <Filter>manager</Filter>
     </ClCompile>
     <ClCompile Include="GAME_CLEAR.cpp">
-      <Filter>sequence</Filter>
+      <Filter>scenes</Filter>
     </ClCompile>
     <ClCompile Include="GAME_OVER.cpp">
-      <Filter>sequence</Filter>
+      <Filter>scenes</Filter>
     </ClCompile>
     <ClCompile Include="STAGE.cpp">
-      <Filter>sequence</Filter>
+      <Filter>scenes</Filter>
     </ClCompile>
-    <ClCompile Include="CREATE_BIN.cpp">
-      <Filter>container</Filter>
+    <ClCompile Include="HP_GAUGE.cpp">
+      <Filter>characters</Filter>
+    </ClCompile>
+    <ClCompile Include="GAME_OBJECT.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SCENE.cpp">
+      <Filter>scenes\base</Filter>
+    </ClCompile>
+    <ClCompile Include="BULLETS.cpp">
+      <Filter>characters\bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="ENEMY_BULLETS.cpp">
+      <Filter>characters\bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="PLAYER_BULLETS.cpp">
+      <Filter>characters\bullets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,29 +79,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GAME_STATE.h">
-      <Filter>sequence</Filter>
-    </ClInclude>
     <ClInclude Include="TITLE.h">
-      <Filter>sequence</Filter>
+      <Filter>scenes</Filter>
     </ClInclude>
     <ClInclude Include="PLAYER.h">
-      <Filter>character</Filter>
+      <Filter>characters</Filter>
     </ClInclude>
     <ClInclude Include="ENEMIES.h">
-      <Filter>character</Filter>
-    </ClInclude>
-    <ClInclude Include="BULLETS.h">
-      <Filter>character</Filter>
-    </ClInclude>
-    <ClInclude Include="PLAYER_BULLETS.h">
-      <Filter>character</Filter>
-    </ClInclude>
-    <ClInclude Include="ENEMY_BULLETS.h">
-      <Filter>character</Filter>
-    </ClInclude>
-    <ClInclude Include="CHARACTER.h">
-      <Filter>character</Filter>
+      <Filter>characters</Filter>
     </ClInclude>
     <ClInclude Include="GAME.h">
       <Filter>manager</Filter>
@@ -104,19 +95,34 @@
       <Filter>container</Filter>
     </ClInclude>
     <ClInclude Include="GAME_CLEAR.h">
-      <Filter>sequence</Filter>
+      <Filter>scenes</Filter>
     </ClInclude>
     <ClInclude Include="GAME_OVER.h">
-      <Filter>sequence</Filter>
+      <Filter>scenes</Filter>
     </ClInclude>
     <ClInclude Include="STAGE.h">
-      <Filter>sequence</Filter>
-    </ClInclude>
-    <ClInclude Include="CREATE_BIN.h">
-      <Filter>container</Filter>
+      <Filter>scenes</Filter>
     </ClInclude>
     <ClInclude Include="ALL_DATA.h">
       <Filter>container</Filter>
+    </ClInclude>
+    <ClInclude Include="HP_GAUGE.h">
+      <Filter>characters</Filter>
+    </ClInclude>
+    <ClInclude Include="GAME_OBJECT.h">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SCENE.h">
+      <Filter>scenes\base</Filter>
+    </ClInclude>
+    <ClInclude Include="BULLETS.h">
+      <Filter>characters\bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="ENEMY_BULLETS.h">
+      <Filter>characters\bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="PLAYER_BULLETS.h">
+      <Filter>characters\bullets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -165,17 +165,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BULLETS.cpp" />
-    <ClCompile Include="CHARACTER.cpp" />
-    <ClCompile Include="CREATE_BIN.cpp" />
     <ClCompile Include="ENEMIES.cpp" />
     <ClCompile Include="ENEMY_BULLETS.cpp" />
     <ClCompile Include="GAME.cpp" />
     <ClCompile Include="GAME_CLEAR.cpp" />
+    <ClCompile Include="GAME_OBJECT.cpp" />
     <ClCompile Include="GAME_OVER.cpp" />
-    <ClCompile Include="GAME_STATE.cpp" />
     <ClCompile Include="gmain.cpp" />
+    <ClCompile Include="HP_GAUGE.cpp" />
     <ClCompile Include="PLAYER.cpp" />
     <ClCompile Include="PLAYER_BULLETS.cpp" />
+    <ClCompile Include="SCENE.cpp" />
     <ClCompile Include="STAGE.cpp" />
     <ClCompile Include="TITLE.cpp" />
   </ItemGroup>
@@ -188,17 +188,17 @@
   <ItemGroup>
     <ClInclude Include="ALL_DATA.h" />
     <ClInclude Include="BULLETS.h" />
-    <ClInclude Include="CHARACTER.h" />
     <ClInclude Include="CONTAINER.h" />
-    <ClInclude Include="CREATE_BIN.h" />
     <ClInclude Include="ENEMIES.h" />
     <ClInclude Include="ENEMY_BULLETS.h" />
     <ClInclude Include="GAME.h" />
     <ClInclude Include="GAME_CLEAR.h" />
+    <ClInclude Include="GAME_OBJECT.h" />
     <ClInclude Include="GAME_OVER.h" />
-    <ClInclude Include="GAME_STATE.h" />
+    <ClInclude Include="HP_GAUGE.h" />
     <ClInclude Include="PLAYER.h" />
     <ClInclude Include="PLAYER_BULLETS.h" />
+    <ClInclude Include="SCENE.h" />
     <ClInclude Include="STAGE.h" />
     <ClInclude Include="TITLE.h" />
   </ItemGroup>

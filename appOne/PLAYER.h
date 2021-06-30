@@ -1,15 +1,16 @@
 #pragma once
+#include"GAME_OBJECT.h"
 #include"VECTOR2.h"
-#include"CHARACTER.h"
-class PLAYER 
-    : public CHARACTER
+#include"HP_GAUGE.h"
+class PLAYER
+    : public GAME_OBJECT
 {
 public:
     struct DATA {
+        int img = 0;
         VECTOR2 pos;
-        float advSpeed = 0;
         float angle = 0;
-        int hp = 0;
+        float advSpeed = 0;
         //launch bullet
         VECTOR2 launchVec;//î≠éÀï˚å¸
         float triggerElapsedTime = 0;//î≠éÀå„åoâﬂéûä‘
@@ -18,21 +19,27 @@ public:
         float invincibleTime = 0;//ñ≥ìGéûä‘
         float invincibleRestTime = 0;//ñ≥ìGécÇËéûä‘
         float bcRadius = 0;//è’ìÀîªíËópâ~îºåa
+        COLOR collisionColor;
+        COLOR normalColor;
+        int hp = 0;
+        VECTOR2 hpGaugeOffset;
+        //others
+        VECTOR2 posForTitle;
     };
 private:
-    int Img = 0;
-    struct DATA Player;
+    DATA Player;
+    HP_GAUGE HpGauge;
 public:
     PLAYER(class GAME* game);
     ~PLAYER();
     void create();
     void init();
     void update();
-    void move();
-    void launch();
-    void collision();
+        void move();
+        void launch();
+        void collision();
     void draw();
-    //
+    //for title
     void initForTitle();
     //getter
     VECTOR2 pos() { return Player.pos; }

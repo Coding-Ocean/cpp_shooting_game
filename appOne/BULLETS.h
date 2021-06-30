@@ -1,9 +1,12 @@
 #pragma once
 #include"VECTOR2.h"
-#include"CHARACTER.h"
-class BULLETS:public CHARACTER{
+#include"GAME_OBJECT.h"
+class BULLETS:
+    public GAME_OBJECT
+{
 public:
     struct DATA {
+        int img = 0;
         int totalNum = 0;
         int curNum = 0;
         float advSpeed = 0;
@@ -11,17 +14,18 @@ public:
         float ofstLaunchDist = 0;
         float bcRadius = 0;
     };
-protected:
+private:
     //全ての弾の共通データ
-    struct DATA Bullet;
-    int Img = 0;
-    //弾単体データ
+    DATA Bullet;
+    //弾単体データ配列
     struct BULLET {
-        VECTOR2 pos, vec;
+        VECTOR2 pos;
+        VECTOR2 vec;
         float angle;
     };
-    BULLET* Bullets = nullptr;
-    void AllocateBullets(int Num);
+    BULLET* Bullets = 0;
+protected:
+    void SetBulletData(const DATA& data);
 public:
     BULLETS(class GAME* game);
     virtual ~BULLETS();
@@ -29,9 +33,8 @@ public:
     void launch(const VECTOR2& pos, const VECTOR2& vec);
     void update();
     void draw();
+    void kill(int i);
     VECTOR2 pos(int i);
     int curNum();
-    void kill(int i);
     float bcRadius();
 };
-

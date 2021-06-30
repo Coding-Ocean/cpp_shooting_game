@@ -3,16 +3,14 @@
 #include"graphic.h"
 #include "BULLETS.h"
 BULLETS::BULLETS(class GAME* game)
-    :CHARACTER(game){
+    :GAME_OBJECT(game){
 }
 BULLETS::~BULLETS() {
-    if (Bullets) {
-        delete[] Bullets;
-        Bullets = 0;
-    }
+    if (Bullets) { delete[] Bullets; Bullets = 0; }
 }
-void BULLETS::AllocateBullets(int num) {
-    Bullets = new BULLET[num];
+void BULLETS::SetBulletData(const DATA& data) {
+    Bullet = data;
+    Bullets = new BULLET[Bullet.totalNum];
 }
 void BULLETS::init() {
     Bullet.curNum = 0;
@@ -32,10 +30,10 @@ void BULLETS::update() {
         Bullets[i].pos += Bullets[i].vec * (Bullet.advSpeed * delta);
         Bullets[i].angle += Bullet.angSpeed;
         //ウィンドウの外に出た
-        if (Bullets[i].pos.y < -20
-            || Bullets[i].pos.y > height + 20
-            || Bullets[i].pos.x < -20
-            || Bullets[i].pos.x > width + 20
+        if (Bullets[i].pos.y < -Bullet.bcRadius ||
+            Bullets[i].pos.y > height + Bullet.bcRadius ||
+            Bullets[i].pos.x < -Bullet.bcRadius ||
+            Bullets[i].pos.x > width + Bullet.bcRadius
             ) {
             kill(i);
         }
@@ -45,10 +43,10 @@ void BULLETS::draw() {
     rectMode(CENTER);
     for (int i = 0; i < Bullet.curNum; i++) {
         imageColor(255);
-        image(Img, Bullets[i].pos.x, Bullets[i].pos.y, Bullets[i].angle);
+        image(Bullet.img, Bullets[i].pos.x, Bullets[i].pos.y, Bullets[i].angle);
 #ifdef _DEBUG
         fill(255, 255, 255, 64);
-        circle(Bullets[i].pos.x, Bullets[i].pos.y, BCRadius * 2);
+        circle(Bullets[i].pos.x, Bullets[i].pos.y, Bullet.bcRadius * 2);
 #endif
     }
 }

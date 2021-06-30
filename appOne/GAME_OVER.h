@@ -1,13 +1,15 @@
 #pragma once
-#include "GAME_STATE.h"
+#include "SCENE.h"
 class GAME_OVER :
-    public GAME_STATE
+    public SCENE
 {
     COLOR BackColor;
 public:
     GAME_OVER(class GAME* game);
     ~GAME_OVER();
     void create();
-    void proc();
+    void update();
+    void draw();
+    void nextScene();
 };
 

@@ -3,27 +3,19 @@
 #include"CONTAINER.h"
 #include"PLAYER_BULLETS.h"
 #include"ENEMY_BULLETS.h"
-#include "PLAYER.h"
+#include"PLAYER.h"
 PLAYER::PLAYER(class GAME* game)
-    :CHARACTER(game){
+:GAME_OBJECT(game) {
 }
 PLAYER::~PLAYER() {
 }
 void PLAYER::create() {
-    Img = game()->container()->playerImg;
+    Player = game()->container()->data()->player;
 }
 void PLAYER::init() {
-    Player.advSpeed = 300;
-    Player.triggerElapsedTime = 0.1f;
-    Player.triggerInterval = 0.1f;
-    Player.bcRadius = 40;
-    Player.invincibleTime = 0.05f;
-    Player.pos.x = 960;
-    Player.pos.y = 975;
-    Player.angle = 0;
-    Player.hp = 5;
-    Player.launchVec.x = 0;
-    Player.launchVec.y = -1;
+    const DATA& player = game()->container()->data()->player;
+    Player.pos = player.pos;
+    Player.hp = player.hp;
 }
 void PLAYER::update() {
     move();
@@ -62,35 +54,30 @@ void PLAYER::collision() {
     for (int i = curNum - 1; i >= 0; i--) {
         VECTOR2 vec = Player.pos - bullets->pos(i);
         if (Player.invincibleRestTime<=0 && sqLength(vec) < sqDistance) {
-            bullets->kill(i);
             Player.hp--;
-            Player.invincibleRestTime = Player.invincibleRestTime;
+            Player.invincibleRestTime = Player.invincibleTime;
+            bullets->kill(i);
         }
     }
 }
 void PLAYER::draw() {
     rectMode(CENTER);
     if (Player.invincibleRestTime > 0) {
-        imageColor(255, 0, 0);
+        imageColor(Player.collisionColor);
         Player.invincibleRestTime -= delta;
     }
     else {
-        imageColor(255);
+        imageColor(Player.normalColor);
     }
-    image(Img, Player.pos.x, Player.pos.y, Player.angle);
+    image(Player.img, Player.pos.x, Player.pos.y, Player.angle);
     //HP gauge
-    noStroke();
-    fill(0, 255, 0);
-    rect(Player.pos.x, Player.pos.y-120, Player.hp * 30.0f, 15.0f);
+    HpGauge.draw(Player.pos, Player.hpGaugeOffset, Player.hp);
 #ifdef _DEBUG
     fill(255, 255, 255, 64);
-    for (int i = 0; i < 3; i++) {
-        circle(Player.pos.x, Player.pos.y, Player.bcRadius * 2);
-    }
+    circle(Player.pos.x, Player.pos.y, Player.bcRadius * 2);
 #endif
 }
 void PLAYER::initForTitle() {
-    init();
+    Player.pos = game()->container()->data()->player.posForTitle;
     Player.hp = 0;
 }
-

@@ -7,12 +7,12 @@
 #include"GAME.h"
 #include"STAGE.h"
 STAGE::STAGE(class GAME* game)
-    :GAME_STATE(game) {
+    :SCENE(game) {
 }
 STAGE::~STAGE() {
 }
 void STAGE::create() {
-    BackColor = game()->container()->data.stageBackColor;
+    BackColor = game()->container()->data()->stageBackColor;
 }
 void STAGE::init() {
     game()->player()->init();
@@ -20,24 +20,23 @@ void STAGE::init() {
     game()->playerBullets()->init();
     game()->enemyBullets()->init();
 }
-void STAGE::proc() {
-    //update
+void STAGE::update() {
     game()->playerBullets()->update();
     game()->enemyBullets()->update();
     game()->player()->update();
     game()->enemies()->update();
-    //draw
+}
+void STAGE::draw() {
     clear(BackColor);
     game()->draw();
-#ifdef _DEBUG
-    fill(255);
-    print((let)"CurNum="+ game()->playerBullets()->curNum());
-#endif
-    //next state
+}
+void STAGE::nextScene() {
     if (game()->enemies()->curNum() <= 0) {
-        game()->changeGameState(GAME::STATE_GAME_CLEAR);
+        game()->changeScene(GAME::GAME_CLEAR_ID);
+        game()->stageCntUp();
     }
     else if (game()->player()->hp() <= 0) {
-        game()->changeGameState(GAME::STATE_GAME_OVER);
+        game()->changeScene(GAME::GAME_OVER_ID);
+        game()->resetStageCnt();
     }
 }

@@ -1,8 +1,8 @@
 #pragma once
 #include"libOne.h"
-#include "GAME_STATE.h"
+#include "SCENE.h"
 class STAGE 
-    : public GAME_STATE
+    : public SCENE
 {
     COLOR BackColor;
 public:
@@ -10,6 +10,8 @@ public:
     ~STAGE();
     void create();
     void init();
-    void proc();
+    void update();
+    void draw();
+    void nextScene();
 };
 

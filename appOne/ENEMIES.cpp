@@ -1,39 +1,37 @@
 #include"libOne.h"
 #include"GAME.h"
+#include"STAGE.h"
 #include"CONTAINER.h"
 #include"PLAYER.h"
 #include"ENEMIES.h"
 #include"PLAYER_BULLETS.h"
 #include"ENEMY_BULLETS.h"
 ENEMIES::ENEMIES(class GAME* game)
-:CHARACTER(game){
+:GAME_OBJECT(game){
 }
 ENEMIES::~ENEMIES(){
-    destroy();
-}
-void ENEMIES::create(){
-    Img = game()->container()->enemyImg;
-    Enemy.totalNum = 8;
-    Enemy.triggerInterval = 0.72f;
-    Enemy.majRadius = 800;
-    Enemy.minRadius = 100;
-    Enemy.invincibleTime = 0.05f;
-    Enemy.bcRadius = 90;
-    Enemy.hp = 5;
-    Enemy.ofstTime = 0.09f;
-    Enemies = new ENEMY[Enemy.totalNum]();
-}
-void ENEMIES::destroy() {
     SAFE_DELETE_ARRAY(Enemies);
 }
+void ENEMIES::create(){
+    Enemy = game()->container()->data()->enemy;
+    Enemies = new ENEMY[Enemy.totalNum];
+}
 void ENEMIES::init(){
-    Enemy.centerX = 960;
-    Enemy.centerY = -300;
-    Enemy.curNum = Enemy.totalNum;
-    float divTheta = 3.1415926f * 2 / Enemy.totalNum;
-    for (int i = 0; i < Enemy.totalNum; i++) {
+    //èWícÇÃíÜêSà íuèâä˙âª
+    Enemy.centerPos = game()->container()->data()->enemy.centerPos;
+    //ÉXÉeÅ[ÉWêîÇìGÇÃêîÇ∆Ç∑ÇÈ
+    if (game()->stageCnt() < Enemy.totalNum) {
+        Enemy.curNum = game()->stageCnt();
+    }
+    else {
+        Enemy.curNum = Enemy.totalNum;
+    }
+    //äeìGÇÃèâä˙âª
+    float divTheta = M_2PI / Enemy.curNum;
+    float divInterval = Enemy.triggerInterval / Enemy.curNum;
+    for (int i = 0; i < Enemy.curNum; i++) {
         Enemies[i].ofstTheta = divTheta * i;
-        Enemies[i].triggerElapsedTime = Enemy.ofstTime * (Enemy.totalNum-i);
+        Enemies[i].triggerElapsedTime = divInterval * i;
         Enemies[i].hp = Enemy.hp;
     }
 }
@@ -43,24 +41,28 @@ void ENEMIES::update() {
     collision();
 }
 void ENEMIES::move() {
-    //è„Ç©ÇÁç~ÇËÇƒÇ≠ÇÈ
-    if (Enemy.centerY < 300)Enemy.centerY += 1;
-    //ë»â~è„Çà⁄ìÆ
+    //è„Ç©ÇÁèWícÇ≈ç~ÇËÇƒÇ≠ÇÈ
+    if (Enemy.centerPos.y < Enemy.arrivalY) {
+        Enemy.centerPos.y += Enemy.fallSpeedY * delta;
+    }
+    //ë»â~è„Ç…îzíu
+    VECTOR2 ofstPos;
     for (int i = 0; i < Enemy.curNum; i++) {
         float theta = Enemy.refTheta + Enemies[i].ofstTheta;
-        Enemies[i].pos.x = Enemy.centerX + sin(theta) * Enemy.majRadius;
-        Enemies[i].pos.y = Enemy.centerY + -cos(theta) * Enemy.minRadius;
+        ofstPos.x = cos(theta) * Enemy.majRadius;
+        ofstPos.y = sin(theta) * Enemy.minRadius;
+        Enemies[i].pos = Enemy.centerPos + ofstPos;
     }
     //äÓèÄÇ∆Ç»ÇÈäpÇçXêV
-    Enemy.refTheta += 0.6f * delta;
+    Enemy.refTheta += Enemy.refThetaSpeed * delta;
 }
 void ENEMIES::launch(){
+    VECTOR2 playerPos = game()->player()->pos();
     BULLETS* bullets = game()->enemyBullets();
-    VECTOR2 targetPos = game()->player()->pos();
     for (int i = 0; i < Enemy.curNum; i++) {
         Enemies[i].triggerElapsedTime += delta;
         if ( Enemies[i].triggerElapsedTime >= Enemy.triggerInterval ) {
-            VECTOR2 launchVec = normalize(targetPos - Enemies[i].pos);
+            VECTOR2 launchVec = normalize(playerPos - Enemies[i].pos);
             bullets->launch(Enemies[i].pos, launchVec);
             Enemies[i].triggerElapsedTime = 0;
         }
@@ -71,44 +73,39 @@ void ENEMIES::collision() {
     float distance = Enemy.bcRadius + bullets->bcRadius();
     float sqDistance = distance * distance;
     for (int i = Enemy.curNum - 1; i >= 0; i--) {
-        int curNum = bullets->curNum();
-        int flag = 0;
-        for (int j = curNum - 1; j >= 0 && flag == 0; j--) {
+        for (int j = bullets->curNum() - 1; j >= 0; j--) {
             VECTOR2 vec = Enemies[i].pos - bullets->pos(j);
-            if (Enemies[i].invincibleRestTime <= 0 && 
-                sqLength(vec) < sqDistance) {
+            if (Enemies[i].invincibleRestTime <= 0 && sqLength(vec) < sqDistance) {
                 Enemies[i].hp--;
                 Enemies[i].invincibleRestTime = Enemy.invincibleTime;
                 if (Enemies[i].hp <= 0) {
-                    //kill
-                    Enemy.curNum--;
-                    Enemies[i] = Enemies[Enemy.curNum];
+                    this->kill(i);
                 }
                 bullets->kill(j);
-                flag = 1;
+                j = 0;
             }
         }
     }
 }
+void ENEMIES::kill(int i) {
+    Enemy.curNum--;
+    Enemies[i] = Enemies[Enemy.curNum];
+}
 void ENEMIES::draw(){
     for (int i = 0; i < Enemy.curNum; i++) {
         if (Enemies[i].invincibleRestTime > 0) {
-            imageColor(255, 0, 0,128);
+            imageColor(Enemy.collisionColor);
             Enemies[i].invincibleRestTime -= delta;
         }
         else {
-            imageColor(255, 255, 255, 128);
+            imageColor(Enemy.normalColor);
         }
-        image(Img, Enemies[i].pos.x, Enemies[i].pos.y, Enemies[i].angle);
+        image(Enemy.img, Enemies[i].pos.x, Enemies[i].pos.y, Enemies[i].angle);
         //hp gauge
-        fill(0, 255, 0);
-        noStroke();
-        VECTOR2 ofst(-10, -120);
-        VECTOR2 pos = Enemies[i].pos + ofst;
-        rect(pos.x, pos.y, Enemies[i].hp * 30.0f, 15.0f);
+        HpGauge.draw(Enemies[i].pos, Enemy.hpGaugeOffset, Enemies[i].hp);
 #ifdef _DEBUG
         fill(255, 255, 255, 64);
-        circle(Enemies[i].pos.x, Enemies[i].pos.y, bcRadius*2);
+        circle(Enemies[i].pos.x, Enemies[i].pos.y, Enemy.bcRadius*2);
 #endif
     }
 }
