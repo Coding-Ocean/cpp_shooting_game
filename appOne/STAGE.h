@@ -4,7 +4,13 @@
 class STAGE 
     : public SCENE
 {
-    COLOR BackColor;
+public:
+    struct DATA{
+        int stageNum;
+        int stageCnt;
+    };
+private:
+    STAGE::DATA Stage;
 public:
     STAGE(class GAME* game);
     ~STAGE();
@@ -13,5 +19,6 @@ public:
     void update();
     void draw();
     void nextScene();
+    int stageCnt();
 };
 

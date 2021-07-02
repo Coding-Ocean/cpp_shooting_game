@@ -1,7 +1,6 @@
 #pragma once
 #include"GAME_OBJECT.h"
 #include"VECTOR2.h"
-#include"HP_GAUGE.h"
 class PLAYER
     : public GAME_OBJECT
 {
@@ -11,6 +10,7 @@ public:
         VECTOR2 pos;
         float angle = 0;
         float advSpeed = 0;
+        float limmitRange = 0;
         //launch bullet
         VECTOR2 launchVec;//”­ŽË•ûŒü
         float triggerElapsedTime = 0;//”­ŽËŒãŒo‰ßŽžŠÔ
@@ -28,7 +28,6 @@ public:
     };
 private:
     DATA Player;
-    HP_GAUGE HpGauge;
 public:
     PLAYER(class GAME* game);
     ~PLAYER();
@@ -39,8 +38,6 @@ public:
         void launch();
         void collision();
     void draw();
-    //for title
-    void initForTitle();
     //getter
     VECTOR2 pos() { return Player.pos; }
     int hp() { return Player.hp; }

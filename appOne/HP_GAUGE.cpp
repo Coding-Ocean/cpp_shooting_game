@@ -1,17 +1,20 @@
+#include"CONTAINER.h"
+#include"GAME.h"
 #include "HP_GAUGE.h"
-HP_GAUGE::HP_GAUGE() 
-:Color(0, 255, 0)
-,Danger(255,0,0)
-,Height(15)
-,CoWidth(30){
+HP_GAUGE::HP_GAUGE(GAME*game):
+    GAME_OBJECT(game){ 
+}
+void HP_GAUGE::create() {
+    HpGauge = game()->container()->data()->hpGauge;
 }
 void HP_GAUGE::draw(const VECTOR2& pos, const VECTOR2& offset, int hp ) {
     noStroke();
     if (hp > 1) {
-        fill(Color);
+        fill(HpGauge.color);
     }
     else {
-        fill(Danger);
+        fill(HpGauge.danger);
     }
-    rect(pos.x + offset.x, pos.y + offset.y, hp * CoWidth, Height);
+    rect(pos.x + offset.x, pos.y + offset.y, 
+        hp * HpGauge.coWidth, HpGauge.h);
 }

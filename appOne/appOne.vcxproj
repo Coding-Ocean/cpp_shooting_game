@@ -165,6 +165,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BULLETS.cpp" />
+    <ClCompile Include="CONTAINER.cpp" />
     <ClCompile Include="ENEMIES.cpp" />
     <ClCompile Include="ENEMY_BULLETS.cpp" />
     <ClCompile Include="GAME.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="PLAYER_BULLETS.cpp" />
     <ClCompile Include="SCENE.cpp" />
     <ClCompile Include="STAGE.cpp" />
+    <ClCompile Include="STAGE_CLEAR.cpp" />
     <ClCompile Include="TITLE.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -186,7 +188,6 @@
     <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ALL_DATA.h" />
     <ClInclude Include="BULLETS.h" />
     <ClInclude Include="CONTAINER.h" />
     <ClInclude Include="ENEMIES.h" />
@@ -200,6 +201,7 @@
     <ClInclude Include="PLAYER_BULLETS.h" />
     <ClInclude Include="SCENE.h" />
     <ClInclude Include="STAGE.h" />
+    <ClInclude Include="STAGE_CLEAR.h" />
     <ClInclude Include="TITLE.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

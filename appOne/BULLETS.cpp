@@ -50,17 +50,8 @@ void BULLETS::draw() {
 #endif
     }
 }
-VECTOR2 BULLETS::pos(int i) {
-    return Bullets[i].pos;
-}
-int BULLETS::curNum() {
-    return Bullet.curNum;
-}
 void BULLETS::kill(int i) {
     //¶‚«‚Ä‚¢‚é’e‚ğ€‚ñ‚¾‚½‚Ü‚Éã‘‚«
     Bullet.curNum--;
     Bullets[i] = Bullets[Bullet.curNum];
-}
-float BULLETS::bcRadius() {
-    return Bullet.bcRadius;
 }

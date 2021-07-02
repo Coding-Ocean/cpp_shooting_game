@@ -16,6 +16,10 @@ void SCENE::proc() {
 void SCENE::update(){
 }
 void SCENE::draw(){
+    fill(Scene.textColor);
+    textSize(Scene.textSize);
+    textMode(TOP);
+    text(Scene.string, Scene.pos.x, Scene.pos.y);
 }
 void SCENE::nextScene(){
 }

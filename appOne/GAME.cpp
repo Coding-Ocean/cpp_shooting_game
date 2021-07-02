@@ -3,6 +3,7 @@
 //シーケンス
 #include"TITLE.h"
 #include"STAGE.h"
+#include"STAGE_CLEAR.h"
 #include"GAME_CLEAR.h"
 #include"GAME_OVER.h"
 //キャラクタ
@@ -10,6 +11,7 @@
 #include"PLAYER_BULLETS.h"
 #include"ENEMIES.h"
 #include"ENEMY_BULLETS.h"
+#include"HP_GAUGE.h"
 //ゲームマネージャー
 #include "GAME.h"
 GAME::GAME() {
@@ -18,17 +20,19 @@ GAME::GAME() {
     //シーケンス
     Scenes[TITLE_ID] = new TITLE(this);
     Scenes[STAGE_ID] = new STAGE(this);
+    Scenes[STAGE_CLEAR_ID] = new STAGE_CLEAR(this);
     Scenes[GAME_CLEAR_ID] = new GAME_CLEAR(this);
     Scenes[GAME_OVER_ID] = new GAME_OVER(this);
-    StageCnt = 1;
     //キャラクタ
     Player = new PLAYER(this);
     Enemies = new ENEMIES(this);
     PlayerBullets = new PLAYER_BULLETS(this);
     EnemyBullets = new ENEMY_BULLETS(this);
+    HpGauge = new HP_GAUGE(this);
 }
 GAME::~GAME() {
     //キャラクタ
+    SAFE_DELETE(HpGauge);
     SAFE_DELETE(EnemyBullets);
     SAFE_DELETE(Enemies);
     SAFE_DELETE(PlayerBullets);
@@ -49,6 +53,7 @@ void GAME::run() {
     for (int i = 0; i < STATE_NUM; i++) {
         Scenes[i]->create();
     }
+    HpGauge->create();
     Player->create();
     Enemies->create();
     PlayerBullets->create();
@@ -62,28 +67,15 @@ void GAME::run() {
         setDeltaTime();
         Scenes[CurSceneId]->proc();
         fill(255);
-        print(delta);
+        //print(delta);
     }
 }
 
 //以下、他のクラスから呼び出されるメンバ
-//　コンテナ getter
-CONTAINER* GAME::container() {
-    return Container;
-}
 //　シーケンス
 void GAME::changeScene(SCENE_ID stateId) {
     CurSceneId = stateId;
     Scenes[CurSceneId]->init();
-}
-int GAME::stageCnt(){
-    return StageCnt;
-}
-void GAME::stageCntUp() {
-    StageCnt++;
-}
-void GAME::resetStageCnt() {
-    StageCnt = 1;
 }
 void GAME::draw() {
     Enemies->draw();
@@ -91,16 +83,8 @@ void GAME::draw() {
     PlayerBullets->draw();
     EnemyBullets->draw();
 }
-//　キャラクタ getter
-PLAYER* GAME::player(){
-    return Player;
-}
-PLAYER_BULLETS* GAME::playerBullets() {
-    return PlayerBullets;
-}
-ENEMIES* GAME::enemies() {
-    return Enemies;
-}
-ENEMY_BULLETS* GAME::enemyBullets() {
-    return EnemyBullets;
+int GAME::stageCnt() {
+    //Enemiesの数をステージカウンターと同じにするためのメンバ
+    STAGE* stage = dynamic_cast<STAGE*>(Scenes[STAGE_ID]);
+    return stage->stageCnt();
 }

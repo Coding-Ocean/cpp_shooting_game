@@ -3,19 +3,24 @@
 #include"CONTAINER.h"
 #include"PLAYER_BULLETS.h"
 #include"ENEMY_BULLETS.h"
+#include"HP_GAUGE.h"
 #include"PLAYER.h"
 PLAYER::PLAYER(class GAME* game)
-:GAME_OBJECT(game) {
+:GAME_OBJECT(game){
 }
 PLAYER::~PLAYER() {
 }
 void PLAYER::create() {
-    Player = game()->container()->data()->player;
+    Player = game()->container()->player();
 }
 void PLAYER::init() {
-    const DATA& player = game()->container()->data()->player;
+    const DATA& player = game()->container()->player();
     Player.pos = player.pos;
     Player.hp = player.hp;
+    if (game()->curSceneId() == GAME::TITLE_ID) {
+        Player.pos = player.posForTitle;
+        Player.hp = 0;
+    }
 }
 void PLAYER::update() {
     move();
@@ -23,12 +28,10 @@ void PLAYER::update() {
     collision();
 }
 void PLAYER::move() {
-    float leftRange = Player.bcRadius;
-    float rightRange = width - Player.bcRadius;
-    if (Player.pos.x < rightRange && isPress(KEY_D)) {
+    if (Player.pos.x < width - Player.limmitRange && isPress(KEY_D)) {
         Player.pos.x += Player.advSpeed * delta;
     }
-    else if (Player.pos.x > leftRange && isPress(KEY_A)) {
+    else if (Player.pos.x > Player.limmitRange && isPress(KEY_A)) {
         Player.pos.x += -Player.advSpeed * delta;
     }
 }
@@ -71,13 +74,9 @@ void PLAYER::draw() {
     }
     image(Player.img, Player.pos.x, Player.pos.y, Player.angle);
     //HP gauge
-    HpGauge.draw(Player.pos, Player.hpGaugeOffset, Player.hp);
+    game()->hpGauge()->draw(Player.pos, Player.hpGaugeOffset, Player.hp);
 #ifdef _DEBUG
     fill(255, 255, 255, 64);
     circle(Player.pos.x, Player.pos.y, Player.bcRadius * 2);
 #endif
-}
-void PLAYER::initForTitle() {
-    Player.pos = game()->container()->data()->player.posForTitle;
-    Player.hp = 0;
 }

@@ -67,6 +67,12 @@
     <ClCompile Include="PLAYER_BULLETS.cpp">
       <Filter>characters\bullets</Filter>
     </ClCompile>
+    <ClCompile Include="STAGE_CLEAR.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="CONTAINER.cpp">
+      <Filter>container</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">
@@ -103,9 +109,6 @@
     <ClInclude Include="STAGE.h">
       <Filter>scenes</Filter>
     </ClInclude>
-    <ClInclude Include="ALL_DATA.h">
-      <Filter>container</Filter>
-    </ClInclude>
     <ClInclude Include="HP_GAUGE.h">
       <Filter>characters</Filter>
     </ClInclude>
@@ -123,6 +126,9 @@
     </ClInclude>
     <ClInclude Include="PLAYER_BULLETS.h">
       <Filter>characters\bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="STAGE_CLEAR.h">
+      <Filter>scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

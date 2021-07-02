@@ -6,19 +6,15 @@
 TITLE::TITLE(class GAME* game)
     :SCENE(game){
 }
-TITLE::~TITLE() {
-}
 void TITLE::create() {
-    Title = game()->container()->data()->title;
+    Scene = game()->container()->title();
 }
 void TITLE::init() {
-    game()->player()->initForTitle();
+    game()->player()->init();
 }
 void TITLE::draw() {
-    clear(Title.backColor);
-    fill(Title.textColor);
-    textSize(Title.textSize);
-    text(Title.string, Title.px, Title.py);
+    clear(Scene.backColor);
+    SCENE::draw();
     game()->player()->draw();
 }
 void TITLE::nextScene(){

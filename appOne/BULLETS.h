@@ -34,7 +34,8 @@ public:
     void update();
     void draw();
     void kill(int i);
-    VECTOR2 pos(int i);
-    int curNum();
-    float bcRadius();
+    //getter
+    VECTOR2 pos(int i) { return Bullets[i].pos; }
+    int curNum() { return Bullet.curNum; }
+    float bcRadius() { return Bullet.bcRadius; }
 };

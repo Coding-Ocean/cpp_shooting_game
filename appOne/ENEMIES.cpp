@@ -2,6 +2,7 @@
 #include"GAME.h"
 #include"STAGE.h"
 #include"CONTAINER.h"
+#include"HP_GAUGE.h"
 #include"PLAYER.h"
 #include"ENEMIES.h"
 #include"PLAYER_BULLETS.h"
@@ -37,8 +38,10 @@ void ENEMIES::init(){
 }
 void ENEMIES::update() {
     move();
-    launch();
-    collision();
+    if (game()->curSceneId() == GAME::STAGE_ID) {
+        launch();
+        collision();
+    }
 }
 void ENEMIES::move() {
     //è„Ç©ÇÁèWícÇ≈ç~ÇËÇƒÇ≠ÇÈ
@@ -79,17 +82,14 @@ void ENEMIES::collision() {
                 Enemies[i].hp--;
                 Enemies[i].invincibleRestTime = Enemy.invincibleTime;
                 if (Enemies[i].hp <= 0) {
-                    this->kill(i);
+                    Enemy.curNum--;
+                    Enemies[i] = Enemies[Enemy.curNum];
                 }
                 bullets->kill(j);
                 j = 0;
             }
         }
     }
-}
-void ENEMIES::kill(int i) {
-    Enemy.curNum--;
-    Enemies[i] = Enemies[Enemy.curNum];
 }
 void ENEMIES::draw(){
     for (int i = 0; i < Enemy.curNum; i++) {
@@ -102,7 +102,7 @@ void ENEMIES::draw(){
         }
         image(Enemy.img, Enemies[i].pos.x, Enemies[i].pos.y, Enemies[i].angle);
         //hp gauge
-        HpGauge.draw(Enemies[i].pos, Enemy.hpGaugeOffset, Enemies[i].hp);
+        game()->hpGauge()->draw(Enemies[i].pos, Enemy.hpGaugeOffset, Enemies[i].hp);
 #ifdef _DEBUG
         fill(255, 255, 255, 64);
         circle(Enemies[i].pos.x, Enemies[i].pos.y, Enemy.bcRadius*2);

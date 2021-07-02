@@ -1,6 +1,5 @@
 #pragma once
 #include"GAME_OBJECT.h"
-#include"HP_GAUGE.h"
 #include"VECTOR2.h"
 class ENEMIES : 
     public GAME_OBJECT
@@ -31,7 +30,6 @@ public:
 private:
     //敵共通データ
     DATA Enemy;
-    HP_GAUGE HpGauge;
     //敵単体データ配列
     struct ENEMY {
         VECTOR2 pos;
@@ -50,9 +48,7 @@ public:
         void move();
         void launch();
         void collision();
-        void kill(int i);
     void draw();
+    //getter
     int curNum() { return Enemy.curNum; }
-    VECTOR2 pos(int i) { return Enemies[i].pos; }
 };
-
