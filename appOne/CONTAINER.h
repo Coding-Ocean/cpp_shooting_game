@@ -11,12 +11,14 @@
 class CONTAINER {
 private:
     struct ALL_DATA {
-        TITLE::DATA title;
-        STAGE_CLEAR::DATA stageClear;
+        //シーン
+        TITLE::SCENE::DATA titleScene;
+        STAGE_CLEAR::SCENE::DATA stageClearScene;
         STAGE::SCENE::DATA stageScene;
-        STAGE::DATA stage;
-        GAME_CLEAR::DATA gameClear;
-        GAME_OVER::DATA gameOver;
+        STAGE::DATA stage;//STAGEクラスで用意したデータ
+        GAME_CLEAR::SCENE::DATA gameClearScene;
+        GAME_OVER::SCENE::DATA gameOverScene;
+        //キャラクタ
         PLAYER::DATA player;
         ENEMIES::DATA enemy;
         BULLETS::DATA playerBullet;
@@ -24,13 +26,21 @@ private:
         HP_GAUGE::DATA hpGauge;
     };
     struct ALL_DATA Data;
+    void SetData();
+    void LoadData();
+    void LoadGraphics();
 public:
-    const ALL_DATA* data()const { return &Data; }
-    const TITLE::DATA& title()const { return Data.title; }
-    const STAGE_CLEAR::DATA& stageClear()const { return Data.stageClear; }
-    const PLAYER::DATA& player()const { return Data.player; }
     void load();
-    void setData();
-    void loadGraphics();
     VECTOR2 calcPos(const char* str, float size);
+    const TITLE::SCENE::DATA& titleScene()const { return Data.titleScene; }
+    const STAGE_CLEAR::SCENE::DATA& stageClearScene()const { return Data.stageClearScene; }
+    const STAGE::SCENE::DATA& stageScene() { return Data.stageScene; }
+    const STAGE::DATA& stage() { return Data.stage; }
+    const GAME_CLEAR::SCENE::DATA& gameClearScene() { return Data.gameClearScene; }
+    const GAME_OVER::SCENE::DATA& gameOverScene() { return Data.gameOverScene; }
+    const PLAYER::DATA& player()const { return Data.player; }
+    const ENEMIES::DATA& enemy() { return Data.enemy; }
+    const BULLETS::DATA& playerBullet() { return Data.playerBullet; }
+    const BULLETS::DATA& enemyBullet() { return Data.enemyBullet; }
+    const HP_GAUGE::DATA& hpGauge() { return Data.hpGauge; }
 };

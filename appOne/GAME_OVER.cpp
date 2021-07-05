@@ -9,12 +9,16 @@ GAME_OVER::GAME_OVER(class GAME* game)
     :SCENE(game) {
 }
 void GAME_OVER::create() {
-    Scene = game()->container()->data()->gameOver;
+    Scene = game()->container()->gameOverScene();
+}
+void GAME_OVER::init() {
+    game()->player()->initForGameOver();
 }
 void GAME_OVER::update() {
     game()->playerBullets()->update();
     game()->enemyBullets()->update();
     game()->enemies()->update();
+    game()->player()->updateForGameOver();
 }
 void GAME_OVER::draw() {
     clear(Scene.backColor);

@@ -38,6 +38,7 @@ private:
         float ofstTheta = 0;//位置決め用角の大きさ
         float triggerElapsedTime = 0;//発射経過時間
         float invincibleRestTime = 0;//無敵残り時間
+        COLOR color;
     }* Enemies=0;
 public:
     ENEMIES(class GAME* game);

@@ -12,23 +12,28 @@ STAGE::STAGE(class GAME* game)
 STAGE::~STAGE() {
 }
 void STAGE::create() {
-    Scene = game()->container()->data()->stageScene;
-    Stage = game()->container()->data()->stage;
+    Scene = game()->container()->stageScene();
+    Stage = game()->container()->stage();
 }
 void STAGE::init() {
     game()->player()->init();
     game()->enemies()->init();
     game()->playerBullets()->init();
     game()->enemyBullets()->init();
-    Scene.textColor.a = game()->container()->data()->stageScene.textColor.a;
+    //ƒXƒ^[ƒgƒƒbƒZ[ƒW‚Ì•ÒW
     if (Stage.stageCnt >= Stage.stageNum) {
-        strcpy_s(Scene.string, "ÅŒã‚ÌƒXƒe[ƒW");
+        strcpy_s(Scene.string, Stage.startMsg2);
     }
     else {
-        sprintf_s(Scene.string,"‚ ‚Æ %d ƒXƒe[ƒW",
-            Stage.stageNum - Stage.stageCnt + 1);
+        //Žc‚èƒXƒe[ƒW‚Ì”‚ð‘SŠp‚·‚é
+        int i = Stage.stageNum - Stage.stageCnt + 1;
+        char ws[24]="‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X";
+        char s[4] = { ws[i * 2], ws[i * 2 + 1],'\0' };
+        //•ÒW
+        sprintf_s(Scene.string, "%s%s%s", Stage.startPreMsg1, s, Stage.startMsg1);
     }
     Scene.pos = game()->container()->calcPos(Scene.string, Scene.textSize);
+    Scene.textColor.a = game()->container()->stageScene().textColor.a;
 }
 void STAGE::update() {
     game()->playerBullets()->update();
@@ -48,7 +53,7 @@ void STAGE::nextScene() {
     if (game()->enemies()->curNum() <= 0) {
         if (Stage.stageCnt >= Stage.stageNum) {
             game()->changeScene(GAME::GAME_CLEAR_ID);
-            Stage.stageCnt = game()->container()->data()->stage.stageCnt;
+            Stage.stageCnt = game()->container()->stage().stageCnt;
         }
         else {
             game()->changeScene(GAME::STAGE_CLEAR_ID);
@@ -57,7 +62,7 @@ void STAGE::nextScene() {
     }
     else if (game()->player()->hp() <= 0) {
         game()->changeScene(GAME::GAME_OVER_ID);
-        Stage.stageCnt = game()->container()->data()->stage.stageCnt;
+        Stage.stageCnt = game()->container()->stage().stageCnt;
     }
 }
 int STAGE::stageCnt() {

@@ -8,11 +8,15 @@ GAME_CLEAR::GAME_CLEAR(class GAME* game) :
     SCENE(game) {
 }
 void GAME_CLEAR::create() {
-    Scene = game()->container()->data()->gameClear;
+    Scene = game()->container()->gameClearScene();
+}
+void GAME_CLEAR::init() {
+    game()->player()->initForGameClear();
 }
 void GAME_CLEAR::update() {
     game()->playerBullets()->update();
     game()->enemyBullets()->update();
+    game()->player()->updateForGameClear();
 }
 void GAME_CLEAR::draw() {
     clear(Scene.backColor);

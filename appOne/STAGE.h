@@ -8,9 +8,12 @@ public:
     struct DATA{
         int stageNum;
         int stageCnt;
+        char startPreMsg1[8];
+        char startMsg1[16];
+        char startMsg2[16];
     };
 private:
-    STAGE::DATA Stage;
+    DATA Stage;
 public:
     STAGE(class GAME* game);
     ~STAGE();

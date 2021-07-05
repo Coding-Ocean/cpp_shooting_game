@@ -59,7 +59,7 @@ void GAME::run() {
     PlayerBullets->create();
     EnemyBullets->create();
     //最初のステート
-    CurSceneId = TITLE_ID;
+    CurSceneId = GAME::TITLE_ID;
     Scenes[CurSceneId]->init();
     initDeltaTime();
     //ゲームループ

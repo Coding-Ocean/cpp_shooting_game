@@ -5,5 +5,5 @@ ENEMY_BULLETS::ENEMY_BULLETS(class GAME* game)
     : BULLETS(game) {
 }
 void ENEMY_BULLETS::create() {
-    SetBulletData(game()->container()->data()->enemyBullet);
+    SetBulletData(game()->container()->enemyBullet());
 }

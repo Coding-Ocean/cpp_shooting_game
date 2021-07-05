@@ -6,6 +6,7 @@ class GAME_CLEAR :
 public:
     GAME_CLEAR(class GAME* game);
     void create();
+    void init();
     void update();
     void draw();
     void nextScene();

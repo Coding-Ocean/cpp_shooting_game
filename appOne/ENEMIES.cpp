@@ -14,12 +14,12 @@ ENEMIES::~ENEMIES(){
     SAFE_DELETE_ARRAY(Enemies);
 }
 void ENEMIES::create(){
-    Enemy = game()->container()->data()->enemy;
+    Enemy = game()->container()->enemy();
     Enemies = new ENEMY[Enemy.totalNum];
 }
 void ENEMIES::init(){
     //集団の中心位置初期化
-    Enemy.centerPos = game()->container()->data()->enemy.centerPos;
+    Enemy.centerPos = game()->container()->enemy().centerPos;
     //ステージ数を敵の数とする
     if (game()->stageCnt() < Enemy.totalNum) {
         Enemy.curNum = game()->stageCnt();
@@ -75,31 +75,32 @@ void ENEMIES::collision() {
     BULLETS* bullets = game()->playerBullets();
     float distance = Enemy.bcRadius + bullets->bcRadius();
     float sqDistance = distance * distance;
-    for (int i = Enemy.curNum - 1; i >= 0; i--) {
-        for (int j = bullets->curNum() - 1; j >= 0; j--) {
-            VECTOR2 vec = Enemies[i].pos - bullets->pos(j);
-            if (Enemies[i].invincibleRestTime <= 0 && sqLength(vec) < sqDistance) {
-                Enemies[i].hp--;
-                Enemies[i].invincibleRestTime = Enemy.invincibleTime;
-                if (Enemies[i].hp <= 0) {
-                    Enemy.curNum--;
-                    Enemies[i] = Enemies[Enemy.curNum];
+    for (int j = Enemy.curNum - 1; j >= 0; j--) {
+        if (Enemies[j].invincibleRestTime > 0) {
+            Enemies[j].invincibleRestTime -= delta;
+        }
+        else {
+            Enemies[j].color = Enemy.normalColor;
+            for (int i = bullets->curNum() - 1; i >= 0; i--) {
+                VECTOR2 vec = Enemies[j].pos - bullets->pos(i);
+                if (sqLength(vec) < sqDistance) {
+                    Enemies[j].hp--;
+                    Enemies[j].invincibleRestTime = Enemy.invincibleTime;
+                    Enemies[j].color = Enemy.collisionColor;
+                    if (Enemies[j].hp <= 0) {
+                        Enemy.curNum--;
+                        Enemies[j] = Enemies[Enemy.curNum];
+                    }
+                    bullets->kill(i);
+                    i = 0;
                 }
-                bullets->kill(j);
-                j = 0;
             }
         }
     }
 }
 void ENEMIES::draw(){
     for (int i = 0; i < Enemy.curNum; i++) {
-        if (Enemies[i].invincibleRestTime > 0) {
-            imageColor(Enemy.collisionColor);
-            Enemies[i].invincibleRestTime -= delta;
-        }
-        else {
-            imageColor(Enemy.normalColor);
-        }
+        imageColor(Enemies[i].color);
         image(Enemy.img, Enemies[i].pos.x, Enemies[i].pos.y, Enemies[i].angle);
         //hp gauge
         game()->hpGauge()->draw(Enemies[i].pos, Enemy.hpGaugeOffset, Enemies[i].hp);
