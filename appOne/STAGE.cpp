@@ -20,6 +20,7 @@ void STAGE::init() {
     game()->enemies()->init();
     game()->playerBullets()->init();
     game()->enemyBullets()->init();
+    game()->explosions()->init();
     //スタートメッセージの編集
     if (Stage.stageCnt >= Stage.stageNum) {
         strcpy_s(Scene.string, Stage.startMsg2);
@@ -38,6 +39,7 @@ void STAGE::init() {
 void STAGE::update() {
     game()->playerBullets()->update();
     game()->enemyBullets()->update();
+    game()->explosions()->update();
     game()->player()->update();
     game()->enemies()->update();
 }

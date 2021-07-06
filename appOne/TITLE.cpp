@@ -16,13 +16,13 @@ void TITLE::init() {
 void TITLE::draw() {
     clear(Scene.backColor);
     if (Scene.textColor.a < 255) {
-        Scene.textColor.a += Scene.transSpeed*delta;
+        Scene.textColor.a += Scene.transSpeed * delta;
     }
     SCENE::draw();
     game()->player()->draw();
 }
 void TITLE::nextScene(){
-    if (isTrigger(KEY_J)) {
+    if (game()->nextKeyPushed()) {
         game()->changeScene(GAME::STAGE_ID);
     }
 }

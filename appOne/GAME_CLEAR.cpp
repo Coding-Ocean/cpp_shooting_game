@@ -16,6 +16,7 @@ void GAME_CLEAR::init() {
 void GAME_CLEAR::update() {
     game()->playerBullets()->update();
     game()->enemyBullets()->update();
+    game()->explosions()->update();
     game()->player()->updateForGameClear();
 }
 void GAME_CLEAR::draw() {
@@ -24,7 +25,7 @@ void GAME_CLEAR::draw() {
     SCENE::draw();
 }
 void GAME_CLEAR::nextScene(){
-    if (isTrigger(KEY_J)) {
+    if (game()->nextKeyPushed()) {
         game()->changeScene(GAME::TITLE_ID);
     }
 }

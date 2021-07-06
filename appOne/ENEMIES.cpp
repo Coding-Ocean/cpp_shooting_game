@@ -7,6 +7,7 @@
 #include"ENEMIES.h"
 #include"PLAYER_BULLETS.h"
 #include"ENEMY_BULLETS.h"
+#include"EXPLOSIONS.h"
 ENEMIES::ENEMIES(class GAME* game)
 :GAME_OBJECT(game){
 }
@@ -88,6 +89,7 @@ void ENEMIES::collision() {
                     Enemies[j].invincibleRestTime = Enemy.invincibleTime;
                     Enemies[j].color = Enemy.collisionColor;
                     if (Enemies[j].hp <= 0) {
+                        game()->explosions()->trigger(Enemies[j].pos);
                         Enemy.curNum--;
                         Enemies[j] = Enemies[Enemy.curNum];
                     }

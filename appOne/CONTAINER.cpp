@@ -2,7 +2,9 @@
 //#define _BIN_
 #include"graphic.h"
 #include"CONTAINER.h"
-
+CONTAINER::~CONTAINER() {
+    delete[] Data.explosion.imgs;
+}
 void CONTAINER::load() {
 #ifdef _BIN_
     LoadData();
@@ -29,6 +31,8 @@ VECTOR2 CONTAINER::calcPos(const char* str, float size) {
     return VECTOR2(px, py);
 }
 void CONTAINER::SetData() {
+    Data.game.firstSceneId = GAME::TITLE_ID;
+    Data.game.changeSceneKey = KEY_Z;
 
     Data.titleScene.backColor = COLOR(0, 30, 0);
     Data.titleScene.textColor = COLOR(0, 255, 0);
@@ -43,12 +47,13 @@ void CONTAINER::SetData() {
     strcpy_s(Data.stageClearScene.string, "ステージクリア");
     Data.stageClearScene.pos = calcPos(Data.stageClearScene.string, Data.stageClearScene.textSize);
 
+    //STAGE独自の追加データ
     Data.stage.stageNum = 8;
     Data.stage.stageCnt = 1;
     strcpy_s(Data.stage.startPreMsg1, "あと");
     strcpy_s(Data.stage.startMsg1, "ステージ");
     strcpy_s(Data.stage.startMsg2, "最後のステージ");
-    
+    //STAGE・ SCENE基底クラスのデータ
     Data.stageScene.backColor = COLOR(50, 50, 50);
     Data.stageScene.textColor = COLOR(0, 255, 255, 255);
     Data.stageScene.textSize = 200;
@@ -97,11 +102,6 @@ void CONTAINER::SetData() {
     Data.player.rollingSpeed = 2.4f;
     Data.player.rollingLimmit = 1.2f;
 
-    Data.hpGauge.color = COLOR(0, 255, 0);
-    Data.hpGauge.danger = COLOR(255, 0, 0);
-    Data.hpGauge.coWidth = 30;
-    Data.hpGauge.h = 15;
-
     Data.enemy.totalNum = 8;
     Data.enemy.triggerInterval = 0.72f;
     Data.enemy.centerPos.x = 960;
@@ -120,19 +120,39 @@ void CONTAINER::SetData() {
     Data.enemy.collisionColor = COLOR(255, 0, 0, 200);
     Data.enemy.normalColor = COLOR(255, 255, 255, 200);
 
+    Data.playerBullet.totalNum = 36;
+    Data.playerBullet.curNum = 0;
     Data.playerBullet.advSpeed = 600;
     Data.playerBullet.angSpeed = 0.05f;
     Data.playerBullet.ofstLaunchDist = 100;
     Data.playerBullet.bcRadius = 20;
-    Data.playerBullet.totalNum = 70;
-    Data.playerBullet.curNum = 0;
 
+    Data.enemyBullet.totalNum = 24;
+    Data.enemyBullet.curNum = 0;
     Data.enemyBullet.advSpeed = 600;
     Data.enemyBullet.angSpeed = 0;
     Data.enemyBullet.ofstLaunchDist = 90;
     Data.enemyBullet.bcRadius = 30;
-    Data.enemyBullet.totalNum = 20;
-    Data.enemyBullet.curNum = 0;
+
+    Data.hpGauge.color = COLOR(0, 255, 0);
+    Data.hpGauge.danger = COLOR(255, 0, 0);
+    Data.hpGauge.coWidth = 30;
+    Data.hpGauge.h = 15;
+
+    Data.explosion.totalNum = 4;
+    Data.explosion.curNum = 0;
+    Data.explosion.interval = 0.048f;
+    Data.explosion.numImgs = 48;
+    Data.explosion.imgs = new int[Data.explosion.numImgs];
+    Data.explosion.startIdx = 24;
+    Data.explosion.color = COLOR(255, 255, 255, 210);
+    Data.explosion.scale = 10;
+
+Data.stage.stageNum = 8;
+Data.stage.stageCnt = 7;
+Data.enemy.totalNum = 8;
+//Data.enemy.hp = 1;
+Data.player.invincibleTime = 5;
 
     //create binary file
     FILE* fp;
@@ -149,4 +169,9 @@ void CONTAINER::LoadGraphics() {
     Data.playerBullet.img = loadImage("assets\\pBullet.png");
     Data.enemy.img = loadImage("assets\\enemy.png");
     Data.enemyBullet.img = loadImage("assets\\eBullet.png");
+    char filename[64];
+    for (int i = 0; i < Data.explosion.numImgs; i++) {
+        sprintf_s(filename, "assets\\explosion\\a%02d.png", i);
+        Data.explosion.imgs[i] = loadImage(filename);
+    }
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include"GAME.h"
 #include"TITLE.h"
 #include"STAGE.h"
 #include"STAGE_CLEAR.h"
@@ -8,9 +9,12 @@
 #include"ENEMIES.h"
 #include"BULLETS.h"
 #include"HP_GAUGE.h"
+#include"EXPLOSIONS.h"
 class CONTAINER {
 private:
     struct ALL_DATA {
+        //GAME
+        GAME::DATA game;
         //ÉVÅ[Éì
         TITLE::SCENE::DATA titleScene;
         STAGE_CLEAR::SCENE::DATA stageClearScene;
@@ -24,14 +28,17 @@ private:
         BULLETS::DATA playerBullet;
         BULLETS::DATA enemyBullet;
         HP_GAUGE::DATA hpGauge;
+        EXPLOSIONS::DATA explosion;
     };
     struct ALL_DATA Data;
     void SetData();
     void LoadData();
     void LoadGraphics();
 public:
+    ~CONTAINER();
     void load();
     VECTOR2 calcPos(const char* str, float size);
+    const GAME::DATA& game() { return Data.game; }
     const TITLE::SCENE::DATA& titleScene()const { return Data.titleScene; }
     const STAGE_CLEAR::SCENE::DATA& stageClearScene()const { return Data.stageClearScene; }
     const STAGE::SCENE::DATA& stageScene() { return Data.stageScene; }
@@ -43,4 +50,5 @@ public:
     const BULLETS::DATA& playerBullet() { return Data.playerBullet; }
     const BULLETS::DATA& enemyBullet() { return Data.enemyBullet; }
     const HP_GAUGE::DATA& hpGauge() { return Data.hpGauge; }
+    const EXPLOSIONS::DATA& explosion() { return Data.explosion; }
 };

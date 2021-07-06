@@ -12,6 +12,7 @@
 #include"ENEMIES.h"
 #include"ENEMY_BULLETS.h"
 #include"HP_GAUGE.h"
+#include"EXPLOSIONS.h"
 //ゲームマネージャー
 #include "GAME.h"
 GAME::GAME() {
@@ -29,9 +30,11 @@ GAME::GAME() {
     PlayerBullets = new PLAYER_BULLETS(this);
     EnemyBullets = new ENEMY_BULLETS(this);
     HpGauge = new HP_GAUGE(this);
+    Explosions = new EXPLOSIONS(this);
 }
 GAME::~GAME() {
     //キャラクタ
+    SAFE_DELETE(Explosions);
     SAFE_DELETE(HpGauge);
     SAFE_DELETE(EnemyBullets);
     SAFE_DELETE(Enemies);
@@ -50,24 +53,23 @@ void GAME::run() {
     //読み込み
     Container->load();
     //全要素をつくる
+    Game = Container->game();
     for (int i = 0; i < STATE_NUM; i++) {
         Scenes[i]->create();
     }
-    HpGauge->create();
     Player->create();
     Enemies->create();
     PlayerBullets->create();
     EnemyBullets->create();
+    HpGauge->create();
+    Explosions->create();
     //最初のステート
-    CurSceneId = GAME::TITLE_ID;
-    Scenes[CurSceneId]->init();
+    changeScene(Game.firstSceneId);
     initDeltaTime();
     //ゲームループ
     while (notQuit) {
         setDeltaTime();
         Scenes[CurSceneId]->proc();
-        fill(255);
-        //print(delta);
     }
 }
 
@@ -82,9 +84,19 @@ void GAME::draw() {
     Player->draw();
     PlayerBullets->draw();
     EnemyBullets->draw();
+    Explosions->draw();
+    static int max = 0;
+    if (EnemyBullets->curNum() > max) {
+        max = EnemyBullets->curNum();
+    }
+    print(max);
 }
 int GAME::stageCnt() {
     //Enemiesの数をステージカウンターと同じにするためのメンバ
     STAGE* stage = dynamic_cast<STAGE*>(Scenes[STAGE_ID]);
     return stage->stageCnt();
 }
+int GAME::nextKeyPushed() {
+    return isTrigger(Game.changeSceneKey);
+}
+

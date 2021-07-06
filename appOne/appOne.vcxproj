@@ -168,6 +168,7 @@
     <ClCompile Include="CONTAINER.cpp" />
     <ClCompile Include="ENEMIES.cpp" />
     <ClCompile Include="ENEMY_BULLETS.cpp" />
+    <ClCompile Include="EXPLOSIONS.cpp" />
     <ClCompile Include="GAME.cpp" />
     <ClCompile Include="GAME_CLEAR.cpp" />
     <ClCompile Include="GAME_OBJECT.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="CONTAINER.h" />
     <ClInclude Include="ENEMIES.h" />
     <ClInclude Include="ENEMY_BULLETS.h" />
+    <ClInclude Include="EXPLOSIONS.h" />
     <ClInclude Include="GAME.h" />
     <ClInclude Include="GAME_CLEAR.h" />
     <ClInclude Include="GAME_OBJECT.h" />

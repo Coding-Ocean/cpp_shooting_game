@@ -1,6 +1,6 @@
 #pragma once
 #include"GAME_OBJECT.h"
-#include"graphic.h"
+#include"COLOR.h"
 #include"VECTOR2.h"
 class SCENE:
     public GAME_OBJECT

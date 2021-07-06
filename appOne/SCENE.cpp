@@ -1,3 +1,4 @@
+#include"graphic.h"
 #include"SCENE.h"
 SCENE::SCENE(class GAME* game):
 GAME_OBJECT(game){

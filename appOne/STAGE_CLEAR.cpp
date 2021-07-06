@@ -17,6 +17,7 @@ void STAGE_CLEAR::init() {
 void STAGE_CLEAR::update() {
     game()->playerBullets()->update();
     game()->enemyBullets()->update();
+    game()->explosions()->update();
 }
 void STAGE_CLEAR::draw() {
     clear(Scene.backColor);
@@ -24,7 +25,7 @@ void STAGE_CLEAR::draw() {
     SCENE::draw();
 }
 void STAGE_CLEAR::nextScene(){
-    if (isTrigger(KEY_J)) {
+    if (game()->nextKeyPushed()) {
         game()->changeScene(GAME::STAGE_ID);
     }
 }

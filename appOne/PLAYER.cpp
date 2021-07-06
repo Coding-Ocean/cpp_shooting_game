@@ -93,6 +93,7 @@ void PLAYER::initForGameClear() {
     Player.lastPos = Player.pos;
     Player.hp = 0;
     Player.color = Player.normalColor;
+    Player.standingRestTime = Player.standingTime;
 }
 void PLAYER::updateForGameClear() {
     //回転しながらジャンプ。着地したら一定時間立っている。

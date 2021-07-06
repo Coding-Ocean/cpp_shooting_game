@@ -1,4 +1,5 @@
 #pragma once
+#include"input.h"
 class GAME
 {
 //コンテナ
@@ -16,13 +17,19 @@ public:
         GAME_OVER_ID,
         STATE_NUM
     };
+    struct DATA {
+        INPUT_CODE changeSceneKey;
+        SCENE_ID firstSceneId;
+    };
 private:
+    DATA Game;
     class SCENE* Scenes[STATE_NUM];
     SCENE_ID CurSceneId = TITLE_ID;
 public:
     void changeScene(SCENE_ID state);
     SCENE_ID curSceneId() { return CurSceneId; }
     int stageCnt();
+    int nextKeyPushed();
 //キャラクタ
 private:
     class PLAYER* Player = 0;
@@ -30,6 +37,7 @@ private:
     class ENEMIES* Enemies = 0;
     class ENEMY_BULLETS* EnemyBullets = 0;
     class HP_GAUGE* HpGauge = 0;
+    class EXPLOSIONS* Explosions = 0;
 public:
     void draw();
     class PLAYER* player() { return Player; }
@@ -37,6 +45,7 @@ public:
     class ENEMIES* enemies() { return Enemies; }
     class ENEMY_BULLETS* enemyBullets() { return EnemyBullets; }
     class HP_GAUGE* hpGauge() { return HpGauge; }
+    class EXPLOSIONS* explosions() { return Explosions; }
 //ゲームマネージャー
 public:
     GAME();

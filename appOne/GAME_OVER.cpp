@@ -17,6 +17,7 @@ void GAME_OVER::init() {
 void GAME_OVER::update() {
     game()->playerBullets()->update();
     game()->enemyBullets()->update();
+    game()->explosions()->update();
     game()->enemies()->update();
     game()->player()->updateForGameOver();
 }
@@ -26,7 +27,7 @@ void GAME_OVER::draw() {
     SCENE::draw();
 }
 void GAME_OVER::nextScene() {
-    if (isTrigger(KEY_J)) {
+    if (game()->nextKeyPushed()) {
         game()->changeScene(GAME::TITLE_ID);
     }
 }
