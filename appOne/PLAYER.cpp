@@ -11,10 +11,10 @@ PLAYER::PLAYER(class GAME* game)
 PLAYER::~PLAYER() {
 }
 void PLAYER::create() {
-    Player = game()->container()->player();
+    Player = game()->container()->data().player;
 }
 void PLAYER::init() {
-    const DATA& player = game()->container()->player();
+    const DATA& player = game()->container()->data().player;
     Player.pos = player.pos;
     Player.hp = player.hp;
 }
@@ -36,7 +36,7 @@ void PLAYER::launch(){
         Player.triggerElapsedTime += delta;
         if (Player.triggerElapsedTime > Player.triggerInterval) {
             game()->playerBullets()->launch(Player.pos, Player.launchVec);
-            Player.triggerElapsedTime = 0;
+            Player.triggerElapsedTime -= Player.triggerInterval;
         }
     }
     else {
@@ -112,7 +112,7 @@ void PLAYER::updateForGameClear() {
         VECTOR2 vec(sin(Player.launchAngle), -cos(Player.launchAngle));
         Player.launchAngle += Player.launchAngleSpeed;
         game()->playerBullets()->launch(Player.lastPos, vec);
-        Player.triggerElapsedTime = 0;
+        Player.triggerElapsedTime -= Player.triggerInterval2;
     }
 }
 void PLAYER::initForGameOver() {

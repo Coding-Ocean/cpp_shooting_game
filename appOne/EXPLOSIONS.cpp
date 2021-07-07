@@ -5,7 +5,7 @@ EXPLOSIONS::EXPLOSIONS(class GAME* game):
 GAME_OBJECT(game){}
 EXPLOSIONS::~EXPLOSIONS(){}
 void EXPLOSIONS::create(){
-    Explosion = game()->container()->explosion();
+    Explosion = game()->container()->data().explosion;
     Explosions = new EXPLOSION[Explosion.totalNum];
 }
 void EXPLOSIONS::init(){

@@ -3,7 +3,6 @@
 class TITLE :
     public SCENE
 {
-    int FadeFlag;
 public:
     TITLE(class GAME* game);
     void create();

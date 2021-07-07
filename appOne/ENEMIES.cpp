@@ -15,12 +15,12 @@ ENEMIES::~ENEMIES(){
     SAFE_DELETE_ARRAY(Enemies);
 }
 void ENEMIES::create(){
-    Enemy = game()->container()->enemy();
+    Enemy = game()->container()->data().enemy;
     Enemies = new ENEMY[Enemy.totalNum];
 }
 void ENEMIES::init(){
     //集団の中心位置初期化
-    Enemy.centerPos = game()->container()->enemy().centerPos;
+    Enemy.centerPos = game()->container()->data().enemy.centerPos;
     //ステージ数を敵の数とする
     if (game()->stageNo() < Enemy.totalNum) {
         Enemy.curNum = game()->stageNo();
@@ -68,7 +68,7 @@ void ENEMIES::launch(){
         if ( Enemies[i].triggerElapsedTime >= Enemy.triggerInterval ) {
             VECTOR2 launchVec = normalize(playerPos - Enemies[i].pos);
             bullets->launch(Enemies[i].pos, launchVec);
-            Enemies[i].triggerElapsedTime = 0;
+            Enemies[i].triggerElapsedTime -= Enemy.triggerInterval;
         }
     }
 }

@@ -18,8 +18,8 @@ public:
         STATE_NUM
     };
     struct DATA {
-        INPUT_CODE changeSceneKey;
         SCENE_ID firstSceneId;
+        INPUT_CODE changeSceneKey;
     };
 private:
     DATA Game;

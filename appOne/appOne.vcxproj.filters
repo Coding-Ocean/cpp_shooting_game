@@ -76,6 +76,7 @@
     <ClCompile Include="EXPLOSIONS.cpp">
       <Filter>characters</Filter>
     </ClCompile>
+    <ClCompile Include="MESSAGE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">
@@ -136,5 +137,6 @@
     <ClInclude Include="EXPLOSIONS.h">
       <Filter>characters</Filter>
     </ClInclude>
+    <ClInclude Include="MESSAGE.h" />
   </ItemGroup>
 </Project>

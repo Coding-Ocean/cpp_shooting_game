@@ -9,7 +9,7 @@ STAGE_CLEAR::STAGE_CLEAR(class GAME* game) :
     SCENE(game) {
 }
 void STAGE_CLEAR::create() {
-    Scene = game()->container()->stageClearScene();
+    Scene = game()->container()->data().stageClearScene;
 }
 void STAGE_CLEAR::init() {
     game()->player()->initForStageClear();
@@ -22,7 +22,7 @@ void STAGE_CLEAR::update() {
 void STAGE_CLEAR::draw() {
     clear(Scene.backColor);
     game()->draw();
-    SCENE::draw();
+    Scene.message.draw();
 }
 void STAGE_CLEAR::nextScene(){
     if (game()->nextKeyPushed()) {

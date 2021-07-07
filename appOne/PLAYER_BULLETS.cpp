@@ -5,5 +5,5 @@ PLAYER_BULLETS::PLAYER_BULLETS(class GAME* game)
     : BULLETS(game) {
 }
 void PLAYER_BULLETS::create(){
-    SetBulletData(game()->container()->playerBullet());
+    SetBulletData(game()->container()->data().playerBullet);
 }

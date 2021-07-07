@@ -12,8 +12,9 @@ STAGE::STAGE(class GAME* game)
 STAGE::~STAGE() {
 }
 void STAGE::create() {
-    Scene = game()->container()->stageScene();
-    Stage = game()->container()->stage();
+    Scene = game()->container()->data().stageScene;
+    Stage = game()->container()->data().stage;
+    Stage.stageInitNo = Stage.stageNo;
 }
 void STAGE::init() {
     game()->player()->init();
@@ -23,7 +24,7 @@ void STAGE::init() {
     game()->explosions()->init();
     //ƒXƒ^[ƒgƒƒbƒZ[ƒW‚Ì•ÒW
     if (Stage.stageNo >= Stage.stageNum) {
-        strcpy_s(Scene.string, Stage.startMsg2);
+        Scene.message.setString(Stage.startMsg2);
     }
     else {
         //Žc‚èƒXƒe[ƒW”‚ð‘SŠp‚Ì”Žš‚É•ÏŠ·
@@ -31,11 +32,12 @@ void STAGE::init() {
         char ws[24]="‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X";
         char s[4] = { ws[i * 2], ws[i * 2 + 1],'\0' };
         //•ÒW
-        sprintf_s(Scene.string, "%s%s%s", Stage.startPreMsg1, s, Stage.startMsg1);
+        char buf[24];
+        sprintf_s(buf, "%s%s%s", Stage.startPreMsg1, s, Stage.startMsg1);
+        Scene.message.setString(buf);
     }
-    Scene.pos = game()->container()->calcPos(Scene.string, Scene.textSize);
-    Stage.FadeFlag = 0;
-    Scene.textColor.a = 0;
+    Scene.message.calcPosDispCenter();
+    Scene.message.initFadeInOut();
 }
 void STAGE::update() {
     game()->playerBullets()->update();
@@ -43,28 +45,18 @@ void STAGE::update() {
     game()->explosions()->update();
     game()->player()->update();
     game()->enemies()->update();
+    Scene.message.fadeInOut();
 }
 void STAGE::draw() {
     clear(Scene.backColor);
     game()->draw();
-    if (Scene.textColor.a >= 0) {
-        SCENE::draw();
-    }
-    if (Stage.FadeFlag == 0) {
-        Scene.textColor.a += Scene.transSpeed*2 * delta;
-        if (Scene.textColor.a > 255) {
-            Stage.FadeFlag = 1;
-        }
-    }
-    if (Stage.FadeFlag == 1 && Scene.textColor.a >= 0) {
-        Scene.textColor.a -= Scene.transSpeed * delta;
-    }
+    Scene.message.draw();
 }
 void STAGE::nextScene() {
     if (game()->enemies()->curNum() <= 0) {
         if (Stage.stageNo >= Stage.stageNum) {
             game()->changeScene(GAME::GAME_CLEAR_ID);
-            Stage.stageNo = game()->container()->stage().stageNo;
+            Stage.stageNo = Stage.stageInitNo;
         }
         else {
             game()->changeScene(GAME::STAGE_CLEAR_ID);
@@ -73,7 +65,7 @@ void STAGE::nextScene() {
     }
     else if (game()->player()->hp() <= 0) {
         game()->changeScene(GAME::GAME_OVER_ID);
-        Stage.stageNo = game()->container()->stage().stageNo;
+        Stage.stageNo = Stage.stageInitNo;
     }
 }
 int STAGE::stageNo() {

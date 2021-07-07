@@ -53,7 +53,7 @@ void GAME::run() {
     //読み込み
     Container->load();
     //全要素をつくる
-    Game = Container->game();
+    Game = Container->data().game;
     for (int i = 0; i < STATE_NUM; i++) {
         Scenes[i]->create();
     }
@@ -67,9 +67,12 @@ void GAME::run() {
     changeScene(Game.firstSceneId);
     initDeltaTime();
     //ゲームループ
+    int max = 0;
     while (notQuit) {
         setDeltaTime();
         Scenes[CurSceneId]->proc();
+        if (PlayerBullets->curNum() > max)max = PlayerBullets->curNum();
+        print(max);
     }
 }
 

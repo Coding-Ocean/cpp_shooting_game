@@ -1,22 +1,40 @@
 #pragma once
 #include"COLOR.h"
 #include"VECTOR2.h"
-class MESSAGE{
-public:
-        COLOR color;
-        float size = 0;
-        char string[16] = "";
-        VECTOR2 pos;
-        //•Ï‰»
-        VECTOR2 vec;
-        float transSpeed = 0;
-        int fadeSw = 0;
+class MESSAGE {
 private:
-    void CalcPos();
+    COLOR Color;
+    float Size = 0;
+    char String[16] = "";
+    VECTOR2 Pos;
+    //•Ï‰»
+    float FadeInSpeed = 0;
+    float FadeOutSpeed = 0;
+    int FadeSw = 0;
+    float InitPosY = 0;
+    float TargetPosY = 0;
+    float VecY = 0;
 public:
-    void create();
-    void init();
-    void update();
+    void calcPosDispCenter();
+    void setString(const char* str);
+    void setColor(const COLOR& color) { Color = color; }
+    void setSize(float size) { Size = size; }
+    void setFadeInSpeed(float fadeInSpeed) { FadeInSpeed = fadeInSpeed; }
+    void setFadeOutSpeed(float fadeOutSpeed) { FadeOutSpeed = fadeOutSpeed; }
+    void setFadeSw(int fadeSw) { FadeSw = fadeSw; }
+    void setInitPosY(float y) { InitPosY = y; }
+    void setTargetPosY(float y) { TargetPosY = y; }
+    void setVecY(float y) { VecY = y; }
+    //fade
+    void initFadeIn();
+    int fadeIn();
+    int fadeOut();
+    void initFadeInOut();
+    void fadeInOut();
+    //move
+    void initMove();
+    void move();
+    //draw
     void draw();
 };
 

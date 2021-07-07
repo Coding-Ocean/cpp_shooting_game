@@ -24,55 +24,51 @@ void CONTAINER::loadData() {
     }
 }
 #else
-VECTOR2 CONTAINER::calcPos(const char* str, float size) {
-    size_t len = strlen(str);
-    float px = (width - size / 2 * len) / 2;
-    float py = (height - size) / 2 - 100;
-    return VECTOR2(px, py);
-}
 void CONTAINER::SetData() {
     Data.game.firstSceneId = GAME::TITLE_ID;
     Data.game.changeSceneKey = KEY_Z;
 
-    Data.titleScene.backColor = COLOR(0, 30, 0);
-    Data.titleScene.textColor = COLOR(0, 255, 0);
-    Data.titleScene.textSize = 450;
-    strcpy_s(Data.titleScene.string, "KUNOICHI");
-    Data.titleScene.pos = calcPos(Data.titleScene.string, Data.titleScene.textSize);
-    Data.titleScene.transSpeed = 102;
+    Data.titleScene.backColor = COLOR(0, 50, 0);
+    Data.titleScene.message.setColor( COLOR(0, 255, 0));
+    Data.titleScene.message.setSize(450);
+    Data.titleScene.message.setString("KUNOICHI");
+    Data.titleScene.message.calcPosDispCenter();
+    Data.titleScene.message.setFadeInSpeed(102);
 
-    Data.stageClearScene.backColor = COLOR(50, 50, 50);
-    Data.stageClearScene.textColor = COLOR(255, 200, 200);
-    Data.stageClearScene.textSize = 120;
-    strcpy_s(Data.stageClearScene.string, "ステージクリア");
-    Data.stageClearScene.pos = calcPos(Data.stageClearScene.string, Data.stageClearScene.textSize);
-    Data.stageClearScene.transSpeed = 102;
-
+    //STAGE・ SCENE基底クラスのデータ
+    Data.stageScene.backColor = COLOR(0, 0, 50);
+    Data.stageScene.message.setColor(COLOR(0, 255, 255, 255));
+    Data.stageScene.message.setSize(200);
+    Data.stageScene.message.setFadeInSpeed(204);
+    Data.stageScene.message.setFadeOutSpeed(102);
     //STAGE独自の追加データ
     Data.stage.stageNum = 8;
     Data.stage.stageNo = 1;
     strcpy_s(Data.stage.startPreMsg1, "あと");
     strcpy_s(Data.stage.startMsg1, "ステージ");
     strcpy_s(Data.stage.startMsg2, "最後のステージ");
-    //STAGE・ SCENE基底クラスのデータ
-    Data.stageScene.backColor = COLOR(50, 50, 50);
-    Data.stageScene.textColor = COLOR(0, 255, 255, 255);
-    Data.stageScene.textSize = 200;
-    Data.stageScene.transSpeed = 102;
+
+    Data.stageClearScene.backColor = COLOR(0, 0, 50);
+    Data.stageClearScene.message.setColor(COLOR(255, 200, 200));
+    Data.stageClearScene.message.setSize(120);
+    Data.stageClearScene.message.setString("ステージクリア");
+    Data.stageClearScene.message.calcPosDispCenter();
+    Data.stageClearScene.message.setFadeInSpeed(102);
 
     Data.gameClearScene.backColor = COLOR(60, 60, 0);
-    Data.gameClearScene.textColor = COLOR(255, 255, 0);
-    Data.gameClearScene.textSize = 370;
-    strcpy_s(Data.gameClearScene.string, "GAME CLEAR");
-    Data.gameClearScene.pos = calcPos(Data.gameClearScene.string, Data.gameClearScene.textSize);
-    Data.gameClearScene.vec = VECTOR2(0, -300);
+    Data.gameClearScene.message.setColor(COLOR(255, 255, 0));
+    Data.gameClearScene.message.setSize(370);
+    Data.gameClearScene.message.setString("GAME CLEAR");
+    Data.gameClearScene.message.calcPosDispCenter();
+    Data.gameClearScene.message.setInitPosY(height);
+    Data.gameClearScene.message.setVecY(-300);
 
     Data.gameOverScene.backColor = COLOR(60, 0, 0);
-    Data.gameOverScene.textColor = COLOR(255, 0, 0);
-    Data.gameOverScene.textSize = 370;
-    strcpy_s(Data.gameOverScene.string, "GAME OVER");
-    Data.gameOverScene.pos = calcPos(Data.gameOverScene.string, Data.gameOverScene.textSize);
-    Data.gameOverScene.transSpeed = 102;
+    Data.gameOverScene.message.setColor(COLOR(255, 0, 0));
+    Data.gameOverScene.message.setSize(370);
+    Data.gameOverScene.message.setString("GAME OVER");
+    Data.gameOverScene.message.calcPosDispCenter();
+    Data.gameOverScene.message.setFadeInSpeed(102);
 
     Data.player.pos.x = 960;
     Data.player.pos.y = 975;
@@ -96,7 +92,7 @@ void CONTAINER::SetData() {
     Data.player.angSpeed = 12;
     Data.player.standingRestTime = 0;
     Data.player.standingTime = 0.6f;
-    Data.player.triggerInterval2 = 0.02f;
+    Data.player.triggerInterval2 = 0.03f;
     Data.player.launchAngle = 0;
     Data.player.launchAngleSpeed = 3.1415926f/180*25;
     //for game over
@@ -105,7 +101,7 @@ void CONTAINER::SetData() {
     Data.player.rollingSpeed = 2.4f;
     Data.player.rollingLimmit = 1.2f;
     Data.player.changeRedColorSpeed = -255;
-    Data.player.changeGreenColorSpeed = 128;
+    Data.player.changeGreenColorSpeed = 255;
 
     Data.enemy.totalNum = 8;
     Data.enemy.triggerInterval = 0.72f;
@@ -125,7 +121,7 @@ void CONTAINER::SetData() {
     Data.enemy.collisionColor = COLOR(255, 0, 0, 200);
     Data.enemy.normalColor = COLOR(255, 255, 255, 200);
 
-    Data.playerBullet.totalNum = 36;
+    Data.playerBullet.totalNum = 40;
     Data.playerBullet.curNum = 0;
     Data.playerBullet.advSpeed = 600;
     Data.playerBullet.angSpeed = 0.05f;
@@ -153,10 +149,12 @@ void CONTAINER::SetData() {
     Data.explosion.color = COLOR(255, 255, 255, 210);
     Data.explosion.scale = 10;
 
-//Data.stage.stageNum = 8;
-//Data.stage.stageNo = 7;
+Data.game.changeSceneKey = KEY_J;
+Data.stage.stageNum = 8;
+Data.stage.stageNo = 7;
 //Data.enemy.totalNum = 8;
 //Data.enemy.hp = 1;
+//Data.player.hp = 1;
 //Data.player.invincibleTime = 5;
 
     //create binary file

@@ -7,20 +7,18 @@ TITLE::TITLE(class GAME* game)
     :SCENE(game){
 }
 void TITLE::create() {
-    Scene = game()->container()->titleScene();
+    Scene = game()->container()->data().titleScene;
 }
 void TITLE::init() {
-    Scene.textColor.a = 0;
     game()->player()->initForTitle();
+    Scene.message.initFadeIn();
 }
 void TITLE::update() {
-    if (Scene.textColor.a < 255) {
-        Scene.textColor.a += Scene.transSpeed * delta;
-    }
+    Scene.message.fadeIn();
 }
 void TITLE::draw() {
     clear(Scene.backColor);
-    SCENE::draw();
+    Scene.message.draw();
     game()->player()->draw();
 }
 void TITLE::nextScene(){

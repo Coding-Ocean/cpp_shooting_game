@@ -8,10 +8,10 @@ public:
     struct DATA{
         int stageNum;
         int stageNo;
+        int stageInitNo;
         char startPreMsg1[8];
         char startMsg1[16];
         char startMsg2[16];
-        int FadeFlag;
     };
 private:
     DATA Stage;

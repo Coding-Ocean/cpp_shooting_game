@@ -9,11 +9,11 @@ GAME_OVER::GAME_OVER(class GAME* game)
     :SCENE(game) {
 }
 void GAME_OVER::create() {
-    Scene = game()->container()->gameOverScene();
+    Scene = game()->container()->data().gameOverScene;
 }
 void GAME_OVER::init() {
     game()->player()->initForGameOver();
-    Scene.textColor.a = 0;
+    Scene.message.initFadeIn();
 }
 void GAME_OVER::update() {
     game()->playerBullets()->update();
@@ -21,14 +21,12 @@ void GAME_OVER::update() {
     game()->explosions()->update();
     game()->enemies()->update();
     game()->player()->updateForGameOver();
-    if (Scene.textColor.a < 255) {
-        Scene.textColor.a += Scene.transSpeed * delta;
-    }
+    Scene.message.fadeIn();
 }
 void GAME_OVER::draw() {
     clear(Scene.backColor);
     game()->draw();
-    SCENE::draw();
+    Scene.message.draw();
 }
 void GAME_OVER::nextScene() {
     if (game()->nextKeyPushed()) {

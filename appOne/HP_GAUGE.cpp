@@ -5,7 +5,7 @@ HP_GAUGE::HP_GAUGE(GAME*game):
     GAME_OBJECT(game){ 
 }
 void HP_GAUGE::create() {
-    HpGauge = game()->container()->hpGauge();
+    HpGauge = game()->container()->data().hpGauge;
 }
 void HP_GAUGE::draw(const VECTOR2& pos, const VECTOR2& offset, int hp ) {
     noStroke();

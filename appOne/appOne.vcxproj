@@ -175,6 +175,7 @@
     <ClCompile Include="GAME_OVER.cpp" />
     <ClCompile Include="gmain.cpp" />
     <ClCompile Include="HP_GAUGE.cpp" />
+    <ClCompile Include="MESSAGE.cpp" />
     <ClCompile Include="PLAYER.cpp" />
     <ClCompile Include="PLAYER_BULLETS.cpp" />
     <ClCompile Include="SCENE.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="GAME_OBJECT.h" />
     <ClInclude Include="GAME_OVER.h" />
     <ClInclude Include="HP_GAUGE.h" />
+    <ClInclude Include="MESSAGE.h" />
     <ClInclude Include="PLAYER.h" />
     <ClInclude Include="PLAYER_BULLETS.h" />
     <ClInclude Include="SCENE.h" />
