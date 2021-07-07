@@ -22,8 +22,8 @@ void ENEMIES::init(){
     //集団の中心位置初期化
     Enemy.centerPos = game()->container()->enemy().centerPos;
     //ステージ数を敵の数とする
-    if (game()->stageCnt() < Enemy.totalNum) {
-        Enemy.curNum = game()->stageCnt();
+    if (game()->stageNo() < Enemy.totalNum) {
+        Enemy.curNum = game()->stageNo();
     }
     else {
         Enemy.curNum = Enemy.totalNum;

@@ -12,12 +12,16 @@ void GAME_CLEAR::create() {
 }
 void GAME_CLEAR::init() {
     game()->player()->initForGameClear();
+    Scene.pos.y = height;
 }
 void GAME_CLEAR::update() {
     game()->playerBullets()->update();
     game()->enemyBullets()->update();
     game()->explosions()->update();
     game()->player()->updateForGameClear();
+    if (Scene.pos.y > (height - Scene.textSize) / 2) {
+        Scene.pos += Scene.vec * delta;
+    }
 }
 void GAME_CLEAR::draw() {
     clear(Scene.backColor);

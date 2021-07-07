@@ -13,11 +13,13 @@ void TITLE::init() {
     Scene.textColor.a = 0;
     game()->player()->initForTitle();
 }
-void TITLE::draw() {
-    clear(Scene.backColor);
+void TITLE::update() {
     if (Scene.textColor.a < 255) {
         Scene.textColor.a += Scene.transSpeed * delta;
     }
+}
+void TITLE::draw() {
+    clear(Scene.backColor);
     SCENE::draw();
     game()->player()->draw();
 }

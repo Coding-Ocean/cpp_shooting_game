@@ -46,10 +46,11 @@ void CONTAINER::SetData() {
     Data.stageClearScene.textSize = 120;
     strcpy_s(Data.stageClearScene.string, "ステージクリア");
     Data.stageClearScene.pos = calcPos(Data.stageClearScene.string, Data.stageClearScene.textSize);
+    Data.stageClearScene.transSpeed = 102;
 
     //STAGE独自の追加データ
     Data.stage.stageNum = 8;
-    Data.stage.stageCnt = 1;
+    Data.stage.stageNo = 1;
     strcpy_s(Data.stage.startPreMsg1, "あと");
     strcpy_s(Data.stage.startMsg1, "ステージ");
     strcpy_s(Data.stage.startMsg2, "最後のステージ");
@@ -64,12 +65,14 @@ void CONTAINER::SetData() {
     Data.gameClearScene.textSize = 370;
     strcpy_s(Data.gameClearScene.string, "GAME CLEAR");
     Data.gameClearScene.pos = calcPos(Data.gameClearScene.string, Data.gameClearScene.textSize);
+    Data.gameClearScene.vec = VECTOR2(0, -300);
 
     Data.gameOverScene.backColor = COLOR(60, 0, 0);
     Data.gameOverScene.textColor = COLOR(255, 0, 0);
     Data.gameOverScene.textSize = 370;
     strcpy_s(Data.gameOverScene.string, "GAME OVER");
     Data.gameOverScene.pos = calcPos(Data.gameOverScene.string, Data.gameOverScene.textSize);
+    Data.gameOverScene.transSpeed = 102;
 
     Data.player.pos.x = 960;
     Data.player.pos.y = 975;
@@ -101,6 +104,8 @@ void CONTAINER::SetData() {
     Data.player.fallLimmit = 1050;
     Data.player.rollingSpeed = 2.4f;
     Data.player.rollingLimmit = 1.2f;
+    Data.player.changeRedColorSpeed = -255;
+    Data.player.changeGreenColorSpeed = 128;
 
     Data.enemy.totalNum = 8;
     Data.enemy.triggerInterval = 0.72f;
@@ -148,11 +153,11 @@ void CONTAINER::SetData() {
     Data.explosion.color = COLOR(255, 255, 255, 210);
     Data.explosion.scale = 10;
 
-Data.stage.stageNum = 8;
-Data.stage.stageCnt = 7;
-Data.enemy.totalNum = 8;
+//Data.stage.stageNum = 8;
+//Data.stage.stageNo = 7;
+//Data.enemy.totalNum = 8;
 //Data.enemy.hp = 1;
-Data.player.invincibleTime = 5;
+//Data.player.invincibleTime = 5;
 
     //create binary file
     FILE* fp;

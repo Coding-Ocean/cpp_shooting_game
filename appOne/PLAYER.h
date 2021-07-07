@@ -39,6 +39,8 @@ public:
         float fallLimmit = 0;
         float rollingSpeed = 0;
         float rollingLimmit = 0;
+        float changeRedColorSpeed = 0;
+        float changeGreenColorSpeed = 0;
     };
 private:
     DATA Player;

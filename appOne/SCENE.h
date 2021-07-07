@@ -12,6 +12,7 @@ public:
         float transSpeed = 0;
         float textSize = 0;
         VECTOR2 pos;
+        VECTOR2 vec;
         char string[16] = "";
     };
 protected:

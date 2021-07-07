@@ -13,6 +13,7 @@ void GAME_OVER::create() {
 }
 void GAME_OVER::init() {
     game()->player()->initForGameOver();
+    Scene.textColor.a = 0;
 }
 void GAME_OVER::update() {
     game()->playerBullets()->update();
@@ -20,6 +21,9 @@ void GAME_OVER::update() {
     game()->explosions()->update();
     game()->enemies()->update();
     game()->player()->updateForGameOver();
+    if (Scene.textColor.a < 255) {
+        Scene.textColor.a += Scene.transSpeed * delta;
+    }
 }
 void GAME_OVER::draw() {
     clear(Scene.backColor);

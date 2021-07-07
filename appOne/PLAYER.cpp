@@ -119,9 +119,13 @@ void PLAYER::initForGameOver() {
 }
 void PLAYER::updateForGameOver() {
     if (Player.angle < Player.rollingLimmit) {
-        Player.angle += Player.rollingSpeed*delta;
+        Player.angle += Player.rollingSpeed * delta;
     }
     if (Player.pos.y < Player.fallLimmit) {
-        Player.pos.y += Player.fallSpeed*delta;
+        Player.pos.y += Player.fallSpeed * delta;
+    }
+    if (Player.color.r > 0.0f) {
+        Player.color.r += Player.changeRedColorSpeed * delta;
+        Player.color.g += Player.changeGreenColorSpeed * delta;
     }
 }

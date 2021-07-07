@@ -85,16 +85,11 @@ void GAME::draw() {
     PlayerBullets->draw();
     EnemyBullets->draw();
     Explosions->draw();
-    static int max = 0;
-    if (EnemyBullets->curNum() > max) {
-        max = EnemyBullets->curNum();
-    }
-    print(max);
 }
-int GAME::stageCnt() {
+int GAME::stageNo() {
     //Enemiesの数をステージカウンターと同じにするためのメンバ
     STAGE* stage = dynamic_cast<STAGE*>(Scenes[STAGE_ID]);
-    return stage->stageCnt();
+    return stage->stageNo();
 }
 int GAME::nextKeyPushed() {
     return isTrigger(Game.changeSceneKey);

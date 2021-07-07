@@ -7,10 +7,11 @@ class STAGE
 public:
     struct DATA{
         int stageNum;
-        int stageCnt;
+        int stageNo;
         char startPreMsg1[8];
         char startMsg1[16];
         char startMsg2[16];
+        int FadeFlag;
     };
 private:
     DATA Stage;
@@ -22,6 +23,6 @@ public:
     void update();
     void draw();
     void nextScene();
-    int stageCnt();
+    int stageNo();
 };
 

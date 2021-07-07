@@ -73,7 +73,9 @@
     <ClCompile Include="CONTAINER.cpp">
       <Filter>container</Filter>
     </ClCompile>
-    <ClCompile Include="EXPLOSIONS.cpp" />
+    <ClCompile Include="EXPLOSIONS.cpp">
+      <Filter>characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">
@@ -131,6 +133,8 @@
     <ClInclude Include="STAGE_CLEAR.h">
       <Filter>scenes</Filter>
     </ClInclude>
-    <ClInclude Include="EXPLOSIONS.h" />
+    <ClInclude Include="EXPLOSIONS.h">
+      <Filter>characters</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
