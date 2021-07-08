@@ -1,6 +1,6 @@
 #pragma once
 #include "GAME_OBJECT.h"
-#include "libOne.h"
+#include "VECTOR2.h"
 class EXPLOSIONS :
     public GAME_OBJECT
 {

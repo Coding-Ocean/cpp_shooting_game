@@ -1,4 +1,4 @@
-#include"libOne.h"
+#include"graphic.h"
 #include"CONTAINER.h"
 #include"PLAYER.h"
 #include"PLAYER_BULLETS.h"
@@ -24,17 +24,16 @@ void STAGE::init() {
     game()->explosions()->init();
     //ƒXƒ^[ƒgƒƒbƒZ[ƒW‚Ì•ÒW
     if (Stage.stageNo >= Stage.stageNum) {
-        Scene.message.setString(Stage.startMsg2);
+        Scene.message.setString(Stage.lastMsg);
     }
     else {
-        //Žc‚èƒXƒe[ƒW”‚ð‘SŠp‚Ì”Žš‚É•ÏŠ·
-        int i = Stage.stageNum - Stage.stageNo + 1;
-        char ws[24]="‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X";
-        char s[4] = { ws[i * 2], ws[i * 2 + 1],'\0' };
-        //•ÒW
-        char buf[24];
-        sprintf_s(buf, "%s%s%s", Stage.startPreMsg1, s, Stage.startMsg1);
-        Scene.message.setString(buf);
+        int no = Stage.stageNum - Stage.stageNo + 1;
+        if (no >= 10) {
+            Scene.message.setEditString(Stage.preMsg, no, "");
+        }
+        else {
+            Scene.message.setEditString(Stage.preMsg, no, Stage.sufMsg);
+        }
     }
     Scene.message.calcPosDispCenter();
     Scene.message.initFadeInOut();

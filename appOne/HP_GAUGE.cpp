@@ -1,3 +1,4 @@
+#include"graphic.h"
 #include"CONTAINER.h"
 #include"GAME.h"
 #include "HP_GAUGE.h"

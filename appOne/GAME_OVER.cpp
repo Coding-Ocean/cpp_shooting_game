@@ -1,4 +1,4 @@
-#include"libOne.h"
+#include"graphic.h"
 #include"GAME.h"
 #include"CONTAINER.h"
 #include"PLAYER_BULLETS.h"
@@ -12,7 +12,6 @@ void GAME_OVER::create() {
     Scene = game()->container()->data().gameOverScene;
 }
 void GAME_OVER::init() {
-    game()->player()->initForGameOver();
     Scene.message.initFadeIn();
 }
 void GAME_OVER::update() {

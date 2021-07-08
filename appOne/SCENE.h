@@ -1,7 +1,6 @@
 #pragma once
 #include"GAME_OBJECT.h"
 #include"COLOR.h"
-#include"VECTOR2.h"
 #include"MESSAGE.h"
 class SCENE:
     public GAME_OBJECT

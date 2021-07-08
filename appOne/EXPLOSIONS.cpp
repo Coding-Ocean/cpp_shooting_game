@@ -1,9 +1,15 @@
+#include"common.h"
+#include"rand.h"
+#include"window.h"
+#include"graphic.h"
 #include"GAME.h"
 #include"CONTAINER.h"
 #include "EXPLOSIONS.h"
 EXPLOSIONS::EXPLOSIONS(class GAME* game):
 GAME_OBJECT(game){}
-EXPLOSIONS::~EXPLOSIONS(){}
+EXPLOSIONS::~EXPLOSIONS(){
+    SAFE_DELETE_ARRAY(Explosions);
+}
 void EXPLOSIONS::create(){
     Explosion = game()->container()->data().explosion;
     Explosions = new EXPLOSION[Explosion.totalNum];

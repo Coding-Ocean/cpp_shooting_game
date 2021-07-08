@@ -5,7 +5,7 @@ class MESSAGE {
 private:
     COLOR Color;
     float Size = 0;
-    char String[16] = "";
+    char String[20] = "";
     VECTOR2 Pos;
     //•Ï‰»
     float FadeInSpeed = 0;
@@ -25,6 +25,7 @@ public:
     void setInitPosY(float y) { InitPosY = y; }
     void setTargetPosY(float y) { TargetPosY = y; }
     void setVecY(float y) { VecY = y; }
+    void setEditString(const char* preMsg, int n, const char* sufMsg);
     //fade
     void initFadeIn();
     int fadeIn();

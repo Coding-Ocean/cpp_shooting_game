@@ -1,4 +1,7 @@
-#include"libOne.h"
+#include"common.h"
+#include"window.h"
+#include"graphic.h"
+#include"mathUtil.h"
 #include"GAME.h"
 #include"STAGE.h"
 #include"CONTAINER.h"
@@ -29,7 +32,7 @@ void ENEMIES::init(){
         Enemy.curNum = Enemy.totalNum;
     }
     //äeìGÇÃèâä˙âª
-    float divTheta = M_2PI / Enemy.curNum;
+    float divTheta = 3.1415926f * 2 / Enemy.curNum;
     float divInterval = Enemy.triggerInterval / Enemy.curNum;
     for (int i = 0; i < Enemy.curNum; i++) {
         Enemies[i].ofstTheta = divTheta * i;
@@ -107,7 +110,7 @@ void ENEMIES::draw(){
         //hp gauge
         game()->hpGauge()->draw(Enemies[i].pos, Enemy.hpGaugeOffset, Enemies[i].hp);
 #ifdef _DEBUG
-        fill(255, 255, 255, 64);
+        fill(255, 255, 255, 128);
         circle(Enemies[i].pos.x, Enemies[i].pos.y, Enemy.bcRadius*2);
 #endif
     }

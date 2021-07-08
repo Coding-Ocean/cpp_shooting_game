@@ -18,6 +18,25 @@ void MESSAGE::calcPosDispCenter() {
 void MESSAGE::setString(const char* str) {
     strcpy_s(String, str);
 }
+void MESSAGE::setEditString(const char* preMsg, int n, const char* sufMsg) {
+    int n10 = n / 10;//10の位
+    int n1 = n - n10 * 10;//1の位
+    //数値を全角の数字に変換
+    char ws[24] = "０一二三四五六七八九";
+    char no[8] = { '\0' };
+    if (n10 == 0) {
+        no[0] = ws[n1 * 2];
+        no[1] = ws[n1 * 2 + 1];
+    }
+    else {
+        no[0] = ws[n10 * 2];
+        no[1] = ws[n10 * 2 + 1];
+        no[2] = ws[n1 * 2];
+        no[3] = ws[n1 * 2 + 1];
+    }
+    //残りステージ数の前後に文字列をくっつけて編集
+    sprintf_s(String, "%s%s%s", preMsg, no, sufMsg);
+}
 
 void MESSAGE::initFadeIn(){
     Color.a = 0;

@@ -15,7 +15,7 @@ void CONTAINER::load() {
 }
 
 #ifdef _BIN_
-void CONTAINER::loadData() {
+void CONTAINER::LoadData() {
     FILE* fp;
     fopen_s(&fp, "assets\\data.bin", "rb");
     if (fp) {
@@ -35,7 +35,7 @@ void CONTAINER::SetData() {
     Data.titleScene.message.calcPosDispCenter();
     Data.titleScene.message.setFadeInSpeed(102);
 
-    //STAGE・ SCENE基底クラスのデータ
+    //STAGEのSCENE基底クラスのデータ
     Data.stageScene.backColor = COLOR(0, 0, 50);
     Data.stageScene.message.setColor(COLOR(0, 255, 255, 255));
     Data.stageScene.message.setSize(200);
@@ -44,39 +44,39 @@ void CONTAINER::SetData() {
     //STAGE独自の追加データ
     Data.stage.stageNum = 8;
     Data.stage.stageNo = 1;
-    strcpy_s(Data.stage.startPreMsg1, "あと");
-    strcpy_s(Data.stage.startMsg1, "ステージ");
-    strcpy_s(Data.stage.startMsg2, "最後のステージ");
+    strcpy_s(Data.stage.preMsg, "任務はあと");
+    strcpy_s(Data.stage.sufMsg, "つ");
+    strcpy_s(Data.stage.lastMsg, "最後の任務");
 
     Data.stageClearScene.backColor = COLOR(0, 0, 50);
     Data.stageClearScene.message.setColor(COLOR(255, 200, 200));
     Data.stageClearScene.message.setSize(120);
-    Data.stageClearScene.message.setString("ステージクリア");
     Data.stageClearScene.message.calcPosDispCenter();
-    Data.stageClearScene.message.setFadeInSpeed(102);
+    Data.stageClearScene.message.setFadeInSpeed(500);
+    //STAGE_CLEAR独自の追加データ
+    strcpy_s(Data.stageClear.preMsg, "「其ノ");
+    strcpy_s(Data.stageClear.sufMsg, "」完");
 
     Data.gameClearScene.backColor = COLOR(60, 60, 0);
     Data.gameClearScene.message.setColor(COLOR(255, 255, 0));
     Data.gameClearScene.message.setSize(370);
-    Data.gameClearScene.message.setString("GAME CLEAR");
+    Data.gameClearScene.message.setString("任務完了");
     Data.gameClearScene.message.calcPosDispCenter();
     Data.gameClearScene.message.setInitPosY(height);
     Data.gameClearScene.message.setVecY(-300);
 
     Data.gameOverScene.backColor = COLOR(60, 0, 0);
     Data.gameOverScene.message.setColor(COLOR(255, 0, 0));
-    Data.gameOverScene.message.setSize(370);
-    Data.gameOverScene.message.setString("GAME OVER");
+    Data.gameOverScene.message.setSize(500);
+    Data.gameOverScene.message.setString("失敗");
     Data.gameOverScene.message.calcPosDispCenter();
     Data.gameOverScene.message.setFadeInSpeed(102);
 
-    Data.player.pos.x = 960;
-    Data.player.pos.y = 975;
+    Data.player.pos = VECTOR2(960, 975);
     Data.player.angle = 0;
     Data.player.advSpeed = 300;
     Data.player.limmitRange = 100;
-    Data.player.launchVec.x = 0;
-    Data.player.launchVec.y = -1;
+    Data.player.launchVec = VECTOR2(0,-1);
     Data.player.triggerElapsedTime = 0.1f;
     Data.player.triggerInterval = 0.1f;
     Data.player.bcRadius = 40;
@@ -104,7 +104,7 @@ void CONTAINER::SetData() {
     Data.player.changeGreenColorSpeed = 255;
 
     Data.enemy.totalNum = 8;
-    Data.enemy.triggerInterval = 0.72f;
+    Data.enemy.triggerInterval = 0.7f;
     Data.enemy.centerPos.x = 960;
     Data.enemy.centerPos.y = -300;
     Data.enemy.majRadius = 800;
@@ -144,26 +144,26 @@ void CONTAINER::SetData() {
     Data.explosion.curNum = 0;
     Data.explosion.interval = 0.048f;
     Data.explosion.numImgs = 48;
-    Data.explosion.imgs = new int[Data.explosion.numImgs];
+    Data.explosion.imgs = 0;
     Data.explosion.startIdx = 24;
     Data.explosion.color = COLOR(255, 255, 255, 210);
     Data.explosion.scale = 10;
 
-Data.game.changeSceneKey = KEY_J;
-Data.stage.stageNum = 8;
-Data.stage.stageNo = 7;
-//Data.enemy.totalNum = 8;
-//Data.enemy.hp = 1;
-//Data.player.hp = 1;
-//Data.player.invincibleTime = 5;
-
     //create binary file
     FILE* fp;
-    fopen_s(&fp, "assets\\Data.bin", "wb");
+    fopen_s(&fp, "assets\\data.bin", "wb");
     if (fp) {
         fwrite(&Data, sizeof(ALL_DATA), 1, fp);
         fclose(fp);
     }
+
+//Data.game.changeSceneKey = KEY_J;
+//Data.stage.stageNum = 10;
+//Data.stage.stageNo = 8;
+//Data.enemy.totalNum = 10;
+//Data.enemy.hp = 1;
+//Data.player.hp = 1;
+//Data.player.invincibleTime = 5;
 }
 #endif
 
@@ -172,6 +172,8 @@ void CONTAINER::LoadGraphics() {
     Data.playerBullet.img = loadImage("assets\\pBullet.png");
     Data.enemy.img = loadImage("assets\\enemy.png");
     Data.enemyBullet.img = loadImage("assets\\eBullet.png");
+
+    Data.explosion.imgs = new int[Data.explosion.numImgs];
     char filename[64];
     for (int i = 0; i < Data.explosion.numImgs; i++) {
         sprintf_s(filename, "assets\\explosion\\a%02d.png", i);

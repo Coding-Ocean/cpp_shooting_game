@@ -1,3 +1,7 @@
+#include"common.h"
+#include"framework.h"
+#include"window.h"
+#include"graphic.h"
 //コンテナ
 #include"CONTAINER.h"
 //シーケンス
@@ -67,12 +71,21 @@ void GAME::run() {
     changeScene(Game.firstSceneId);
     initDeltaTime();
     //ゲームループ
-    int max = 0;
+#ifdef _DEBUG
+    int EBmax = 0;
+    int PBmax = 0;
+#endif
     while (notQuit) {
         setDeltaTime();
         Scenes[CurSceneId]->proc();
-        if (PlayerBullets->curNum() > max)max = PlayerBullets->curNum();
-        print(max);
+#ifdef _DEBUG
+        fill(255);
+        print((let)"delta=" + delta);
+        if (PlayerBullets->curNum() > PBmax)PBmax = PlayerBullets->curNum();
+        print((let)"PBmax=" + PBmax);
+        if (EnemyBullets->curNum() > EBmax)EBmax = EnemyBullets->curNum();
+        print((let)"EBmax=" + EBmax);
+#endif
     }
 }
 

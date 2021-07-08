@@ -1,5 +1,4 @@
 #pragma once
-#include"libOne.h"
 #include "SCENE.h"
 class STAGE 
     : public SCENE
@@ -9,9 +8,9 @@ public:
         int stageNum;
         int stageNo;
         int stageInitNo;
-        char startPreMsg1[8];
-        char startMsg1[16];
-        char startMsg2[16];
+        char preMsg[16];//prefix message
+        char sufMsg[16];//suffix message
+        char lastMsg[16];
     };
 private:
     DATA Stage;

@@ -63,7 +63,6 @@ public:
     void initForGameClear();
     void updateForGameClear();
     //game over
-    void initForGameOver();
     void updateForGameOver();
     //getter
     VECTOR2 pos() { return Player.pos; }

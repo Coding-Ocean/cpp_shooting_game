@@ -1,6 +1,6 @@
 #pragma once
-#include"VECTOR2.h"
 #include"GAME_OBJECT.h"
+#include"VECTOR2.h"
 class BULLETS:
     public GAME_OBJECT
 {

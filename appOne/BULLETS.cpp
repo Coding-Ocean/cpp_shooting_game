@@ -6,7 +6,7 @@ BULLETS::BULLETS(class GAME* game)
     :GAME_OBJECT(game){
 }
 BULLETS::~BULLETS() {
-    if (Bullets) { delete[] Bullets; Bullets = 0; }
+    SAFE_DELETE_ARRAY(Bullets);
 }
 void BULLETS::SetBulletData(const DATA& data) {
     Bullet = data;
@@ -45,7 +45,7 @@ void BULLETS::draw() {
         imageColor(255);
         image(Bullet.img, Bullets[i].pos.x, Bullets[i].pos.y, Bullets[i].angle);
 #ifdef _DEBUG
-        fill(255, 255, 255, 64);
+        fill(255, 255, 255, 128);
         circle(Bullets[i].pos.x, Bullets[i].pos.y, Bullet.bcRadius * 2);
 #endif
     }

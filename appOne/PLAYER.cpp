@@ -1,4 +1,6 @@
-#include"libOne.h"
+#include"window.h"
+#include"graphic.h"
+#include"mathUtil.h"
 #include"GAME.h"
 #include"CONTAINER.h"
 #include"PLAYER_BULLETS.h"
@@ -74,7 +76,7 @@ void PLAYER::draw() {
     //HP gauge
     game()->hpGauge()->draw(Player.pos, Player.hpGaugeOffset, Player.hp);
 #ifdef _DEBUG
-    fill(255, 255, 255, 64);
+    fill(255, 255, 255, 128);
     circle(Player.pos.x, Player.pos.y, Player.bcRadius * 2);
 #endif
 }
@@ -86,9 +88,11 @@ void PLAYER::initForTitle() {
     Player.angle = 0;
     Player.color = Player.normalColor;
 }
+
 void PLAYER::initForStageClear() {
     Player.color = Player.normalColor;
 }
+
 void PLAYER::initForGameClear() {
     Player.lastPos = Player.pos;
     Player.hp = 0;
@@ -115,8 +119,7 @@ void PLAYER::updateForGameClear() {
         Player.triggerElapsedTime -= Player.triggerInterval2;
     }
 }
-void PLAYER::initForGameOver() {
-}
+
 void PLAYER::updateForGameOver() {
     if (Player.angle < Player.rollingLimmit) {
         Player.angle += Player.rollingSpeed * delta;
