@@ -35,27 +35,26 @@ void CONTAINER::SetData() {
     Data.titleScene.message.calcPosDispCenter();
     Data.titleScene.message.setFadeInSpeed(102);
 
+    //STAGE独自の追加データ
+    Data.stage.num = 8;
+    Data.stage.no = 1;
     //STAGEのSCENE基底クラスのデータ
     Data.stageScene.backColor = COLOR(0, 0, 50);
     Data.stageScene.message.setColor(COLOR(0, 255, 255, 255));
     Data.stageScene.message.setSize(200);
     Data.stageScene.message.setFadeInSpeed(204);
     Data.stageScene.message.setFadeOutSpeed(102);
-    //STAGE独自の追加データ
-    Data.stage.stageNum = 8;
-    Data.stage.stageNo = 1;
-    strcpy_s(Data.stage.preMsg, "任務はあと");
-    strcpy_s(Data.stage.sufMsg, "つ");
-    strcpy_s(Data.stage.lastMsg, "最後の任務");
+    Data.stageScene.message.setPreMsg("任務はあと");
+    Data.stageScene.message.setSufMsg("つ");
+    Data.stageScene.message.setLastMsg("最後の任務");
 
     Data.stageClearScene.backColor = COLOR(0, 0, 50);
     Data.stageClearScene.message.setColor(COLOR(255, 200, 200));
     Data.stageClearScene.message.setSize(120);
     Data.stageClearScene.message.calcPosDispCenter();
     Data.stageClearScene.message.setFadeInSpeed(500);
-    //STAGE_CLEAR独自の追加データ
-    strcpy_s(Data.stageClear.preMsg, "「其ノ");
-    strcpy_s(Data.stageClear.sufMsg, "」完");
+    Data.stageClearScene.message.setPreMsg("「其ノ");
+    Data.stageClearScene.message.setSufMsg("」完");
 
     Data.gameClearScene.backColor = COLOR(60, 60, 0);
     Data.gameClearScene.message.setColor(COLOR(255, 255, 0));
@@ -135,10 +134,14 @@ void CONTAINER::SetData() {
     Data.enemyBullet.ofstLaunchDist = 90;
     Data.enemyBullet.bcRadius = 30;
 
-    Data.hpGauge.color = COLOR(0, 255, 0);
-    Data.hpGauge.danger = COLOR(255, 0, 0);
+    Data.hpGauge.hp = 0;
+    Data.hpGauge.green = COLOR(0, 255, 0);
+    Data.hpGauge.yellow = COLOR(255, 255, 0);
+    Data.hpGauge.red = COLOR(255, 0, 0);
     Data.hpGauge.coWidth = 30;
-    Data.hpGauge.h = 15;
+    Data.hpGauge.hi = 15;
+    Data.hpGauge.warningHp = 2;
+    Data.hpGauge.dangerHp = 1;
 
     Data.explosion.totalNum = 4;
     Data.explosion.curNum = 0;
@@ -146,7 +149,7 @@ void CONTAINER::SetData() {
     Data.explosion.numImgs = 48;
     Data.explosion.imgs = 0;
     Data.explosion.startIdx = 24;
-    Data.explosion.color = COLOR(255, 255, 255, 210);
+    Data.explosion.color = COLOR(255, 255, 255, 255);
     Data.explosion.scale = 10;
 
     //create binary file

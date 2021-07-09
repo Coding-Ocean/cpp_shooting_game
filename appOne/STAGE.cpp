@@ -14,7 +14,7 @@ STAGE::~STAGE() {
 void STAGE::create() {
     Scene = game()->container()->data().stageScene;
     Stage = game()->container()->data().stage;
-    Stage.stageInitNo = Stage.stageNo;
+    Stage.initNo = Stage.no;
 }
 void STAGE::init() {
     game()->player()->init();
@@ -22,18 +22,12 @@ void STAGE::init() {
     game()->playerBullets()->init();
     game()->enemyBullets()->init();
     game()->explosions()->init();
-    //スタートメッセージの編集
-    if (Stage.stageNo >= Stage.stageNum) {
-        Scene.message.setString(Stage.lastMsg);
+    if (Stage.no >= Stage.num) {
+        Scene.message.last();
     }
     else {
-        int no = Stage.stageNum - Stage.stageNo + 1;
-        if (no >= 10) {
-            Scene.message.setEditString(Stage.preMsg, no, "");
-        }
-        else {
-            Scene.message.setEditString(Stage.preMsg, no, Stage.sufMsg);
-        }
+        int no = Stage.num - Stage.no + 1;
+        Scene.message.edit(no);
     }
     Scene.message.calcPosDispCenter();
     Scene.message.initFadeInOut();
@@ -53,20 +47,20 @@ void STAGE::draw() {
 }
 void STAGE::nextScene() {
     if (game()->enemies()->curNum() <= 0) {
-        if (Stage.stageNo >= Stage.stageNum) {
+        if (Stage.no >= Stage.num) {
             game()->changeScene(GAME::GAME_CLEAR_ID);
-            Stage.stageNo = Stage.stageInitNo;
+            Stage.no = Stage.initNo;
         }
         else {
             game()->changeScene(GAME::STAGE_CLEAR_ID);
-            Stage.stageNo++;
+            Stage.no++;
         }
     }
     else if (game()->player()->hp() <= 0) {
         game()->changeScene(GAME::GAME_OVER_ID);
-        Stage.stageNo = Stage.stageInitNo;
+        Stage.no = Stage.initNo;
     }
 }
-int STAGE::stageNo() {
-    return Stage.stageNo;
+int STAGE::no() {
+    return Stage.no;
 }

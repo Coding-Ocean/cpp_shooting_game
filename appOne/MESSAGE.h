@@ -7,13 +7,18 @@ private:
     float Size = 0;
     char String[20] = "";
     VECTOR2 Pos;
-    //変化
+    //フェード
     float FadeInSpeed = 0;
     float FadeOutSpeed = 0;
     int FadeSw = 0;
+    //移動
     float InitPosY = 0;
     float TargetPosY = 0;
     float VecY = 0;
+    //STAGE,STAGE_CLEAR用
+    char PreMsg[16];//prefix message
+    char SufMsg[16];//suffix message
+    char LastMsg[16];
 public:
     void calcPosDispCenter();
     void setString(const char* str);
@@ -25,7 +30,12 @@ public:
     void setInitPosY(float y) { InitPosY = y; }
     void setTargetPosY(float y) { TargetPosY = y; }
     void setVecY(float y) { VecY = y; }
-    void setEditString(const char* preMsg, int n, const char* sufMsg);
+    //STAGE,STAGE_CLEAR用
+    void setPreMsg(const char*);
+    void setSufMsg(const char*);
+    void setLastMsg(const char*);
+    void edit(int n);
+    void last();
     //fade
     void initFadeIn();
     int fadeIn();

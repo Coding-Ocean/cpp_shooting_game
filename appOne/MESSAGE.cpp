@@ -18,7 +18,17 @@ void MESSAGE::calcPosDispCenter() {
 void MESSAGE::setString(const char* str) {
     strcpy_s(String, str);
 }
-void MESSAGE::setEditString(const char* preMsg, int n, const char* sufMsg) {
+
+void MESSAGE::setPreMsg(const char* msg) {
+    strcpy_s(PreMsg, msg);
+}
+void MESSAGE::setSufMsg(const char* msg) {
+    strcpy_s(SufMsg, msg);
+}
+void MESSAGE::setLastMsg(const char* msg) {
+    strcpy_s(LastMsg, msg);
+}
+void MESSAGE::edit(int n) {
     int n10 = n / 10;//10の位
     int n1 = n - n10 * 10;//1の位
     //数値を全角の数字に変換
@@ -35,7 +45,10 @@ void MESSAGE::setEditString(const char* preMsg, int n, const char* sufMsg) {
         no[3] = ws[n1 * 2 + 1];
     }
     //残りステージ数の前後に文字列をくっつけて編集
-    sprintf_s(String, "%s%s%s", preMsg, no, sufMsg);
+    sprintf_s(String, "%s%s%s", PreMsg, no, SufMsg);
+}
+void MESSAGE::last() {
+    strcpy_s(String,LastMsg);
 }
 
 void MESSAGE::initFadeIn(){

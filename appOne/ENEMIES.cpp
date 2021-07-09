@@ -87,7 +87,7 @@ void ENEMIES::collision() {
             Enemies[j].color = Enemy.normalColor;
             for (int i = bullets->curNum() - 1; i >= 0; i--) {
                 VECTOR2 vec = Enemies[j].pos - bullets->pos(i);
-                if (sqLength(vec) < sqDistance) {
+                if (vec.sqMag() < sqDistance) {
                     Enemies[j].hp--;
                     Enemies[j].invincibleRestTime = Enemy.invincibleTime;
                     Enemies[j].color = Enemy.collisionColor;
@@ -108,7 +108,9 @@ void ENEMIES::draw(){
         imageColor(Enemies[i].color);
         image(Enemy.img, Enemies[i].pos.x, Enemies[i].pos.y, Enemies[i].angle);
         //hp gauge
-        game()->hpGauge()->draw(Enemies[i].pos, Enemy.hpGaugeOffset, Enemies[i].hp);
+        game()->hpGauge()->setHp(Enemies[i].hp);
+        game()->hpGauge()->setPos(Enemies[i].pos + Enemy.hpGaugeOffset);
+        game()->hpGauge()->draw();
 #ifdef _DEBUG
         fill(255, 255, 255, 128);
         circle(Enemies[i].pos.x, Enemies[i].pos.y, Enemy.bcRadius*2);

@@ -8,14 +8,17 @@ HP_GAUGE::HP_GAUGE(GAME*game):
 void HP_GAUGE::create() {
     HpGauge = game()->container()->data().hpGauge;
 }
-void HP_GAUGE::draw(const VECTOR2& pos, const VECTOR2& offset, int hp ) {
+void HP_GAUGE::draw() {
     noStroke();
-    if (hp > 1) {
-        fill(HpGauge.color);
+    if (HpGauge.hp > HpGauge.warningHp) {
+        fill(HpGauge.green);
+    }
+    else if (HpGauge.hp > HpGauge.dangerHp) {
+        fill(HpGauge.yellow);
     }
     else {
-        fill(HpGauge.danger);
+        fill(HpGauge.red);
     }
-    rect(pos.x + offset.x, pos.y + offset.y, 
-        hp * HpGauge.coWidth, HpGauge.h);
+    rect(HpGauge.pos.x, HpGauge.pos.y,
+        HpGauge.hp * HpGauge.coWidth, HpGauge.hi);
 }

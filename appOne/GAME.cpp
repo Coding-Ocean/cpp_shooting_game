@@ -95,19 +95,19 @@ void GAME::changeScene(SCENE_ID stateId) {
     CurSceneId = stateId;
     Scenes[CurSceneId]->init();
 }
+int GAME::stageNo() {
+    //Enemiesの数をステージカウンターと同じにするためのメンバ
+    STAGE* stage = dynamic_cast<STAGE*>(Scenes[STAGE_ID]);
+    return stage->no();
+}
+int GAME::nextKeyPushed() {
+    return isTrigger(Game.changeSceneKey);
+}
 void GAME::draw() {
     Enemies->draw();
     Player->draw();
     PlayerBullets->draw();
     EnemyBullets->draw();
     Explosions->draw();
-}
-int GAME::stageNo() {
-    //Enemiesの数をステージカウンターと同じにするためのメンバ
-    STAGE* stage = dynamic_cast<STAGE*>(Scenes[STAGE_ID]);
-    return stage->stageNo();
-}
-int GAME::nextKeyPushed() {
-    return isTrigger(Game.changeSceneKey);
 }
 

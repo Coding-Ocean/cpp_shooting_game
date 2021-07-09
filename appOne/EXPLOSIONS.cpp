@@ -6,7 +6,8 @@
 #include"CONTAINER.h"
 #include "EXPLOSIONS.h"
 EXPLOSIONS::EXPLOSIONS(class GAME* game):
-GAME_OBJECT(game){}
+GAME_OBJECT(game){
+}
 EXPLOSIONS::~EXPLOSIONS(){
     SAFE_DELETE_ARRAY(Explosions);
 }
@@ -28,11 +29,14 @@ void EXPLOSIONS::trigger(const VECTOR2& pos){
     }
 }
 void EXPLOSIONS::update(){
+    //Explosion.intervalŽžŠÔŒo‰ß‚µ‚½‚ç
+    //Explosions[i].idx‚ðŽŸ‚Ì‰æ‘œ‚ÉØ‚è‘Ö‚¦‚é
+    //ÅŒã‚Ü‚Å•\Ž¦‚µ‚Ä‚¢‚½‚çÁ‚·
     for (int i = Explosion.curNum - 1; i >= 0; i--) {
         Explosions[i].elapsedTime += delta;
         if (Explosions[i].elapsedTime > Explosion.interval) {
             Explosions[i].idx++;
-            Explosions[i].elapsedTime = 0;
+            Explosions[i].elapsedTime -= Explosion.interval;
             if (Explosions[i].idx >= Explosion.numImgs) {
                 Explosion.curNum--;
                 Explosions[i] = Explosions[Explosion.curNum];

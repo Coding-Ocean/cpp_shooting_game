@@ -59,7 +59,7 @@ void PLAYER::collision() {
         Player.color = Player.normalColor;
         for (int i = curNum - 1; i >= 0; i--) {
             VECTOR2 vec = Player.pos - bullets->pos(i);
-            if (sqLength(vec) < sqDistance) {
+            if (vec.sqMag() < sqDistance) {
                 Player.hp--;
                 Player.color = Player.collisionColor;
                 Player.invincibleRestTime = Player.invincibleTime;
@@ -74,7 +74,9 @@ void PLAYER::draw() {
     imageColor(Player.color);
     image(Player.img, Player.pos.x, Player.pos.y, Player.angle);
     //HP gauge
-    game()->hpGauge()->draw(Player.pos, Player.hpGaugeOffset, Player.hp);
+    game()->hpGauge()->setHp(Player.hp);
+    game()->hpGauge()->setPos(Player.pos + Player.hpGaugeOffset);
+    game()->hpGauge()->draw();
 #ifdef _DEBUG
     fill(255, 255, 255, 128);
     circle(Player.pos.x, Player.pos.y, Player.bcRadius * 2);
