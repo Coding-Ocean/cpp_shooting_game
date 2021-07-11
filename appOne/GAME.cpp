@@ -89,16 +89,15 @@ void GAME::run() {
     }
 }
 
-//以下、他のクラスから呼び出されるメンバ
-//　シーケンス
+//以下、getter以外で他のクラスから呼び出されるメンバ
 void GAME::changeScene(SCENE_ID stateId) {
     CurSceneId = stateId;
     Scenes[CurSceneId]->init();
 }
-int GAME::stageNo() {
-    //Enemiesの数をステージカウンターと同じにするためのメンバ
-    STAGE* stage = dynamic_cast<STAGE*>(Scenes[STAGE_ID]);
-    return stage->no();
+STAGE* GAME::stage() {
+    //ステージナンバーをENEMIESに伝えるためのメンバ
+    //return (STAGE*)Scenes[STAGE_ID];
+    return dynamic_cast<STAGE*>(Scenes[STAGE_ID]);
 }
 int GAME::nextKeyPushed() {
     return isTrigger(Game.changeSceneKey);

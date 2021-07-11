@@ -28,7 +28,7 @@ private:
 public:
     void changeScene(SCENE_ID state);
     SCENE_ID curSceneId() { return CurSceneId; }
-    int stageNo();
+    class STAGE* stage();
     int nextKeyPushed();
 //ƒLƒƒƒ‰ƒNƒ^
 private:

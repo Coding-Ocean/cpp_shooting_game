@@ -153,16 +153,16 @@ void CONTAINER::SetData() {
     Data.explosion.scale = 10;
 
     //create binary file
-    FILE* fp;
-    fopen_s(&fp, "assets\\data.bin", "wb");
-    if (fp) {
-        fwrite(&Data, sizeof(ALL_DATA), 1, fp);
-        fclose(fp);
-    }
+    //FILE* fp;
+    //fopen_s(&fp, "assets\\data.bin", "wb");
+    //if (fp) {
+    //    fwrite(&Data, sizeof(ALL_DATA), 1, fp);
+    //    fclose(fp);
+    //}
 
 //Data.game.changeSceneKey = KEY_J;
 //Data.stage.stageNum = 10;
-//Data.stage.stageNo = 8;
+Data.stage.no = 8;
 //Data.enemy.totalNum = 10;
 //Data.enemy.hp = 1;
 //Data.player.hp = 1;

@@ -13,7 +13,7 @@ void STAGE_CLEAR::create() {
 }
 void STAGE_CLEAR::init() {
     game()->player()->initForStageClear();
-    Scene.message.edit(game()->stageNo());
+    Scene.message.edit(game()->stage()->no());
     Scene.message.calcPosDispCenter();
     Scene.message.initFadeIn();
 }

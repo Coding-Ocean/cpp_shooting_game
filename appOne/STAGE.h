@@ -19,6 +19,7 @@ public:
     void update();
     void draw();
     void nextScene();
+    //getter
     int no();
 };
 
