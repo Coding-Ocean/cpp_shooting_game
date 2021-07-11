@@ -162,7 +162,7 @@ void CONTAINER::SetData() {
 
 //Data.game.changeSceneKey = KEY_J;
 //Data.stage.stageNum = 10;
-Data.stage.no = 8;
+//Data.stage.no = 8;
 //Data.enemy.totalNum = 10;
 //Data.enemy.hp = 1;
 //Data.player.hp = 1;
